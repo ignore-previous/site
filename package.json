@@ -1,0 +1,13 @@
+{
+  "name": "ignoreprevious-site",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Static site for ignoreprevious.dev. No dependencies.",
+  "type": "module",
+  "scripts": {
+    "build": "node build.mjs",
+    "check": "node build.mjs && node scripts/check.mjs",
+    "preview": "node build.mjs && node scripts/serve.mjs"
+  },
+  "engines": { "node": ">=20" }
+}
