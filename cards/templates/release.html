@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en-AU"><head><meta charset="utf-8"><meta name="card-size" content="1200x675"><title>Release card</title>
+<!--COMMON-->
+<style>
+body { width: 1200px; height: 675px; }
+.card { width: 100%; height: 100%; padding: 56px 72px 56px; display: flex; flex-direction: column; justify-content: space-between; }
+.top { display: flex; justify-content: space-between; align-items: center; }
+.main { display: flex; align-items: center; justify-content: space-between; gap: 40px; }
+.copy { max-width: 700px; }
+.kicker { font-family: "JetBrains Mono", Consolas, monospace; font-weight: 500; font-size: 24px; color: var(--mute); margin-bottom: 14px; }
+h1 { margin: 0; font-family: "Bricolage Grotesque", sans-serif; font-weight: 800; font-size: 96px; line-height: .98; letter-spacing: -.03em; }
+.ver { display: inline-block; margin-top: 26px; background: var(--accent); color: var(--accentInk); border: 2px solid var(--accentInk); border-radius: 12px; padding: 4px 22px; font-family: "JetBrains Mono", Consolas, monospace; font-weight: 700; font-size: 44px; }
+.line { margin: 28px 0 0; font-family: "Figtree", sans-serif; font-weight: 500; font-size: 32px; line-height: 1.3; color: var(--ink); text-wrap: pretty; }
+.mark { width: 300px; height: 300px; border-radius: 50%; flex: none; border: 3px solid var(--accentInk); }
+.mark img { width: 100%; height: 100%; border-radius: 50%; display: block; }
+</style></head>
+<body data-theme="{{theme}}">
+<div class="card">
+  <div class="top"><div class="brand"><img src="{{assets}}/avatar-1024.png" alt=""><span>Ignore Previous</span></div></div>
+  <div class="main">
+    <div class="copy">
+      <div class="kicker">{{kicker}}</div>
+      <h1>{{product}}</h1>
+      <div class="ver">{{version}}</div>
+      <p class="line">{{line}}</p>
+    </div>
+    <div class="mark"><img src="{{assets}}/avatar-1024.png" alt=""></div>
+  </div>
+  <div class="url">{{url}}</div>
+</div>
+</body></html>

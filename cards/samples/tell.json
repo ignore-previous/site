@@ -1,0 +1,10 @@
+{
+  "template": "tell",
+  "theme": "light",
+  "kicker": "Unclank: a tell it checks for",
+  "tell": "Starter favicon",
+  "before": "The browser tab still shows the default icon.",
+  "after": "A real mark in the tab, and /favicon.ico served as well as an SVG.",
+  "source": "unclank-launch",
+  "url": "ignoreprevious.dev"
+}
