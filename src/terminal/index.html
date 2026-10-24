@@ -40,7 +40,7 @@
   <header class="tm-hero">
     <div class="tm-hero-text">
       <h1>New to the <mark>terminal</mark>?</h1>
-      <p class="lede">A terminal is a window where you type commands instead of clicking. It looks bare, but it does nothing until you press Enter, and it only does what the command says. This page covers what you need to run the commands on this site.</p>
+      <p class="lede">A terminal is a window where you type commands instead of clicking. It looks bare, but it only does what the command says. This page covers what you need to run the commands on this site.</p>
       <nav class="tm-jump" aria-label="On this page">
         <a href="#what-h">What it is</a>
         <a href="#open-h">Open one</a>
@@ -55,7 +55,7 @@
     <div class="card tm-anatomy">
       <figure class="tm-win" aria-labelledby="anat-cap">
         <div class="tm-bar" aria-hidden="true"><i></i><i></i><i></i><span>Terminal</span></div>
-        <div class="tm-screen">
+        <div class="tm-screen" aria-hidden="true">
           <p class="tm-line"><span class="tm-where"><b class="tm-n" aria-hidden="true">1</b>PS C:\Users\you\my-project&gt;</span> <span class="tm-typed"><b class="tm-n" aria-hidden="true">2</b>npx whatsallowed</span></p>
           <p class="tm-out"><b class="tm-n" aria-hidden="true">3</b>1 high, 1 medium.</p>
           <p class="tm-line"><span class="tm-where">PS C:\Users\you\my-project&gt;</span> <span class="tm-cursor" aria-hidden="true"></span></p>
@@ -64,7 +64,7 @@
       </figure>
       <ol class="tm-key">
         <li><b>Where you are.</b> The folder the terminal is working in. Commands act on this folder unless they say otherwise. It looks different on each system: see Open one below.</li>
-        <li><b>What you type.</b> Type or paste a command here, then press Enter. Nothing runs before you press Enter.</li>
+        <li><b>What you type.</b> Type or paste a command here, then press Enter. Paste one line at a time: text with a line break in it can run straight away.</li>
         <li><b>What comes back.</b> The command's answer. When it finishes, the "where you are" line comes back, ready for the next command.</li>
       </ol>
     </div>
@@ -130,7 +130,7 @@
       </div>
       <div class="card tm-habit">
         <h3>Stop</h3>
-        <p><kbd>Ctrl</kbd> + <kbd>C</kbd> stops the command that's running, on every system.</p>
+        <p><kbd>Ctrl</kbd> + <kbd>C</kbd> usually stops the command that's running, on every system. In Windows Terminal, click in the window first so no text is selected, or it copies instead.</p>
         <p>Closing the window stops it too.</p>
       </div>
     </div>
@@ -138,7 +138,7 @@
 
   <section class="sect" aria-labelledby="agents-h">
     <h2 class="h2" id="agents-h">Why coding agents run in a terminal</h2>
-    <p class="tm-intro">A coding agent is a program that reads and changes files and runs commands for you. You start it in your project folder and it works there. The terminal shows each step, so you can see what it wants to run. Its settings decide what it may do without asking: <a href="/clank-safely/">Clank Safely</a> explains them.</p>
+    <p class="tm-intro">A coding agent is a program that reads and changes files and runs commands for you. You start it in your project folder and it works there. The terminal shows each step. You can see what it wants to run. Its settings decide what it may do without asking: <a href="/clank-safely/">Clank Safely</a> explains them.</p>
     <div class="tm-agents">
       <div class="card tm-agent">
         <h3>Claude Code</h3>

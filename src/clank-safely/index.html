@@ -76,11 +76,12 @@
 Rules:
 1. First read the guide: https://ignoreprevious.dev/clank-safely/index.html.md
    Use its setting names and its sources. If you're not sure a setting exists, say so.
-2. If you can run commands, start by checking my current settings with What's Allowed: npx whatsallowed, in this project's folder. Show me the command and wait for my yes before you run it.
+2. Install nothing except What's Allowed (the npm package whatsallowed), which npx downloads when it runs. If you can run commands, start by checking my current settings with What's Allowed: npx whatsallowed, in this project's folder. Show me the command and wait for my yes before you run it.
 3. Ask me one question at a time, and wait for my answer.
-4. Before you change any settings file, show me the file and the exact change. Write it only after I say yes.
-5. If you're a chat app such as claude.ai or ChatGPT and can't change my files, give advice only. I'll make the changes myself.
-6. At the end, list every file you changed and how to undo each change.</pre>
+4. Before you run a command or change any file, show me the exact command or change. Do it only after I say yes.
+5. Don't open or print .env files, keys or other secret files. If something points to one, give me the file name only.
+6. If you're a chat app such as claude.ai or ChatGPT and can't change my files, give advice only. I'll make the changes myself.
+7. At the end, list every file you changed and how to undo each change.</pre>
         <button type="button" class="copy-prompt" data-target="p-clank" data-say="the Clank Safely prompt" aria-label="Copy the Clank Safely prompt">Copy prompt</button>
         <p class="fine">The agent's own settings still decide what it may do. The prompt asks it to check with you, but it can't force it to.</p>
       </div>

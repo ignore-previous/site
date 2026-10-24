@@ -49,7 +49,7 @@ body {
    Without it the guide's column changed width with the app picked. */
 .inner-wrap { width: 100%; }
 a { color: inherit; text-underline-offset: 3px; text-decoration-thickness: 1.5px; }
-a:focus-visible, button:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+a:focus-visible, button:focus-visible, summary:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
 p { margin: 0; }
 h1, h2, h3 { margin: 0; font-family: var(--display); text-wrap: balance; }
 
