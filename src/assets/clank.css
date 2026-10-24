@@ -1,6 +1,4 @@
 /* Extra styles for the Clank Safely page only. Built on guide.css and the tokens in site.css. */
-.pill.enf { background: var(--accent); color: var(--accent-ink); }
-.pill.gde { background: var(--surface); border-style: dashed; }
 .profile .g-block + .g-block { border-top: 2px solid var(--shade); padding-top: 1.5rem; }
 .g .card h4 { font-family: var(--display); font-size: 1.1rem; font-weight: 800; }
 .g .card li { max-width: 44rem; }

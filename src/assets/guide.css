@@ -56,14 +56,56 @@
 /* sources and pills */
 .src { display: inline-block; font-size: .8rem; color: var(--mute); padding: .75rem .25rem; margin: -.75rem 0; white-space: nowrap; }
 .src:hover { color: var(--ink); }
-.pill { display: inline-block; font-size: .78rem; font-weight: 700; line-height: 1.2; padding: .15rem .5rem; border: 2px solid var(--line); border-radius: 999px; background: var(--well); color: var(--ink); vertical-align: .08em; margin-right: .2rem; }
-.pill.unv, .pill.dis { background: var(--hl); }
-.pill.ours { background: var(--surface); border-style: dashed; }
-.pill.old { background: var(--surface); }
-.pill.plan { background: var(--well); }
+/* Labels: a square tag, a symbol then the word, on a tint. The symbol and the word carry the meaning, so colour is
+   never the only cue. Screen readers skip the symbol ("/ ''" is its empty alt text); the word already says it. */
+:root {
+  --t-enf-wf: #ffffff; --t-enf-wb: #1a4bb3; --t-enf-cf: #ffffff; --t-enf-cb: #0f2f80;
+  --t-gde-wf: #12307a; --t-gde-wb: #dbe6fb; --t-gde-cf: #ffffff; --t-gde-cb: #1a4bb3;
+  --t-unv-wf: #5e3200; --t-unv-wb: #ffe8bd; --t-unv-cf: #ffffff; --t-unv-cb: #8a4b00;
+  --t-dis-wf: #7d140b; --t-dis-wb: #fcd9d3; --t-dis-cf: #ffffff; --t-dis-cb: #a61e12;
+  --t-old-wf: #433f2b; --t-old-wb: #e9e6d6; --t-old-cf: #ffffff; --t-old-cb: #5f5a40;
+  --t-ours-wf: #3f1d7a; --t-ours-wb: #e6d9f7; --t-ours-cf: #ffffff; --t-ours-cb: #5b2fa8;
+  --t-plan-wf: #4f5563; --t-plan-wb: #e6e9f0;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --t-enf-wf: #0d1b3d; --t-enf-wb: #8fb2ff; --t-enf-cf: #0d1b3d; --t-enf-cb: #c4d6ff;
+    --t-gde-wf: #c4d6ff; --t-gde-wb: #1f2c4f; --t-gde-cf: #0d1b3d; --t-gde-cb: #8fb2ff;
+    --t-unv-wf: #f7d894; --t-unv-wb: #3a2c0c; --t-unv-cf: #2b1f00; --t-unv-cb: #f2c36b;
+    --t-dis-wf: #ffc2b8; --t-dis-wb: #46201b; --t-dis-cf: #3a0f0a; --t-dis-cb: #ff9d8f;
+    --t-old-wf: #e0dcc4; --t-old-wb: #2f2e25; --t-old-cf: #23221a; --t-old-cb: #cfc9a8;
+    --t-ours-wf: #e0cfff; --t-ours-wb: #33264f; --t-ours-cf: #26104a; --t-ours-cb: #c9a8ff;
+    --t-plan-wf: #a9afbd; --t-plan-wb: #14161c;
+  }
+}
+:root[data-theme="dark"] {
+  --t-enf-wf: #0d1b3d; --t-enf-wb: #8fb2ff; --t-enf-cf: #0d1b3d; --t-enf-cb: #c4d6ff;
+  --t-gde-wf: #c4d6ff; --t-gde-wb: #1f2c4f; --t-gde-cf: #0d1b3d; --t-gde-cb: #8fb2ff;
+  --t-unv-wf: #f7d894; --t-unv-wb: #3a2c0c; --t-unv-cf: #2b1f00; --t-unv-cb: #f2c36b;
+  --t-dis-wf: #ffc2b8; --t-dis-wb: #46201b; --t-dis-cf: #3a0f0a; --t-dis-cb: #ff9d8f;
+  --t-old-wf: #e0dcc4; --t-old-wb: #2f2e25; --t-old-cf: #23221a; --t-old-cb: #cfc9a8;
+  --t-ours-wf: #e0cfff; --t-ours-wb: #33264f; --t-ours-cf: #26104a; --t-ours-cb: #c9a8ff;
+  --t-plan-wf: #a9afbd; --t-plan-wb: #14161c;
+}
+.pill { display: inline-flex; align-items: center; font-size: .78rem; font-weight: 700; line-height: 1.2; min-height: 1.5rem; padding-right: .5rem; border-radius: 4px; overflow: hidden; vertical-align: .08em; margin-right: .2rem; }
+.pill::before { align-self: stretch; display: inline-flex; align-items: center; justify-content: center; min-width: 1.55rem; padding: 0 .3rem; margin-right: .4rem; font-family: var(--mono); font-weight: 700; }
+.pill.enf { color: var(--t-enf-wf); background: var(--t-enf-wb); }
+.pill.enf::before { color: var(--t-enf-cf); background: var(--t-enf-cb); content: "\00A7"; content: "\00A7" / ""; }
+.pill.gde { color: var(--t-gde-wf); background: var(--t-gde-wb); }
+.pill.gde::before { color: var(--t-gde-cf); background: var(--t-gde-cb); content: "\00BB"; content: "\00BB" / ""; }
+.pill.unv { color: var(--t-unv-wf); background: var(--t-unv-wb); }
+.pill.unv::before { color: var(--t-unv-cf); background: var(--t-unv-cb); content: "?"; content: "?" / ""; }
+.pill.dis { color: var(--t-dis-wf); background: var(--t-dis-wb); }
+.pill.dis::before { color: var(--t-dis-cf); background: var(--t-dis-cb); content: "\2191\2193"; content: "\2191\2193" / ""; letter-spacing: -.1em; }
+.pill.old { color: var(--t-old-wf); background: var(--t-old-wb); }
+.pill.old::before { color: var(--t-old-cf); background: var(--t-old-cb); content: "\00AB"; content: "\00AB" / ""; }
+.pill.ours { color: var(--t-ours-wf); background: var(--t-ours-wb); }
+.pill.ours::before { color: var(--t-ours-cf); background: var(--t-ours-cb); content: "+"; content: "+" / ""; }
+/* Plan labels stay quiet: grey, no symbol. */
+.pill.plan { color: var(--t-plan-wf); background: var(--t-plan-wb); font-weight: 600; padding: .15rem .5rem; }
+@media (forced-colors: active) { .pill { border: 1px solid CanvasText; } .pill::before { border-right: 1px solid CanvasText; } }
 
 .notice { border: 2px solid var(--line); border-radius: 10px; padding: .9rem 1rem; background: var(--well); display: flex; flex-direction: column; gap: .6rem; }
-.notice.dis, .notice.unv { background: var(--hl); }
 .notice.work { background: var(--surface); border-style: dashed; }
 .card .notice h3 { font-size: 1.1rem; }
 .notice p { max-width: 44rem; }
