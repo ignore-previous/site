@@ -1,9 +1,18 @@
 // Copy buttons and tabs. No storage, no network, nothing leaves the page.
+// The buttons carry an aria-label, so screen readers hear "Copied" from a shared status line instead.
+var copyStatus = document.createElement('p');
+copyStatus.className = 'sr-only';
+copyStatus.setAttribute('role', 'status');
+document.body.appendChild(copyStatus);
 document.querySelectorAll('button[data-target]').forEach(function (b) {
   b.addEventListener('click', function () {
     var el = document.getElementById(b.dataset.target);
     var label = b.textContent;
-    var done = function () { b.textContent = 'Copied'; setTimeout(function () { b.textContent = label; }, 1500); };
+    var done = function () {
+      b.textContent = 'Copied';
+      copyStatus.textContent = 'Copied ' + el.textContent;
+      setTimeout(function () { b.textContent = label; copyStatus.textContent = ''; }, 1500);
+    };
     var sel = function () { var r = document.createRange(); r.selectNodeContents(el); var s = getSelection(); s.removeAllRanges(); s.addRange(r); };
     try { navigator.clipboard.writeText(el.textContent).then(done, sel); } catch (e) { sel(); }
   });
