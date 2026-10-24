@@ -7,7 +7,7 @@
 //    Pages therefore carry no inline <script>, <style>, style="" or on*="" handlers. JSON-LD data blocks are allowed and must parse.
 // 6. Canonical links, sitemap, llms.txt, Markdown copies, security.txt and wrangler.jsonc agree with each other.
 import { readdirSync, readFileSync, statSync, existsSync } from "node:fs";
-import { join, extname } from "node:path";
+import { join, extname, relative, sep } from "node:path";
 import { execFileSync } from "node:child_process";
 
 const failures = [];
@@ -58,7 +58,9 @@ function checkSite(label, { beacon }) {
       try { JSON.parse(m[2]); } catch (e) { fail(f, `${label}: JSON-LD does not parse (${e.message})`); }
     }
     // Analytics wording appears only when the beacon is there.
-    if (/Web Analytics/.test(s) !== beacon && !f.endsWith("404.html")) fail(f, `${label}: footer analytics line ${beacon ? "missing" : "present without the beacon"}`);
+    const visible = s.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ");
+    if (!beacon && /\bcount (?:page )?visits\b|Web Analytics/i.test(visible)) fail(f, `${label}: says visits are counted, but there is no beacon`);
+    if (beacon && !f.endsWith("404.html") && !/Web Analytics/.test(visible)) fail(f, `${label}: footer analytics line missing`);
     if (/<!-- \/?ANALYTICS -->/.test(s)) fail(f, `${label}: ANALYTICS marker left in output`);
     // Internal links resolve
     for (const m of s.matchAll(/\b(?:href|src)=["'](\/[^"'#?]*)/g)) {
@@ -106,7 +108,10 @@ function checkDiscovery() {
     const s = readFileSync(f, "utf8");
     const c = (s.match(/<link rel="canonical" href="([^"]+)">/) || [])[1];
     const og = (s.match(/<meta property="og:url" content="([^"]+)">/) || [])[1];
-    if (!c) fail(f, "no canonical link"); else if (c !== og) fail(f, `canonical ${c} differs from og:url ${og}`);
+    const own = "https://ignoreprevious.dev/" + relative("dist", f).split(sep).join("/").replace(/index\.html$/, "");
+    if (!c) fail(f, "no canonical link");
+    else if (c !== own) fail(f, `canonical ${c} should be the page's own address ${own}`);
+    else if (c !== og) fail(f, `canonical ${c} differs from og:url ${og}`);
     if (c) canon.push(c);
     const md = f + ".md";
     if (!existsSync(md)) fail(md, "missing Markdown copy");

@@ -54,6 +54,7 @@ function skip(n) {
   if (["svg", "script", "style", "button", "input", "noscript", "template"].includes(n.tag)) return true;
   if (n.attrs["aria-hidden"] === "true" || n.attrs.role === "tablist") return true;
   if (n.tag === "fieldset") return true; // the app and plan pickers
+  if (n.attrs.id === "picker" || n.attrs.id === "pick-h") return true; // the picker card and its heading: a copy has nothing to pick
   return ["g-statusrow", "g-prompt", "back-wrap", "nojs-note"].some((c) => has(n, c));
 }
 
@@ -75,7 +76,8 @@ function inline(nodes, ctx) {
     switch (n.tag) {
       case "br": out += "  \n"; break;
       case "a": {
-        const t = inner().trim();
+        // The aria-label names the link better than its text ("Source" alone says nothing out of context).
+        const t = (n.attrs["aria-label"] || inner()).trim();
         const href = n.attrs.href ? abs(n.attrs.href, ctx.base) : "";
         out += href && t ? `[${t}](${href})` : t;
         break;
@@ -151,7 +153,8 @@ function block(n, ctx) {
   const app = n.attrs["data-app"];
   if (app && ctx.planSets?.[app]) {
     const map = ctx.planSets[app];
-    ctx = { ...ctx, plans: (v) => "for " + v.split(/\s+/).map((k) => map[k] ?? k).join(", ") };
+    // "unsure" is the picker's show-everything choice, not a plan.
+    ctx = { ...ctx, plans: (v) => "for " + v.split(/\s+/).filter((k) => k !== "unsure").map((k) => map[k] ?? k).join(", ") };
   }
   const h = /^h([1-6])$/.exec(n.tag);
   if (h) return "#".repeat(+h[1]) + " " + tidy(inline(n.children, ctx)).replace(/\n/g, " ");
