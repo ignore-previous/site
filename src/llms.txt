@@ -9,6 +9,7 @@ Each page below is also available as Markdown at the linked address. The Markdow
 - [Home](https://ignoreprevious.dev/index.html.md): what Ignore Previous makes: What's Allowed, Unclank and Clank Safely.
 - [What Can My AI See?](https://ignoreprevious.dev/what-can-my-ai-see/index.html.md): a plain guide to what ChatGPT and Claude can see and remember, what changes if you give them a folder, and how to check your own settings.
 - [Clank Safely](https://ignoreprevious.dev/clank-safely/index.html.md): setting up Claude Code or Codex so it cannot do more than you meant, with the official setting names and a source for each fact.
+- [New to the terminal?](https://ignoreprevious.dev/terminal/index.html.md): what a terminal is, how to open one on Windows, macOS and Linux, and why coding agents run there.
 
 ## Tools
 
