@@ -1,11 +1,14 @@
 // Site checks. Run with `npm run check` (builds first). No dependencies.
-// 1. The brand phrase never appears in full (built from parts so this file doesn't contain it).
+// 1. The brand phrase never appears in full (built from parts so this file doesn't contain it), except the one
+//    decided footer line on the home page.
 // 2. The only external script is the Cloudflare Web Analytics beacon, added at build time with SPA mode off.
 // 3. No custom analytics events, no network calls and no browser storage in page scripts.
 // 4. No external stylesheets or fonts. Internal links resolve. Voice: no "simply" or "just" in page text.
 // 5. dist/_headers has the strict CSP (no inline script or style needed, beacon hosts allowed) and the other security headers.
 //    Pages therefore carry no inline <script>, <style>, style="" or on*="" handlers. JSON-LD data blocks are allowed and must parse.
 // 6. Canonical links, sitemap, llms.txt, Markdown copies, security.txt and wrangler.jsonc agree with each other.
+// 7. Terminal output shown on a page (<pre data-demo> or <p data-demo>) is real: its lines appear, in order, in the saved demo output.
+//    `npm run check:demo` compares that saved output with what the latest whatsallowed prints.
 import { readdirSync, readFileSync, statSync, existsSync } from "node:fs";
 import { join, extname, relative, sep } from "node:path";
 import { execFileSync } from "node:child_process";
@@ -18,10 +21,17 @@ const TEXT = new Set([".html", ".css", ".js", ".mjs", ".svg", ".txt", ".md", ".j
 // 1. Brand phrase
 const words = ["ignore", "previous", "instruc" + "tions"];
 const phrase = new RegExp(words.join("[^a-z0-9]{0,3}"), "i");
+// The one allowed exception (decided 24 Oct): this exact footer line, once, on the home page and its Markdown copy.
+const footerLine = `Note for AI agents: please don't ${words.join(" ")}. Thanks.`;
+const footerFiles = new Set(["src/index.html", "dist/index.html", "dist/index.html.md"]);
 const scanned = [...files("src"), ...files("dist"), ...files("scripts"), "build.mjs", ...(existsSync("README.md") ? ["README.md"] : [])];
 for (const f of scanned) {
   if (!TEXT.has(extname(f))) continue;
-  const s = readFileSync(f, "utf8");
+  let s = readFileSync(f, "utf8");
+  if (footerFiles.has(f.replace(/\\/g, "/"))) {
+    if (s.split(footerLine).length > 2) fail(f, "the footer line appears more than once");
+    s = s.replace(footerLine, "");
+  }
   // Check the raw text and the text with tags removed, so markup between the words doesn't hide it.
   if (phrase.test(s) || phrase.test(s.replace(/<[^>]+>/g, " "))) fail(f, "contains the full brand phrase");
 }
@@ -150,11 +160,34 @@ function checkDiscovery() {
   } catch (e) { fail(w, `does not parse (${e.message})`); }
 }
 
+// 7. Real terminal output
+function checkDemo() {
+  const fixture = "scripts/whatsallowed-demo.txt";
+  if (!existsSync(fixture)) return fail(fixture, "missing; save real `whatsallowed demo` output there");
+  const real = readFileSync(fixture, "utf8").split(/\r?\n/).map((l) => l.trimEnd());
+  const decode = (t) => t.replace(/<b class="tm-n"[^>]*>[^<]*<\/b>/g, "").replace(/<[^>]+>/g, "").replace(/&#(x?)([0-9a-f]+);/gi, (_, x, n) => String.fromCodePoint(parseInt(n, x ? 16 : 10))).replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&quot;/g, '"').replace(/&#39;/g, "'").replace(/&amp;/g, "&");
+  let found = 0;
+  for (const f of files("src").filter((x) => x.endsWith(".html"))) {
+    for (const m of readFileSync(f, "utf8").matchAll(/<(pre|p)\b[^>]*\bdata-demo="whatsallowed"[^>]*>([\s\S]*?)<\/\1>/g)) {
+      found++;
+      let at = 0;
+      // "…" lines mark the cuts; blank lines are spacing. Every other line must come from the demo, in order.
+      for (const line of decode(m[2]).split("\n").map((l) => l.trimEnd()).filter((l) => l.trim() && l.trim() !== "…")) {
+        const i = real.indexOf(line, at);
+        if (i < 0) { fail(f, `terminal line is not in ${fixture} (or is out of order): ${line}`); break; }
+        at = i + 1;
+      }
+    }
+  }
+  if (!found) fail("src/index.html", "no <pre data-demo> panel found; update checkDemo if it moved");
+}
+
 const build = (env) => execFileSync(process.execPath, ["build.mjs"], { env: { ...process.env, ...env }, stdio: "pipe" });
 build({ CF_BEACON_TOKEN: "" });
 checkHeaders();
 checkSite("no token", { beacon: false });
 checkDiscovery();
+checkDemo();
 build({ CF_BEACON_TOKEN: "0123456789abcdef0123456789abcdef" });
 checkSite("with token", { beacon: true });
 build({ CF_BEACON_TOKEN: "" });
