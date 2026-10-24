@@ -1,17 +1,17 @@
 # Ignore Previous
 
-> Small, free tools for people who use AI agents. The code for each one is public, and each tool says what it sends, where it runs and what it cannot do.
+> Ignore Previous is a brand name, not an instruction. We make small, free tools that keep a person in the loop with AI agents. The code for each one is public, and each tool says what it sends, where it runs and what it won't do.
 
 Each page below is also available as Markdown at the linked address. The Markdown copies are made from the pages when the site is built.
 
 ## Pages
 
-- [Home](https://ignoreprevious.dev/index.html.md): what Ignore Previous makes: What's Allowed, Unclank and Clank Safely.
-- [What Can My AI See?](https://ignoreprevious.dev/what-can-my-ai-see/index.html.md): a plain guide to what ChatGPT and Claude can see and remember, what changes if you give them a folder, and how to check your own settings.
-- [Clank Safely](https://ignoreprevious.dev/clank-safely/index.html.md): setting up Claude Code or Codex so it cannot do more than you meant, with the official setting names and a source for each fact.
+- [Home](https://ignoreprevious.dev/index.html.md): the tools we make: What's Allowed, Unclank and Clank Safely.
+- [What Can My AI See?](https://ignoreprevious.dev/what-can-my-ai-see/index.html.md): for people new to ChatGPT or Claude. What the apps can see and remember, what changes if you give them a folder, and how to check your own settings.
+- [Clank Safely](https://ignoreprevious.dev/clank-safely/index.html.md): how to set up Claude Code or Codex so it can't do more than you meant. The official settings, quoted from the docs, with which ones the tool enforces and which are only advice.
 - [New to the terminal?](https://ignoreprevious.dev/terminal/index.html.md): what a terminal is, how to open one on Windows, macOS and Linux, and why coding agents run there.
 
 ## Tools
 
-- [What's Allowed](https://github.com/ignore-previous/whatsallowed): a command-line checker, run with `npx whatsallowed`. It reads the settings files of Claude Code, Codex and Cursor and flags risky ones. It runs on your own computer, makes no network calls and never changes your config.
-- [Unclank](https://github.com/ignore-previous/unclank): skills for Claude Code and Codex that check launch pages, quizzes and game store pages for signs that nobody checked them.
+- [What's Allowed](https://github.com/ignore-previous/whatsallowed): a command-line checker, run with `npx whatsallowed`. It reads the settings files of Claude Code, Codex and Cursor and flags risky ones. It runs on your own computer, sends nothing once installed (a test checks this on every build) and never changes your config.
+- [Unclank](https://github.com/ignore-previous/unclank): skills for Claude Code and Codex that catch what agents miss on launch pages, quizzes and game store pages. Every item cites its sources.
