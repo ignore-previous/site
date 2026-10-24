@@ -12,5 +12,5 @@ Each page below is also available as Markdown at the linked address. The Markdow
 
 ## Tools
 
-- [What's Allowed](https://github.com/ignore-previous/whatsallowed): a command-line checker, run with `npx whatsallowed`. It reads the settings files of Claude Code, Codex and Cursor and flags risky ones. It runs on your own computer, makes no network calls and never changes your config.
+- [What's Allowed](https://github.com/ignore-previous/whatsallowed): a command-line checker, run with `npx whatsallowed`. It reads the settings files of Claude Code and Codex, and Cursor's MCP config, and flags risky settings. It runs on your own computer, makes no network calls and never changes your config.
 - [Unclank](https://github.com/ignore-previous/unclank): skills for Claude Code and Codex that check launch pages, quizzes and game store pages for signs that nobody checked them.

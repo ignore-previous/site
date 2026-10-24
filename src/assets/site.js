@@ -7,7 +7,8 @@ document.body.appendChild(copyStatus);
 document.querySelectorAll('button[data-target]').forEach(function (b) {
   b.addEventListener('click', function () {
     var el = document.getElementById(b.dataset.target);
-    var label = b.textContent;
+    // Keep the first label, so a second click while it says "Copied" doesn't make "Copied" stick.
+    var label = b.dataset.label || (b.dataset.label = b.textContent);
     var done = function () {
       b.textContent = 'Copied';
       copyStatus.textContent = 'Copied ' + el.textContent;
