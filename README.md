@@ -16,7 +16,11 @@ In PowerShell, from this folder:
 
 `npm run check` builds the site, scans for the brand phrase and tests each page with and without the analytics beacon. It also confirms that the canonical links, `sitemap.xml`, `llms.txt`, the Markdown copies, `security.txt` and `wrangler.jsonc` agree.
 
-The terminal output on the home page is real `whatsallowed demo` output, shortened. `npm run check` fails if a line in that panel is missing from `scripts/whatsallowed-demo.txt` or out of order. `npm run check:demo` downloads the latest What's Allowed from npm and fails if its demo output differs from that file. When it does, update the file and the panel together.
+Terminal output on the site is real `whatsallowed demo` output, shortened. `npm run check` fails if a line shown on a page is missing from `scripts/whatsallowed-demo.txt` or out of order. `npm run check:demo` downloads the latest What's Allowed from npm and fails if its demo output differs from that file. When it does, update the file and the pages together.
+
+## Voice
+
+Copy on the site and in the brand's READMEs follows [VOICE.md](VOICE.md). `npm run check` enforces the rules VOICE.md marks as checked.
 
 ## Security headers
 
