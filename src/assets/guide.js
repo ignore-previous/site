@@ -12,7 +12,7 @@
   var APP_NAMES = { chatgpt: 'ChatGPT', claude: 'Claude' };
   var PLAN_NAMES = {
     chatgpt: { free: 'Free or Go', paid: 'Plus or Pro', work: 'Business, Enterprise or Edu (work or school)', unsure: 'every plan' },
-    claude: { free: 'Free', paid: 'Pro or Max', work: 'Team, Enterprise or Education (work or school)', unsure: 'every plan' }
+    claude: { free: 'Free', paid: 'Pro or Max', work: 'Team and Enterprise (work or school)', unsure: 'every plan' }
   };
 
   function all(sel, root) { return [].slice.call((root || document).querySelectorAll(sel)); }
