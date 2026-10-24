@@ -1,0 +1,16 @@
+# Ignore Previous
+
+> Small, free tools for people who use AI agents. The code for each one is public, and each tool says what it sends, where it runs and what it cannot do.
+
+Each page below is also available as Markdown at the linked address. The Markdown copies are made from the pages when the site is built.
+
+## Pages
+
+- [Home](https://ignoreprevious.dev/index.html.md): what Ignore Previous makes: What's Allowed, Unclank and Clank Safely.
+- [What Can My AI See?](https://ignoreprevious.dev/what-can-my-ai-see/index.html.md): a plain guide to what ChatGPT and Claude can see and remember, what changes if you give them a folder, and how to check your own settings.
+- [Clank Safely](https://ignoreprevious.dev/clank-safely/index.html.md): setting up Claude Code or Codex so it cannot do more than you meant, with the official setting names and a source for each fact.
+
+## Tools
+
+- [What's Allowed](https://github.com/ignore-previous/whatsallowed): a command-line checker, run with `npx whatsallowed`. It reads the settings files of Claude Code, Codex and Cursor and flags risky ones. It runs on your own computer, makes no network calls and never changes your config.
+- [Unclank](https://github.com/ignore-previous/unclank): skills for Claude Code and Codex that check launch pages, quizzes and game store pages for signs that nobody checked them.

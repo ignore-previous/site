@@ -9,7 +9,13 @@
 <meta property="og:description" content="Security setup and safety guidance for AI coding agents. Advice with sources.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://ignoreprevious.dev/clank-safely/">
+<link rel="canonical" href="https://ignoreprevious.dev/clank-safely/">
+<link rel="alternate" type="text/markdown" href="/clank-safely/index.html.md">
 <meta property="og:image" content="https://ignoreprevious.dev/assets/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Ignore Previous: small, free tools with public code for working with AI agents.">
+<meta property="og:site_name" content="Ignore Previous">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#f1f3f7" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#14161c" media="(prefers-color-scheme: dark)">
@@ -78,7 +84,7 @@
         <p><b>Check: reads your config files (the files that hold your tools' settings), sends nothing.</b></p>
         <p data-fact="clank-3.1 clank-3.2">What's Allowed is our free checker. It reads the settings files of Claude Code, Codex and Cursor and flags risky ones. Each finding gives the file, the line and a rule code, with a reason and a fix <a class="src" href="https://github.com/ignore-previous/whatsallowed#readme" rel="noopener noreferrer" aria-label="Source: What's Allowed project page">Source</a>.</p>
         <p data-fact="clank-3.3">Open a terminal in your project folder. A terminal is a window where you type commands. On Windows, use PowerShell. Run this. It needs Node.js 20 or later, the program that runs the tool <a class="src" href="https://github.com/ignore-previous/whatsallowed#readme" rel="noopener noreferrer" aria-label="Source: What's Allowed project page, first run">Source</a>.</p>
-        <div class="cmd"><code id="c1">npx whatsallowed</code><button type="button" data-target="c1">Copy</button></div>
+        <div class="cmd"><code id="c1">npx whatsallowed</code><button type="button" data-target="c1" aria-label="Copy npx whatsallowed">Copy</button></div>
         <ul>
           <li data-fact="clank-3.4">It reads your config and never changes it. It makes no network calls, and a test checks that on every build <a class="src" href="https://github.com/ignore-previous/whatsallowed/blob/main/test/no-network.test.ts" rel="noopener noreferrer" aria-label="Source: What's Allowed test that it makes no network calls">Source</a>.</li>
           <li data-fact="clank-3.5">It does not change your settings. Its one file write is a baseline file in your home folder, and only when you run its <span class="path">baseline</span> command <a class="src" href="https://github.com/ignore-previous/whatsallowed#readme" rel="noopener noreferrer" aria-label="Source: What's Allowed project page, commands">Source</a>.</li>
@@ -241,7 +247,7 @@
   <footer>
     <div><a href="https://github.com/ignore-previous">github.com/ignore-previous</a><br>The code for this site, What's Allowed and Unclank is public there.</div>
     <div>Say hello: <span class="addr">hello@ignoreprevious.dev</span><br>New to ChatGPT or Claude? <a href="/what-can-my-ai-see/">Read What Can My AI See?</a></div>
-    <div>We count visits with Cloudflare Web Analytics. No cookies, no personal data, no tracking across sites.<br><span class="nod">Yes, the name is a joke. The tools are not.</span></div>
+    <div><!-- ANALYTICS -->We count visits with Cloudflare Web Analytics. <!-- /ANALYTICS -->No cookies, no personal data, no tracking across sites.<br><span class="nod">Yes, the name is a joke. The tools are not.</span></div>
     <div class="fonts">Fonts served from this site: Bricolage Grotesque (The Bricolage Grotesque Project Authors), Figtree (The Figtree Project Authors) and JetBrains Mono (The JetBrains Mono Project Authors). <a href="/assets/fonts/OFL.txt">SIL Open Font License 1.1</a>.</div>
   </footer>
 </div>

@@ -1,9 +1,11 @@
 // Copies src/ to dist/. Adds the Cloudflare Web Analytics beacon only when CF_BEACON_TOKEN is set.
 // The beacon counts page views. SPA mode is off, so it never sees anything a page does after load.
+// Also writes a Markdown copy of each page next to it (index.html -> index.html.md), linked from llms.txt.
 import { cpSync, rmSync, readdirSync, readFileSync, writeFileSync, statSync } from "node:fs";
-import { join } from "node:path";
+import { join, relative, sep } from "node:path";
+import { htmlToMarkdown } from "./scripts/markdown.mjs";
 
-const SRC = "src", OUT = "dist";
+const SRC = "src", OUT = "dist", ORIGIN = "https://ignoreprevious.dev";
 const token = (process.env.CF_BEACON_TOKEN || "").trim();
 if (token && !/^[a-f0-9]{32}$/i.test(token)) throw new Error("CF_BEACON_TOKEN should be 32 hex characters.");
 
@@ -21,7 +23,14 @@ function walk(dir) {
     else if (p.endsWith(".html")) {
       const html = readFileSync(p, "utf8");
       if (!html.includes("<!-- CF_BEACON -->")) throw new Error(`${p} has no <!-- CF_BEACON --> marker.`);
-      writeFileSync(p, html.replace("<!-- CF_BEACON -->", beacon));
+      // The footer only says we count visits when the beacon is there to count them.
+      const analytics = /<!-- ANALYTICS -->([\s\S]*?)<!-- \/ANALYTICS -->/g;
+      const out = html.replace("<!-- CF_BEACON -->", beacon).replace(analytics, token ? "$1" : "");
+      writeFileSync(p, out);
+      if (name !== "404.html") {
+        const path = "/" + relative(OUT, p).split(sep).join("/").replace(/index\.html$/, "");
+        writeFileSync(p + ".md", htmlToMarkdown(out, ORIGIN + path));
+      }
     }
   }
 }

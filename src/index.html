@@ -9,7 +9,13 @@
 <meta property="og:description" content="Free tools for people working with AI agents. The code is public.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://ignoreprevious.dev/">
+<link rel="canonical" href="https://ignoreprevious.dev/">
+<link rel="alternate" type="text/markdown" href="/index.html.md">
 <meta property="og:image" content="https://ignoreprevious.dev/assets/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Ignore Previous: small, free tools with public code for working with AI agents.">
+<meta property="og:site_name" content="Ignore Previous">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#f1f3f7" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#14161c" media="(prefers-color-scheme: dark)">
@@ -18,6 +24,67 @@
 <link rel="preload" href="/assets/fonts/figtree-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/assets/site.css">
 <script src="/assets/js-class.js"></script>
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "WebSite",
+   "@id": "https://ignoreprevious.dev/#website",
+   "name": "Ignore Previous",
+   "url": "https://ignoreprevious.dev/",
+   "publisher": {
+    "@id": "https://ignoreprevious.dev/#org"
+   }
+  },
+  {
+   "@type": "Organization",
+   "@id": "https://ignoreprevious.dev/#org",
+   "name": "Ignore Previous",
+   "url": "https://ignoreprevious.dev/",
+   "email": "hello@ignoreprevious.dev",
+   "sameAs": [
+    "https://github.com/ignore-previous"
+   ]
+  },
+  {
+   "@type": "SoftwareApplication",
+   "name": "What's Allowed",
+   "alternateName": "whatsallowed",
+   "description": "A free command-line checker that reads the settings files of Claude Code, Codex and Cursor and flags risky ones. It runs on your own computer and never changes your config.",
+   "applicationCategory": "DeveloperApplication",
+   "operatingSystem": "Windows, macOS, Linux",
+   "url": "https://github.com/ignore-previous/whatsallowed",
+   "downloadUrl": "https://www.npmjs.com/package/whatsallowed",
+   "sameAs": [
+    "https://www.npmjs.com/package/whatsallowed"
+   ],
+   "license": "https://opensource.org/licenses/MIT",
+   "isAccessibleForFree": true,
+   "publisher": {
+    "@id": "https://ignoreprevious.dev/#org"
+   }
+  },
+  {
+   "@type": "SoftwareApplication",
+   "name": "Unclank",
+   "alternateName": "unclank",
+   "description": "Skills for Claude Code and Codex that check launch pages, quizzes and game store pages for signs that nobody checked them.",
+   "applicationCategory": "DeveloperApplication",
+   "operatingSystem": "Windows, macOS, Linux",
+   "url": "https://github.com/ignore-previous/unclank",
+   "license": [
+    "https://opensource.org/licenses/MIT",
+    "https://creativecommons.org/licenses/by/4.0/"
+   ],
+   "isAccessibleForFree": true,
+   "publisher": {
+    "@id": "https://ignoreprevious.dev/#org"
+   }
+  }
+ ]
+}
+</script>
 </head>
 <body>
 <div class="wrap">
@@ -69,7 +136,7 @@
           <p>A free checker that reads the settings files of Claude Code, Codex and Cursor and flags risky ones. Each finding names the file, the line number and a code for the rule.</p>
           <p class="fine">For example: a setting that downloads a script from the internet and runs it at once, a helper tool that fetches new code each time it starts, or a file of secrets, such as passwords, that the agent can read without asking.</p>
           <p class="fine">Runs on your own computer. It does not send usage data back to us. A check of your settings, not a full security assessment.</p>
-          <div class="cmd"><code id="c1">npx whatsallowed</code><button type="button" data-target="c1">Copy</button></div>
+          <div class="cmd"><code id="c1">npx whatsallowed</code><button type="button" data-target="c1" aria-label="Copy npx whatsallowed">Copy</button></div>
         </div>
         <div class="show">
           <div class="tabs">
@@ -97,7 +164,7 @@
                 <div class="term" role="group" aria-label="Example: running the checker in a terminal">
                   <div class="tbar">Terminal (example output)</div>
                   <div class="tbody">
-                    <div class="tcmd"><code id="t1">npx whatsallowed</code><button type="button" data-target="t1">Copy</button></div>
+                    <div class="tcmd"><code id="t1">npx whatsallowed</code><button type="button" data-target="t1" aria-label="Copy npx whatsallowed">Copy</button></div>
                     <div class="fnd">
                       <div class="h"><span class="sev high">HIGH</span><span class="id">HOOK-001</span><span class="loc">.claude/settings.json:6</span></div>
                       <div class="r"><b>Why</b><span>The hook downloads a script and pipes it into a shell.</span></div>
@@ -131,8 +198,8 @@
           <p class="fine">Runs inside Claude Code or Codex, so the files it reads go to that app like any other request. It adds no tracking of its own.</p>
         </div>
         <div class="cmds">
-          <div class="cmd"><code id="c2">/plugin marketplace add ignore-previous/unclank</code><button type="button" data-target="c2">Copy</button></div>
-          <div class="cmd"><code id="c3">/plugin install unclank@unclank</code><button type="button" data-target="c3">Copy</button></div>
+          <div class="cmd"><code id="c2">/plugin marketplace add ignore-previous/unclank</code><button type="button" data-target="c2" aria-label="Copy /plugin marketplace add ignore-previous/unclank">Copy</button></div>
+          <div class="cmd"><code id="c3">/plugin install unclank@unclank</code><button type="button" data-target="c3" aria-label="Copy /plugin install unclank@unclank">Copy</button></div>
         </div>
       </article>
 
@@ -161,7 +228,7 @@
   <footer>
     <div><a href="https://github.com/ignore-previous">github.com/ignore-previous</a><br>The code for this site, What's Allowed and Unclank is public there.</div>
     <div>Say hello: <span class="addr">hello@ignoreprevious.dev</span><br>New to ChatGPT or Claude? <a href="/what-can-my-ai-see/">Read What Can My AI See?</a></div>
-    <div>We count visits with Cloudflare Web Analytics. No cookies, no personal data, no tracking across sites.<br><span class="nod">Yes, the name is a joke. The tools are not.</span></div>
+    <div><!-- ANALYTICS -->We count visits with Cloudflare Web Analytics. <!-- /ANALYTICS -->No cookies, no personal data, no tracking across sites.<br><span class="nod">Yes, the name is a joke. The tools are not.</span></div>
     <div class="fonts">Fonts served from this site: Bricolage Grotesque (The Bricolage Grotesque Project Authors), Figtree (The Figtree Project Authors) and JetBrains Mono (The JetBrains Mono Project Authors). <a href="/assets/fonts/OFL.txt">SIL Open Font License 1.1</a>.</div>
   </footer>
 </div>
