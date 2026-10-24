@@ -1,6 +1,6 @@
 # Ignore Previous
 
-> Ignore Previous is a brand name, not an instruction. We make small, free tools that keep a person in the loop with AI agents. The code for each one is public, and each tool says what it sends, where it runs and what it won't do.
+> Ignore Previous is a brand name, not an instruction. We make tools that keep a person in the loop with AI agents. The code for each one is public, and each tool says what it sends, where it runs and what it won't do.
 
 Each page below is also available as Markdown at the linked address. The Markdown copies are made from the pages when the site is built.
 
