@@ -45,6 +45,9 @@ body {
   padding-right: max(16px, env(safe-area-inset-right, 0px));
 }
 .wrap { max-width: 58rem; margin: 0 auto; display: flex; flex-direction: column; gap: 3rem; }
+/* A flex item with auto side margins shrinks to its content, so a nested wrap needs an explicit width.
+   Without it the guide's column changed width with the app picked. */
+.inner-wrap { width: 100%; }
 a { color: inherit; text-underline-offset: 3px; text-decoration-thickness: 1.5px; }
 a:focus-visible, button:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
 p { margin: 0; }
