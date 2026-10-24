@@ -66,6 +66,16 @@ h1, h2, h3 { margin: 0; font-family: var(--display); text-wrap: balance; }
 .r-acc.no-stroke { stroke: none; }
 .r-line { stroke: var(--ink); stroke-width: 6; stroke-linecap: round; fill: none; }
 .logo .r-fill, .logo .r-acc, .logo .r-line { stroke-width: 3; }
+/* 404 robot: logo proportions, with pupils animated by robot.js. */
+.not-found { align-items: center; text-align: center; padding-block: 1rem 3rem; }
+.not-found h1 { font-size: clamp(2rem, 8vw, 3.5rem); line-height: 1.1; }
+.lost-robot { display: block; width: clamp(8rem, 28vw, 12rem); max-width: 100%; height: auto; overflow: visible; }
+.lost-robot .r-fill, .lost-robot .r-acc, .lost-robot .r-line { stroke-width: 3; }
+.lost-robot .r-ink { transform-box: fill-box; transform-origin: center; }
+@media (prefers-reduced-motion: no-preference) {
+  .lost-robot .r-ink { transition: transform 65ms ease-in-out; }
+  .lost-robot.is-blinking .r-ink { transform: scaleY(.1); }
+}
 .gear-teeth { fill: none; stroke: var(--ink); stroke-width: 9; stroke-dasharray: 7.1 7.1; }
 .gear-body { fill: var(--surface); stroke: var(--ink); stroke-width: 3; }
 
