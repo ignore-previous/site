@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>New to the terminal? A short guide</title>
+<meta name="description" content="What a terminal is, why coding agents such as Claude Code and Codex run in one, how to open one on Windows, macOS and Linux, and a few safe habits.">
+<meta property="og:title" content="New to the terminal?">
+<meta property="og:description" content="What a terminal is, how to open one, and why coding agents run there.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://ignoreprevious.dev/terminal/">
+<link rel="canonical" href="https://ignoreprevious.dev/terminal/">
+<link rel="alternate" type="text/markdown" href="/terminal/index.html.md">
+<meta property="og:image" content="https://ignoreprevious.dev/assets/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Ignore Previous: small, free tools with public code for working with AI agents.">
+<meta property="og:site_name" content="Ignore Previous">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#f1f3f7" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#14161c" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="/assets/fonts/bricolage-grotesque-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/figtree-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/assets/site.css">
+<link rel="stylesheet" href="/assets/terminal.css">
+<script src="/assets/js-class.js"></script>
+</head>
+<body>
+<div class="wrap">
+  <div class="mast">
+    <a class="logo" href="/" aria-label="Ignore Previous, home">
+      <svg viewBox="0 0 40 40" aria-hidden="true"><line class="r-line" x1="20" y1="3" x2="20" y2="9"/><circle class="r-acc" cx="20" cy="4" r="3"/><rect class="r-fill" x="5" y="9" width="30" height="26" rx="8"/><circle class="r-ink" cx="14" cy="21" r="3"/><circle class="r-ink" cx="26" cy="21" r="3"/></svg>
+      Ignore Previous
+    </a>
+    <span class="tag">by ruddy</span>
+  </div>
+
+  <main class="wrap inner-wrap tm">
+  <header class="tm-hero">
+    <div class="tm-hero-text">
+      <h1>New to the <mark>terminal</mark>?</h1>
+      <p class="lede">A terminal is a window where you type commands instead of clicking. It looks bare, but it only does what the command says. This page covers what you need to run the commands on this site.</p>
+      <nav class="tm-jump" aria-label="On this page">
+        <a href="#what-h">What it is</a>
+        <a href="#open-h">Open one</a>
+        <a href="#habits-h">Safe habits</a>
+        <a href="#agents-h">Agents</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="sect" aria-labelledby="what-h">
+    <h2 class="h2" id="what-h">What you're looking at</h2>
+    <div class="card tm-anatomy">
+      <figure class="tm-win" aria-labelledby="anat-cap">
+        <div class="tm-bar" aria-hidden="true"><i></i><i></i><i></i><span>Terminal</span></div>
+        <div class="tm-screen" aria-hidden="true">
+          <p class="tm-line"><span class="tm-where"><b class="tm-n" aria-hidden="true">1</b>PS C:\Users\you\my-project&gt;</span> <span class="tm-typed"><b class="tm-n" aria-hidden="true">2</b>npx whatsallowed</span></p>
+          <p class="tm-out"><b class="tm-n" aria-hidden="true">3</b>1 high, 1 medium.</p>
+          <p class="tm-line"><span class="tm-where">PS C:\Users\you\my-project&gt;</span> <span class="tm-cursor" aria-hidden="true"></span></p>
+        </div>
+        <figcaption id="anat-cap" class="sr-only">An example terminal window on Windows, with three numbered parts explained below.</figcaption>
+      </figure>
+      <ol class="tm-key">
+        <li><b>Where you are.</b> The folder the terminal is working in. Commands act on this folder unless they say otherwise. It looks different on each system: see Open one below.</li>
+        <li><b>What you type.</b> Type or paste a command here, then press Enter. Paste one line at a time: text with a line break in it can run straight away.</li>
+        <li><b>What comes back.</b> The command's answer. When it finishes, the "where you are" line comes back, ready for the next command.</li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="sect" aria-labelledby="open-h">
+    <h2 class="h2" id="open-h">Open one in your project folder</h2>
+    <p class="tm-intro">Most commands on this site need to run in your project's folder, the folder that holds the code or site you want to check. These are the quickest ways to open a terminal there.</p>
+    <div class="card">
+      <div class="tabs">
+        <div class="tablist" role="tablist" aria-label="Your computer">
+          <button type="button" role="tab" id="tab-win" aria-selected="true" aria-controls="panel-win" tabindex="0">Windows</button>
+          <button type="button" role="tab" id="tab-mac" aria-selected="false" aria-controls="panel-mac" tabindex="-1">macOS</button>
+          <button type="button" role="tab" id="tab-lin" aria-selected="false" aria-controls="panel-lin" tabindex="-1">Linux</button>
+        </div>
+        <div class="panels">
+          <div role="tabpanel" id="panel-win" aria-labelledby="tab-win" class="tm-os">
+            <h3 class="plabel">Windows</h3>
+            <ol class="tm-steps">
+              <li>Open File Explorer and go into your project folder.</li>
+              <li><b>Windows 11:</b> right-click an empty part of the folder and choose <b>Open in Terminal</b>.<br><b>Windows 10:</b> hold Shift, right-click an empty part of the folder and choose <b>Open PowerShell window here</b>.</li>
+              <li>A window opens. The last line shows your folder, like this:</li>
+            </ol>
+            <p class="tm-sample"><span>PS C:\Users\you\my-project&gt;</span></p>
+            <p class="fine">The app is called PowerShell. Commands on this site work in it.</p>
+          </div>
+          <div role="tabpanel" id="panel-mac" aria-labelledby="tab-mac" class="tm-os">
+            <h3 class="plabel">macOS</h3>
+            <ol class="tm-steps">
+              <li>Press <kbd>Cmd</kbd> + <kbd>Space</kbd>, type <b>Terminal</b> and press Return.</li>
+              <li>Type <code>cd</code> and a space. Don't press Return yet.</li>
+              <li>Drag your project folder from Finder into the Terminal window. Its path appears after <code>cd</code>. Now press Return.</li>
+              <li>The last line ends with your folder's name, like this:</li>
+            </ol>
+            <p class="tm-sample"><span>you@Mac my-project %</span></p>
+            <p class="fine"><code>cd</code> means "change directory": go into this folder.</p>
+          </div>
+          <div role="tabpanel" id="panel-lin" aria-labelledby="tab-lin" class="tm-os">
+            <h3 class="plabel">Linux</h3>
+            <ol class="tm-steps">
+              <li>Open your file manager and go into your project folder.</li>
+              <li>Right-click an empty part of the folder and choose <b>Open in Terminal</b>. If your file manager has no such option, press <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>T</kbd> (this works on many desktops, including Ubuntu), then type <code>cd</code>, a space and the folder's path, and press Enter.</li>
+              <li>The last line ends with your folder's name, like this:</li>
+            </ol>
+            <p class="tm-sample"><span>you@laptop:~/my-project$</span></p>
+            <p class="fine"><code>cd</code> means "change directory": go into this folder.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sect" aria-labelledby="habits-h">
+    <h2 class="h2" id="habits-h">Safe habits</h2>
+    <div class="tm-habits">
+      <div class="card tm-habit">
+        <h3>Read it first</h3>
+        <p>A command can do anything you can do on your computer. Run commands only from a source you trust, and read each one before you press Enter.</p>
+      </div>
+      <div class="card tm-habit">
+        <h3>Paste</h3>
+        <ul class="tm-keys"><li><kbd>Ctrl</kbd> + <kbd>V</kbd> on Windows</li><li><kbd>Cmd</kbd> + <kbd>V</kbd> on macOS</li><li><kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>V</kbd> in most Linux terminals</li></ul>
+      </div>
+      <div class="card tm-habit">
+        <h3>Stop</h3>
+        <p><kbd>Ctrl</kbd> + <kbd>C</kbd> usually stops the command that's running, on every system. In Windows Terminal, click in the window first so no text is selected, or it copies instead.</p>
+        <p>Closing the window stops it too.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sect" aria-labelledby="agents-h">
+    <h2 class="h2" id="agents-h">Why coding agents run in a terminal</h2>
+    <p class="tm-intro">A coding agent is a program that reads and changes files and runs commands for you. You start it in your project folder and it works there. The terminal shows each step. You can see what it wants to run. Its settings decide what it may do without asking: <a href="/clank-safely/">Clank Safely</a> explains them.</p>
+    <div class="tm-agents">
+      <div class="card tm-agent">
+        <h3>Claude Code</h3>
+        <p>Anthropic's coding agent.</p>
+        <a class="tm-out-link" href="https://code.claude.com/docs/en/setup" rel="noopener noreferrer">Official install page</a>
+      </div>
+      <div class="card tm-agent">
+        <h3>Codex</h3>
+        <p>OpenAI's coding agent, in its command-line version (Codex CLI).</p>
+        <a class="tm-out-link" href="https://learn.chatgpt.com/docs/codex/cli" rel="noopener noreferrer">Official install page</a>
+      </div>
+      <div class="card tm-agent">
+        <h3>Node.js</h3>
+        <p>Not an agent: the program that runs <code>npx whatsallowed</code>. Our checker needs version 20 or later.</p>
+        <a class="tm-out-link" href="https://nodejs.org/en/download" rel="noopener noreferrer">Official download page</a>
+      </div>
+    </div>
+    <p class="fine">We don't copy install commands here. They change, so take them from the official page.</p>
+  </section>
+
+  <section class="sect" aria-labelledby="next-h">
+    <h2 class="h2" id="next-h">Rather not type commands?</h2>
+    <p class="tm-intro">The commands on our home page have an <b>Ask your agent</b> tab, with a prompt to paste into Claude Code, Codex or Cursor instead, and one for claude.ai or ChatGPT. Clank Safely has a prompt too. Each prompt tells the agent to use only our official code, to show you each command and wait for your yes, and to say what it changed.</p>
+    <a class="newbie" href="/">
+      <span class="nb-text"><b>Back to the tools</b><span>What's Allowed, Unclank and Clank Safely.</span></span>
+      <span class="nb-btn">Go to the home page</span>
+    </a>
+  </section>
+  </main>
+
+  <footer>
+    <div><a href="https://github.com/ignore-previous">github.com/ignore-previous</a><br>The code for this site, What's Allowed and Unclank is public there.</div>
+    <div>Say hello: <span class="addr">hello@ignoreprevious.dev</span><br>New to ChatGPT or Claude? <a href="/what-can-my-ai-see/">Read What Can My AI See?</a></div>
+    <div><!-- ANALYTICS -->We count visits with Cloudflare Web Analytics. <!-- /ANALYTICS -->No cookies, no personal data, no tracking across sites.<br><span class="nod">Yes, the name is a joke. The tools are not.</span></div>
+    <div class="fonts">Fonts served from this site: Bricolage Grotesque (The Bricolage Grotesque Project Authors), Figtree (The Figtree Project Authors) and JetBrains Mono (The JetBrains Mono Project Authors). <a href="/assets/fonts/OFL.txt">SIL Open Font License 1.1</a>.</div>
+  </footer>
+</div>
+<script src="/assets/site.js"></script>
+<!-- CF_BEACON -->
+</body>
+</html>

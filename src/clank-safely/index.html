@@ -66,6 +66,28 @@
     </div>
   </section>
 
+  <section class="sect" aria-labelledby="agent-h">
+    <h2 class="h2" id="agent-h">Or let your agent walk you through it</h2>
+    <div class="card">
+      <div class="g-block">
+        <p>Paste this prompt into Claude Code, Codex or Cursor, opened in your project's folder. The agent reads this page, checks your settings first, then asks you one question at a time. It shows each settings change and writes it only when you say yes. In claude.ai or ChatGPT, it gives advice only.</p>
+<pre class="prompt" id="p-clank">Please help me set up my coding agent safely, using the Clank Safely guide from Ignore Previous.
+
+Rules:
+1. First read the guide: https://ignoreprevious.dev/clank-safely/index.html.md
+   Use its setting names and its sources. If you're not sure a setting exists, say so.
+2. Install nothing except What's Allowed (the npm package whatsallowed), which npx downloads when it runs. If you can run commands, start by checking my current settings with What's Allowed: npx whatsallowed, in this project's folder. Show me the command and wait for my yes before you run it.
+3. Ask me one question at a time, and wait for my answer.
+4. Before you run a command or change any file, show me the exact command or change. Do it only after I say yes.
+5. Don't open or print .env files, keys or other secret files. If something points to one, give me the file name only.
+6. If you're a chat app such as claude.ai or ChatGPT and can't change my files, give advice only. I'll make the changes myself.
+7. At the end, list every file you changed and how to undo each change.</pre>
+        <button type="button" class="copy-prompt" data-target="p-clank" data-say="the Clank Safely prompt" aria-label="Copy the Clank Safely prompt">Copy prompt</button>
+        <p class="fine">The agent's own settings still decide what it may do. The prompt asks it to check with you, but it can't force it to.</p>
+      </div>
+    </div>
+  </section>
+
   <section class="sect" aria-labelledby="s1-h">
     <h2 class="h2" id="s1-h">Step 1: check what your chat app can see</h2>
     <div class="card">
@@ -85,6 +107,13 @@
         <p data-fact="clank-3.1 clank-3.2">What's Allowed is our free checker. It reads the settings files of Claude Code, Codex and Cursor and flags risky ones. Each finding gives the file, the line and a rule code, with a reason and a fix <a class="src" href="https://github.com/ignore-previous/whatsallowed#readme" rel="noopener noreferrer" aria-label="Source: What's Allowed project page">Source</a>.</p>
         <p data-fact="clank-3.3">Open a terminal in your project folder. A terminal is a window where you type commands. On Windows, use PowerShell. Run this. It needs Node.js 20 or later, the program that runs the tool <a class="src" href="https://github.com/ignore-previous/whatsallowed#readme" rel="noopener noreferrer" aria-label="Source: What's Allowed project page, first run">Source</a>.</p>
         <div class="cmd"><code id="c1">npx whatsallowed</code><button type="button" data-target="c1" aria-label="Copy npx whatsallowed">Copy</button></div>
+        <a class="nt" href="/terminal/">New to the terminal?</a>
+        <dl class="runcard">
+          <div><dt>Paste into</dt><dd>A terminal: PowerShell on Windows, Terminal on macOS or Linux.</dd></div>
+          <div><dt>From</dt><dd>Your project's folder.</dd></div>
+          <div><dt>What it does</dt><dd>Reads your agents' settings files and lists what it found. The first time, npx asks to download What's Allowed from npm: type <code>y</code>.</dd></div>
+          <div><dt>Undo</dt><dd>Nothing to undo: it changes no files or settings. npm keeps the download in its cache.</dd></div>
+        </dl>
         <ul>
           <li data-fact="clank-3.4">It reads your config and never changes it. It makes no network calls, and a test checks that on every build <a class="src" href="https://github.com/ignore-previous/whatsallowed/blob/main/test/no-network.test.ts" rel="noopener noreferrer" aria-label="Source: What's Allowed test that it makes no network calls">Source</a>.</li>
           <li data-fact="clank-3.5">It does not change your settings. Its one file write is a baseline file in your home folder, and only when you run its <span class="path">baseline</span> command <a class="src" href="https://github.com/ignore-previous/whatsallowed#readme" rel="noopener noreferrer" aria-label="Source: What's Allowed project page, commands">Source</a>.</li>

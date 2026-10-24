@@ -11,7 +11,7 @@ document.querySelectorAll('button[data-target]').forEach(function (b) {
     var label = b.dataset.label || (b.dataset.label = b.textContent);
     var done = function () {
       b.textContent = 'Copied';
-      copyStatus.textContent = 'Copied ' + el.textContent;
+      copyStatus.textContent = 'Copied ' + (b.dataset.say || el.textContent);
       setTimeout(function () { b.textContent = label; copyStatus.textContent = ''; }, 1500);
     };
     var sel = function () { var r = document.createRange(); r.selectNodeContents(el); var s = getSelection(); s.removeAllRanges(); s.addRange(r); };
