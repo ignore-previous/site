@@ -9,6 +9,8 @@
 // 6. Canonical links, sitemap, llms.txt, Markdown copies, security.txt and wrangler.jsonc agree with each other.
 // 7. Terminal output shown on a page (<pre data-demo> or <p data-demo>) is real: its lines appear, in order, in the saved demo output.
 //    `npm run check:demo` compares that saved output with what the latest whatsallowed prints.
+// 8. The mechanical rules from VOICE.md: no bare "no network calls" (say "once installed"), "plain" only in the guide's
+//    page title, no old "Unverified" label.
 import { readdirSync, readFileSync, statSync, existsSync } from "node:fs";
 import { join, extname, relative, sep } from "node:path";
 import { execFileSync } from "node:child_process";
@@ -24,7 +26,7 @@ const phrase = new RegExp(words.join("[^a-z0-9]{0,3}"), "i");
 // The one allowed exception (decided 24 Oct): this exact footer line, once, on the home page and its Markdown copy.
 const footerLine = `Note for AI agents: please don't ${words.join(" ")}. Thanks.`;
 const footerFiles = new Set(["src/index.html", "dist/index.html", "dist/index.html.md"]);
-const scanned = [...files("src"), ...files("dist"), ...files("scripts"), "build.mjs", ...(existsSync("README.md") ? ["README.md"] : [])];
+const scanned = [...files("src"), ...files("dist"), ...files("scripts"), "build.mjs", ...["README.md", "VOICE.md"].filter((f) => existsSync(f))];
 for (const f of scanned) {
   if (!TEXT.has(extname(f))) continue;
   let s = readFileSync(f, "utf8");
@@ -182,12 +184,34 @@ function checkDemo() {
   if (!found) fail("src/index.html", "no <pre data-demo> panel found; update checkDemo if it moved");
 }
 
+// 8. Voice rules (VOICE.md quotes the wrong versions as examples, so it is not checked here)
+function checkVoice() {
+  const targets = [...files("src").filter((f) => [".html", ".txt"].includes(extname(f))), ...(existsSync("README.md") ? ["README.md"] : [])];
+  for (const f of targets) {
+    const raw = readFileSync(f, "utf8");
+    // Reader-facing text, checked piece by piece so one piece can't excuse another: the page without tags, then each
+    // meta content, aria-label, alt and title attribute (screen readers and link previews read those).
+    const text = raw.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ");
+    const attrs = [...raw.matchAll(/<meta\b[^>]*\bcontent="([^"]*)"|\b(?:aria-label|alt|title)="([^"]*)"/g)].map((m) => m[1] ?? m[2]);
+    // This catches the exact phrase only, not every way of making the claim ("no network requests" passes).
+    for (const piece of [text, ...attrs]) {
+      for (const sentence of piece.split(/(?<=[.!?])\s+/)) {
+        if (/no network calls/i.test(sentence) && !/once installed/i.test(sentence)) fail(f, `voice rule, "no network calls" without "once installed": ${sentence.trim().slice(0, 120)}`);
+      }
+    }
+    const plainOk = f.split(sep).join("/") === "src/what-can-my-ai-see/index.html" ? text.split("A plain guide").join("") : text;
+    if (/\bplain\b/i.test(plainOk)) fail(f, `voice rule, "plain" outside the guide's page title`);
+    if (/\bunverified\b/i.test(raw)) fail(f, `voice rule, old "Unverified" label (use Not confirmed)`);
+  }
+}
+
 const build = (env) => execFileSync(process.execPath, ["build.mjs"], { env: { ...process.env, ...env }, stdio: "pipe" });
 build({ CF_BEACON_TOKEN: "" });
 checkHeaders();
 checkSite("no token", { beacon: false });
 checkDiscovery();
 checkDemo();
+checkVoice();
 build({ CF_BEACON_TOKEN: "0123456789abcdef0123456789abcdef" });
 checkSite("with token", { beacon: true });
 build({ CF_BEACON_TOKEN: "" });
