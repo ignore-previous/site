@@ -1,6 +1,8 @@
 # ignoreprevious.dev
 
-Site and plain guide for Ignore Previous.
+Source for ignoreprevious.dev: the home page, What Can My AI See? and Clank Safely.
+
+Built with Claude.
 
 ## Preview
 
@@ -12,11 +14,13 @@ In PowerShell, from this folder:
 
 ## Check
 
-`npm run check` builds the site, scans for the brand phrase and checks each page with and without the analytics beacon. It also checks that the canonical links, `sitemap.xml`, `llms.txt`, the Markdown copies, `security.txt` and `wrangler.jsonc` agree.
+`npm run check` builds the site, scans for the brand phrase and tests each page with and without the analytics beacon. It also confirms that the canonical links, `sitemap.xml`, `llms.txt`, the Markdown copies, `security.txt` and `wrangler.jsonc` agree.
+
+The terminal output on the home page is real `whatsallowed demo` output, shortened. `npm run check` fails if a line in that panel is missing from `scripts/whatsallowed-demo.txt` or out of order. `npm run check:demo` downloads the latest What's Allowed from npm and fails if its demo output differs from that file. When it does, update the file and the panel together.
 
 ## Security headers
 
-`src/_headers` is copied to `dist/` by the build, and Cloudflare reads it. `npm run preview` applies it too, so the strict CSP is tested locally. Pages carry no inline scripts or styles; `npm run check` fails if one comes back. The one exception is the JSON-LD block on the home page: it is data, not a script, so the CSP doesn't apply to it.
+`src/_headers` is copied to `dist/` by the build, and Cloudflare reads it. `npm run preview` applies it too, so the strict CSP is tested locally. Pages carry no inline scripts or styles; `npm run check` fails if one comes back. The one exception is the JSON-LD block on the home page. CSP's script rules don't apply to non-executable script types such as `application/ld+json`, so it needs no exception in the policy.
 
 ## Deploy
 
@@ -36,4 +40,4 @@ Analytics: set `CF_BEACON_TOKEN` in the build variables to add the Cloudflare We
 - `src/llms.txt`, a short index for language models.
 - `index.html.md` next to each page, a Markdown copy written by `build.mjs` (`scripts/markdown.mjs` does the conversion).
 - `src/.well-known/security.txt` (RFC 9116). Its `Expires` date must be renewed before it passes; `npm run check` fails within 30 days of it.
-- Each page has a canonical link and a link to its Markdown copy. The home page has JSON-LD describing the site and both tools.
+- Each page has a canonical link and a link to its Markdown copy. The home page has JSON-LD describing the site and the two software tools.
