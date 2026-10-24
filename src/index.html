@@ -54,7 +54,7 @@
    "@type": "SoftwareApplication",
    "name": "What's Allowed",
    "alternateName": "whatsallowed",
-   "description": "A free command-line checker that reads the settings files of Claude Code, Codex and Cursor and flags risky ones. It runs on your own computer, sends nothing once installed and never changes your config.",
+   "description": "A command-line checker that reads the settings files of Claude Code, Codex and Cursor and flags risky ones. It runs on your own computer, sends nothing once installed and never changes your config.",
    "applicationCategory": "DeveloperApplication",
    "operatingSystem": "Windows, macOS, Linux",
    "url": "https://github.com/ignore-previous/whatsallowed",
@@ -104,7 +104,7 @@
     <img class="mark" src="/assets/hero-320.png" width="112" height="112" alt="">
     <div class="hero-text">
       <h1>The robots mean well. <mark>Check anyway.</mark></h1>
-      <p>We make tools that keep a person in the loop with AI agents (programs that do tasks on your computer for you). They check what an agent is allowed to do, and whether what it makes holds up for real people. The code is public, and each tool tells you what it sends, where it runs and what it won't do.</p>
+      <p>We make tools that keep a person in the loop with AI. They check what your AI is allowed to do on your computer, and whether what it makes holds up for real people. The code is public, and each tool tells you what it sends, where it runs and what it won't do.</p>
       <a class="newbie" href="/what-can-my-ai-see/">
         <span class="nb-text"><b>New to ChatGPT or Claude?</b><span>What the app can see and remember about you.</span></span>
         <span class="nb-btn">Read What Can My AI See?</span>
@@ -122,7 +122,7 @@
             <h3>What's Allowed</h3>
             <span class="handle">whatsallowed</span>
           </div>
-          <p>A free checker that reads the settings files of Claude Code, Codex and Cursor and flags risky ones. Each finding names the file, the line number and the rule ID.</p>
+          <p>A checker that reads the settings files of Claude Code, Codex and Cursor and flags risky ones. Each finding names the file, the line number and the rule ID.</p>
           <p class="fine">For example: a hook that pipes <code>curl</code> into <code>sh</code>, an MCP server run with <code>npx</code> and no version, or a <code>.env</code> file the agent can read without asking.</p>
           <p class="promise limits"><span class="pi"><b>Runs:</b> <a href="https://github.com/ignore-previous/whatsallowed/blob/main/docs/THREAT_MODEL.md#assumptions">on your computer</a> <span class="dot">&middot;</span></span> <span class="pi"><b>Sends:</b> <a href="https://github.com/ignore-previous/whatsallowed/blob/main/test/no-network.test.ts">nothing once installed (tested)</a> <span class="dot">&middot;</span></span> <span class="pi"><b>Won't:</b> <a href="https://github.com/ignore-previous/whatsallowed/blob/main/test/no-writes.test.ts">change your config, or tell you a setup is safe</a></span></p>
           <p class="promise"><a href="https://github.com/ignore-previous/whatsallowed/blob/main/docs/ACCURACY.md">Publishes its test results</a></p>
@@ -205,7 +205,7 @@ Worth checking (5)  Medium: risky in some set-ups, harmless in others.
                 <summary>Claude Code, Codex or Cursor</summary>
                 <div class="ask-body">
                   <p class="fine">Open the agent in your project's folder and paste this.</p>
-<pre class="prompt" id="p-wa-agent">Please check this project's agent settings with What's Allowed, a free checker from Ignore Previous.
+<pre class="prompt" id="p-wa-agent">Please check this project's agent settings with What's Allowed, a checker from Ignore Previous.
 
 Rules:
 1. Use only the npm package whatsallowed, whose code is at https://github.com/ignore-previous/whatsallowed. Don't install or run anything else.
@@ -222,7 +222,7 @@ Rules:
                 <summary>claude.ai or ChatGPT (nothing to install)</summary>
                 <div class="ask-body">
                   <p class="fine">A chat app can't run the checker, so this prompt asks it to guide you through running it yourself.</p>
-<pre class="prompt" id="p-wa-chat">I want to check my AI coding agent's settings with What's Allowed, a free checker from Ignore Previous: https://github.com/ignore-previous/whatsallowed
+<pre class="prompt" id="p-wa-chat">I want to check my AI coding tool's settings with What's Allowed, a checker from Ignore Previous: https://github.com/ignore-previous/whatsallowed
 
 You can't run it from here, so guide me through running it myself.
 
