@@ -120,7 +120,8 @@ function list(n, ctx, ordered) {
     const box = find(li, (x) => x.tag === "input" && x.attrs.type === "checkbox");
     const mark = ordered ? `${i + 1}. ` : box ? "- [ ] " : "- ";
     const labelled = find(li, (x) => has(x, "pill") && has(x, "plan"));
-    const plan = li.attrs["data-plan"] && ctx.plans && !labelled ? ` _(${ctx.plans(li.attrs["data-plan"])})_` : "";
+    const forPlans = li.attrs["data-plan"] && ctx.plans && !labelled ? ctx.plans(li.attrs["data-plan"]) : "";
+    const plan = forPlans ? ` _(${forPlans})_` : "";
     const body = blocks(li.children, ctx) + plan;
     return mark + body.replace(/\n/g, "\n" + " ".repeat(mark.length));
   }).join("\n");
@@ -154,7 +155,10 @@ function block(n, ctx) {
   if (app && ctx.planSets?.[app]) {
     const map = ctx.planSets[app];
     // "unsure" is the picker's show-everything choice, not a plan.
-    ctx = { ...ctx, plans: (v) => "for " + v.split(/\s+/).filter((k) => k !== "unsure").map((k) => map[k] ?? k).join(", ") };
+    ctx = { ...ctx, plans: (v) => {
+      const names = v.split(/\s+/).filter((k) => k && k !== "unsure").map((k) => map[k] ?? k);
+      return names.length ? "for " + names.join(", ") : "";
+    } };
   }
   const h = /^h([1-6])$/.exec(n.tag);
   if (h) return "#".repeat(+h[1]) + " " + tidy(inline(n.children, ctx)).replace(/\n/g, " ");
