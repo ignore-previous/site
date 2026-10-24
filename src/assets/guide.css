@@ -1,6 +1,9 @@
 /* Styles for the "What Can My AI See?" guide and the Clank Safely page. Colours come from the tokens in site.css. */
 
-.g { gap: 2.5rem; }
+/* Sections sit further from the section above (4rem) than from their own heading (1.1rem, .sect in site.css)
+   or a sub-heading from its block (3.4rem with the rule), so each heading reads as the start of what follows. */
+.g { gap: 4rem; }
+.g-content, .g-app { display: flex; flex-direction: column; gap: 4rem; min-width: 0; }
 .g [hidden] { display: none !important; }
 .g p, .g li, .g dd { max-width: 44rem; }
 .g .card { gap: 1.75rem; }
@@ -71,6 +74,7 @@
 .see-row:first-child { border-top: 0; padding-top: 0; }
 .see dt { font-family: var(--display); font-weight: 800; font-size: 1.15rem; }
 .see dd { margin: 0; display: flex; flex-direction: column; gap: .6rem; min-width: 0; }
+.see dd > div[data-plan] { display: flex; flex-direction: column; gap: .6rem; }
 @media (min-width: 46rem) {
   .see-row { grid-template-columns: 11rem minmax(0, 1fr); gap: 1.25rem; }
 }
