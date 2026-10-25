@@ -18,7 +18,7 @@ node cards/render-samples.mjs some-folder
 
 That folder then holds `previews.html`, which lays the three banner ideas side by side. Keep it outside the repo, or under `cards/out/`, which git ignores.
 
-Fonts come from `src/assets/fonts`, and the colours are the site's (`cards/tokens.mjs`). The mark files in `cards/assets/` are copies of the brand set.
+Fonts come from `src/assets/fonts`, and the colours are the site's (`cards/tokens.mjs`). The files in `cards/assets/` (avatar, banner, shoggoth on yellow) are copies from `brand/`.
 
 ## Cards
 
