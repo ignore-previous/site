@@ -59,10 +59,45 @@
 
   <main class="wrap inner-wrap g">
   <header class="g-hero">
-    <h1>Clank <mark>Safely</mark></h1>
+    <h1 id="top">Clank <mark>Safely</mark></h1>
     <p class="lede">Set up Claude Code or Codex so it can't do more than you meant. This page names the official settings, quotes the docs, and says which ones the tool enforces and which are only advice. It changes nothing on your computer. OpenAI and Anthropic didn't write or review it.</p>
     <p class="lede">On Windows: Claude Code's sandbox runs only inside WSL2. Without it, your permission rules are the only fence.</p>
+    <nav class="tm-jump" aria-label="On this page">
+      <a href="#way-h">Pick your way</a>
+      <a href="#scope-h">What this page is</a>
+      <a href="#agent-h">Agent prompt</a>
+      <a href="#s1-h">Step 1: check</a>
+      <a href="#s2-h">Step 2: protections</a>
+      <a href="#ev-h">Enforced or advice</a>
+      <a href="#end-h">What this does not tell you</a>
+      <a href="#how-h">How we checked</a>
+    </nav>
   </header>
+
+  <section class="sect" aria-labelledby="way-h">
+    <h2 class="h2" id="way-h">Pick your way of working</h2>
+    <p class="answer">Three ways of working, each a trade-off. None is a setting: step 2 lists the settings for each.</p>
+    <div class="pick">
+      <div class="card">
+        <h3>Cautious</h3>
+        <p><b>Suits:</b> you are new to agents, or the files matter (client work, or anything with passwords or keys), or you want to see each step.</p>
+        <p><b>Trade-off:</b> you get asked more often, but not before every action.</p>
+        <p><a href="#p-cautious">Cautious settings</a></p>
+      </div>
+      <div class="card">
+        <h3>Balanced</h3>
+        <p><b>Suits:</b> everyday work on your own project, where you review the result before you rely on it.</p>
+        <p><b>Trade-off:</b> fewer prompts, because edits inside the project are approved for you and, where the sandbox runs, it fences the commands.</p>
+        <p><a href="#p-balanced">Balanced settings</a></p>
+      </div>
+      <div class="card">
+        <h3>Unattended</h3>
+        <p><b>Suits:</b> a long job you leave running while you do something else. <span class="pill ours">Our tip</span> We recommend you only do this in an isolated place.</p>
+        <p><b>Trade-off:</b> the agent can do a lot without asking, so the fence around it does the protecting.</p>
+        <p><a href="#p-unattended">Unattended settings</a></p>
+      </div>
+    </div>
+  </section>
 
   <section class="sect" aria-labelledby="scope-h">
     <h2 class="h2" id="scope-h">What this page is, and is not</h2>
@@ -71,8 +106,9 @@
         <p class="answer">This page is advice with sources. It blocks nothing.</p>
         <p>Where a setting is enforced, Claude Code or Codex enforces it, and we say which. The page is for someone who has already installed Claude Code or Codex and approved a few prompts. It covers Claude Code on Windows first, then the Codex settings.</p>
       </div>
-      <div class="g-block">
-        <h3>How to read the labels</h3>
+      <details class="ask">
+        <summary>How to read the labels</summary>
+        <div class="ask-body">
         <ul>
           <li><span class="pill enf">Enforced</span> Claude Code or Codex applies this itself, whatever the agent decides.</li>
           <li><span class="pill gde">Guidance</span> A written instruction the agent reads. It may ignore it.</li>
@@ -81,7 +117,8 @@
           <li><span class="pill ours">Our tip</span> Our advice. Anthropic and OpenAI did not write it.</li>
         </ul>
         <p class="fine">Each Source link opens an official page. Each Our docs link opens the What's Allowed project. See "How we checked" at the end.</p>
-      </div>
+        </div>
+      </details>
     </div>
   </section>
 
@@ -90,6 +127,9 @@
     <div class="card">
       <div class="g-block">
         <p>Paste this prompt into Claude Code, Codex or Cursor, opened in your project's folder. The agent reads this page, checks your settings first, then asks you one question at a time. It shows each settings change and writes it only when you say yes. In claude.ai or ChatGPT, it gives advice only.</p>
+        <details class="ask">
+        <summary>Show the prompt</summary>
+        <div class="ask-body">
 <pre class="prompt" id="p-clank">Please help me set up my coding agent safely, using the Clank Safely guide from Ignore Previous.
 
 Rules:
@@ -102,6 +142,8 @@ Rules:
 6. If you're a chat app such as claude.ai or ChatGPT and can't change my files, give advice only. I'll make the changes myself.
 7. At the end, list every file you changed and how to undo each change.</pre>
         <button type="button" class="copy-prompt" data-target="p-clank" data-say="the Clank Safely prompt" aria-label="Copy the Clank Safely prompt">Copy prompt</button>
+        </div>
+        </details>
         <p class="fine">The agent's own settings still decide what it may do. The prompt asks it to check with you, but it can't force it to.</p>
       </div>
     </div>
@@ -238,19 +280,19 @@ Rules:
     <div class="card">
       <div class="g-block">
         <div class="tbl-wrap" role="region" aria-labelledby="ev-cap" tabindex="0">
-          <table class="ev">
+          <table class="ev" role="table">
             <caption id="ev-cap">Who applies each control</caption>
-            <thead><tr><th scope="col">Control</th><th scope="col">Status</th><th scope="col">Who applies it</th></tr></thead>
-            <tbody>
-              <tr data-fact="clank-1.14"><th scope="row">Claude Code permission modes, allow rules and deny rules</th><td><span class="pill enf">Enforced</span></td><td>Claude Code. "Permission rules are enforced by Claude Code, not by the model." <a class="src" href="https://code.claude.com/docs/en/permissions" rel="noopener noreferrer" aria-label="Source: Claude Code permissions, official docs">Source</a></td></tr>
-              <tr data-fact="clank-1.5 clank-1.18 clank-1.27"><th scope="row">The sandbox (Claude Code's sandbox, and Codex's <span class="path">sandbox_mode</span>)</th><td><span class="pill enf">Enforced</span></td><td>The operating system, set up by the tool. For Codex, the docs say "OS-level mechanisms enforce sandbox policies" <a class="src" href="https://learn.chatgpt.com/docs/agent-approvals-security" rel="noopener noreferrer" aria-label="Source: Codex approvals and security, official docs">Source</a>. For Claude Code, sandboxing "provides OS-level enforcement that restricts shell commands' filesystem and network access" <a class="src" href="https://code.claude.com/docs/en/permissions" rel="noopener noreferrer" aria-label="Source: Claude Code permissions, official docs">Source</a>, but it does not run on native Windows <a class="src" href="https://code.claude.com/docs/en/sandboxing" rel="noopener noreferrer" aria-label="Source: Claude Code sandboxing, official docs">Source</a>.</td></tr>
-              <tr data-fact="clank-2.13 clank-2.18"><th scope="row">Trust for a project's own settings files</th><td><span class="pill enf">Enforced</span></td><td>Claude Code and Codex. Codex reads a project's config only for projects you marked as trusted <a class="src" href="https://learn.chatgpt.com/docs/config-file/config-reference" rel="noopener noreferrer" aria-label="Source: Codex config reference, official docs">Source</a>. Claude Code applies a project's allow rules only after you accept the workspace trust dialog for that folder <a class="src" href="https://code.claude.com/docs/en/permissions" rel="noopener noreferrer" aria-label="Source: Claude Code permissions, official docs">Source</a>.</td></tr>
-              <tr data-fact="clank-1.12 clank-2.10"><th scope="row">Managed settings</th><td><span class="pill enf">Enforced</span></td><td>The tool, with rules set by an administrator <a class="src" href="https://code.claude.com/docs/en/permissions" rel="noopener noreferrer" aria-label="Source: Claude Code permissions, official docs">Source</a>.</td></tr>
-              <tr data-fact="clank-1.19"><th scope="row">Codex asking before a destructive tool call</th><td><span class="pill enf">Enforced</span></td><td>Codex. "Destructive app/MCP tool calls always require approval when the tool advertises a destructive annotation", unless the tool also advertises a read annotation, which takes priority. An annotation is a label a tool attaches to itself to say what kind of action it is. <a class="src" href="https://learn.chatgpt.com/docs/agent-approvals-security" rel="noopener noreferrer" aria-label="Source: Codex approvals and security, official docs">Source</a></td></tr>
-              <tr><th scope="row">Account training and memory settings</th><td>Account setting</td><td>The provider's website. You change them yourself: see <a href="/what-can-my-ai-see/">What Can My AI See?</a></td></tr>
-              <tr data-fact="clank-1.15 clank-1.26 clank-4.6"><th scope="row">"Ask before deleting" written in a file such as <span class="path">CLAUDE.md</span></th><td><span class="pill gde">Guidance</span></td><td>Nobody. The docs say instructions in your prompt or <code>CLAUDE.md</code> "shape what Claude tries to do, but they don't change what Claude Code allows." <a class="src" href="https://code.claude.com/docs/en/permissions" rel="noopener noreferrer" aria-label="Source: Claude Code permissions, official docs">Source</a> Codex's <span class="path">AGENTS.md</span> is the same kind of file. The Codex docs say Codex reads it into the combined prompt it builds <a class="src" href="https://learn.chatgpt.com/docs/agent-configuration/agents-md" rel="noopener noreferrer" aria-label="Source: Codex AGENTS.md, official docs">Source</a>. They also say its security controls come from "two layers", the sandbox mode and the approval policy <a class="src" href="https://learn.chatgpt.com/docs/agent-approvals-security" rel="noopener noreferrer" aria-label="Source: Codex approvals and security, official docs">Source</a>. <span class="path">AGENTS.md</span> is neither. That is our reading of the docs; they don't say it in so many words.</td></tr>
-              <tr><th scope="row">What's Allowed findings</th><td><span class="pill gde">Guidance</span></td><td>Nobody. They are a report and block nothing.</td></tr>
-              <tr><th scope="row">This page</th><td><span class="pill gde">Guidance</span></td><td>Nobody. It is advice, and you make the changes.</td></tr>
+            <thead role="rowgroup"><tr role="row"><th scope="col" role="columnheader">Control</th><th scope="col" role="columnheader">Status</th><th scope="col" role="columnheader">Who applies it</th></tr></thead>
+            <tbody role="rowgroup">
+              <tr role="row" data-fact="clank-1.14"><th scope="row" role="rowheader">Claude Code permission modes, allow rules and deny rules</th><td role="cell"><span class="pill enf">Enforced</span></td><td role="cell">Claude Code. "Permission rules are enforced by Claude Code, not by the model." <a class="src" href="https://code.claude.com/docs/en/permissions" rel="noopener noreferrer" aria-label="Source: Claude Code permissions, official docs">Source</a></td></tr>
+              <tr role="row" data-fact="clank-1.5 clank-1.18 clank-1.27"><th scope="row" role="rowheader">The sandbox (Claude Code's sandbox, and Codex's <span class="path">sandbox_mode</span>)</th><td role="cell"><span class="pill enf">Enforced</span></td><td role="cell">The operating system, set up by the tool. For Codex, the docs say "OS-level mechanisms enforce sandbox policies" <a class="src" href="https://learn.chatgpt.com/docs/agent-approvals-security" rel="noopener noreferrer" aria-label="Source: Codex approvals and security, official docs">Source</a>. For Claude Code, sandboxing "provides OS-level enforcement that restricts shell commands' filesystem and network access" <a class="src" href="https://code.claude.com/docs/en/permissions" rel="noopener noreferrer" aria-label="Source: Claude Code permissions, official docs">Source</a>, but it does not run on native Windows <a class="src" href="https://code.claude.com/docs/en/sandboxing" rel="noopener noreferrer" aria-label="Source: Claude Code sandboxing, official docs">Source</a>.</td></tr>
+              <tr role="row" data-fact="clank-2.13 clank-2.18"><th scope="row" role="rowheader">Trust for a project's own settings files</th><td role="cell"><span class="pill enf">Enforced</span></td><td role="cell">Claude Code and Codex. Codex reads a project's config only for projects you marked as trusted <a class="src" href="https://learn.chatgpt.com/docs/config-file/config-reference" rel="noopener noreferrer" aria-label="Source: Codex config reference, official docs">Source</a>. Claude Code applies a project's allow rules only after you accept the workspace trust dialog for that folder <a class="src" href="https://code.claude.com/docs/en/permissions" rel="noopener noreferrer" aria-label="Source: Claude Code permissions, official docs">Source</a>.</td></tr>
+              <tr role="row" data-fact="clank-1.12 clank-2.10"><th scope="row" role="rowheader">Managed settings</th><td role="cell"><span class="pill enf">Enforced</span></td><td role="cell">The tool, with rules set by an administrator <a class="src" href="https://code.claude.com/docs/en/permissions" rel="noopener noreferrer" aria-label="Source: Claude Code permissions, official docs">Source</a>.</td></tr>
+              <tr role="row" data-fact="clank-1.19"><th scope="row" role="rowheader">Codex asking before a destructive tool call</th><td role="cell"><span class="pill enf">Enforced</span></td><td role="cell">Codex. "Destructive app/MCP tool calls always require approval when the tool advertises a destructive annotation", unless the tool also advertises a read annotation, which takes priority. An annotation is a label a tool attaches to itself to say what kind of action it is. <a class="src" href="https://learn.chatgpt.com/docs/agent-approvals-security" rel="noopener noreferrer" aria-label="Source: Codex approvals and security, official docs">Source</a></td></tr>
+              <tr role="row"><th scope="row" role="rowheader">Account training and memory settings</th><td role="cell">Account setting</td><td role="cell">The provider's website. You change them yourself: see <a href="/what-can-my-ai-see/">What Can My AI See?</a></td></tr>
+              <tr role="row" data-fact="clank-1.15 clank-1.26 clank-4.6"><th scope="row" role="rowheader">"Ask before deleting" written in a file such as <span class="path">CLAUDE.md</span></th><td role="cell"><span class="pill gde">Guidance</span></td><td role="cell">Nobody. The docs say instructions in your prompt or <code>CLAUDE.md</code> "shape what Claude tries to do, but they don't change what Claude Code allows." <a class="src" href="https://code.claude.com/docs/en/permissions" rel="noopener noreferrer" aria-label="Source: Claude Code permissions, official docs">Source</a> Codex's <span class="path">AGENTS.md</span> is the same kind of file. The Codex docs say Codex reads it into the combined prompt it builds <a class="src" href="https://learn.chatgpt.com/docs/agent-configuration/agents-md" rel="noopener noreferrer" aria-label="Source: Codex AGENTS.md, official docs">Source</a>. They also say its security controls come from "two layers", the sandbox mode and the approval policy <a class="src" href="https://learn.chatgpt.com/docs/agent-approvals-security" rel="noopener noreferrer" aria-label="Source: Codex approvals and security, official docs">Source</a>. <span class="path">AGENTS.md</span> is neither. That is our reading of the docs; they don't say it in so many words.</td></tr>
+              <tr role="row"><th scope="row" role="rowheader">What's Allowed findings</th><td role="cell"><span class="pill gde">Guidance</span></td><td role="cell">Nobody. They are a report and block nothing.</td></tr>
+              <tr role="row"><th scope="row" role="rowheader">This page</th><td role="cell"><span class="pill gde">Guidance</span></td><td role="cell">Nobody. It is advice, and you make the changes.</td></tr>
             </tbody>
           </table>
         </div>
@@ -282,6 +324,8 @@ Rules:
       </div>
     </div>
   </section>
+
+  <p class="back-top"><a href="#top">Back to top</a></p>
   </main>
 
   <footer>
