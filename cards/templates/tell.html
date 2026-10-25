@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en-AU"><head><meta charset="utf-8"><meta name="card-size" content="1200x675"><title>Before and after card</title>
+<!--COMMON-->
+<style>
+body { width: 1200px; height: 675px; }
+.card { width: 100%; height: 100%; padding: 44px 64px 48px; display: flex; flex-direction: column; gap: 14px; }
+.top { display: flex; justify-content: space-between; align-items: center; }
+.kicker { font-family: "JetBrains Mono", Consolas, monospace; font-weight: 500; font-size: 22px; color: var(--mute); }
+h1 { margin: 12px 0 0; font-family: "Bricolage Grotesque", sans-serif; font-weight: 800; font-size: 60px; line-height: 1.05; letter-spacing: -.02em; }
+.panels { flex: 1; display: grid; grid-template-columns: 1fr 1fr; gap: 28px; margin-top: 14px; }
+.panel { border: 2px solid var(--line); border-radius: 16px; padding: 28px 30px; display: flex; flex-direction: column; gap: 18px; box-shadow: 6px 6px 0 var(--shade); }
+.panel.before { background: var(--surface); color: var(--ink); }
+.panel.after { background: var(--accent); color: var(--accentInk); border-color: var(--accentInk); }
+.chip { align-self: flex-start; font-family: "Bricolage Grotesque", sans-serif; font-weight: 700; font-size: 22px; letter-spacing: .02em; padding: 4px 16px; border-radius: 99px; }
+.before .chip { background: var(--ink); color: var(--bg); }
+.after .chip { background: var(--accentInk); color: var(--accent); }
+.text { font-family: "Bricolage Grotesque", sans-serif; font-weight: 600; font-size: 50px; line-height: 1.14; letter-spacing: -.01em; text-wrap: balance; }
+.foot { display: flex; justify-content: space-between; align-items: center; margin-top: 6px; }
+</style></head>
+<body data-theme="{{theme}}">
+<div class="card">
+  <div class="top"><div class="brand"><img src="{{assets}}/avatar-1024.png" alt=""><span>Ignore Previous</span></div><div class="kicker">{{kicker}}</div></div>
+  <h1>{{tell}}</h1>
+  <div class="panels">
+    <div class="panel before"><span class="chip">Before</span><div class="text">{{before}}</div></div>
+    <div class="panel after"><span class="chip">After</span><div class="text">{{after}}</div></div>
+  </div>
+  <div class="foot"><div class="url">{{source}}</div><div class="url">{{url}}</div></div>
+</div>
+</body></html>

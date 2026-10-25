@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en-AU"><head><meta charset="utf-8"><meta name="card-size" content="1500x500"><title>X banner: terminal</title>
+<!--COMMON-->
+<style>
+body { width: 1500px; height: 500px; background: var(--bg); }
+.tape { position: absolute; left: 0; right: 0; top: 0; height: 14px; background: repeating-linear-gradient(-45deg, var(--accent) 0 14px, var(--accentInk) 14px 28px); }
+.term { position: absolute; left: 450px; right: 64px; top: 64px; background: var(--term); color: var(--termFg); border: 2px solid var(--line); border-radius: 14px; padding: 18px 28px 20px; font-family: "JetBrains Mono", Consolas, monospace; font-weight: 500; font-size: 20px; line-height: 1.5; }
+.term .cmd b { color: var(--termMute); font-weight: 700; }
+.term .hot { color: var(--accent); font-weight: 700; }
+.term .row { white-space: pre-wrap; overflow-wrap: anywhere; }
+.bio { position: absolute; left: 450px; top: 262px; width: 980px; margin: 0; font-family: "Bricolage Grotesque", sans-serif; font-weight: 800; font-size: 66px; line-height: 1; letter-spacing: -.025em; color: var(--ink); }
+.bio span { color: var(--accent); }
+.sub { position: absolute; left: 450px; top: 404px; margin: 0; font-family: "Bricolage Grotesque", sans-serif; font-weight: 600; font-size: 34px; color: var(--mute); }
+</style></head>
+<body data-theme="{{theme}}">
+<div class="tape"></div>
+<div class="term">
+  <div class="cmd"><b>&gt;</b> {{command}}</div>
+  <div class="row hot">{{finding}}</div>
+  <div class="row">{{where}}</div>
+</div>
+<h1 class="bio">{{headline}}</h1>
+<p class="sub">{{subline}}</p>
+</body></html>
