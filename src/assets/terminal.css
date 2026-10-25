@@ -20,14 +20,14 @@
 .tm-where { opacity: .78; }
 .tm-typed { color: var(--accent); font-weight: 700; }
 .tm-out { opacity: .9; }
-.tm-n { display: inline-grid; place-items: center; width: 1.45em; height: 1.45em; margin-right: .45em; border-radius: 50%; background: var(--accent); color: var(--accent-ink); font-family: var(--display); font-size: .82em; font-weight: 800; line-height: 1; vertical-align: .08em; opacity: 1; }
+.tm-n { display: inline-grid; place-items: center; width: 1.45em; height: 1.45em; margin-right: .45em; border-radius: 50%; background: var(--term-fg); color: var(--term); font-family: var(--display); font-size: .82em; font-weight: 800; line-height: 1; vertical-align: .08em; opacity: 1; }
 .tm-where .tm-n { box-shadow: 0 0 0 2px var(--term); }
 .tm-cursor { display: inline-block; width: .6em; height: 1.1em; vertical-align: -.2em; background: var(--accent); }
 @media (prefers-reduced-motion: no-preference) { .tm-cursor { animation: tm-blink 1.1s steps(1) infinite; } }
 @keyframes tm-blink { 50% { opacity: 0; } }
 .tm-key { margin: 0; padding: 0; list-style: none; counter-reset: k; display: flex; flex-direction: column; gap: .9rem; }
 .tm-key li { counter-increment: k; position: relative; padding-left: 2.3rem; }
-.card .tm-key li::before { content: counter(k); position: absolute; left: 0; top: .1rem; display: grid; place-items: center; width: 1.7rem; height: 1.7rem; border-radius: 50%; background: var(--accent); color: var(--accent-ink); border: 2px solid var(--line); font-family: var(--display); font-weight: 800; font-size: .9rem; }
+.card .tm-key li::before { content: counter(k); position: absolute; left: 0; top: .1rem; display: grid; place-items: center; width: 1.7rem; height: 1.7rem; border-radius: 50%; background: var(--surface); color: var(--ink); border: 2px solid var(--line); font-family: var(--display); font-weight: 800; font-size: .9rem; }
 
 /* open one: steps per system */
 .tm-os { display: flex; flex-direction: column; gap: .9rem; }

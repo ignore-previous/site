@@ -169,6 +169,14 @@ function checkDemo() {
   if (!existsSync(fixture)) return fail(fixture, "missing; save real `whatsallowed demo` output there");
   const real = readFileSync(fixture, "utf8").split(/\r?\n/).map((l) => l.trimEnd());
   const decode = (t) => t.replace(/<b class="tm-n"[^>]*>[^<]*<\/b>/g, "").replace(/<[^>]+>/g, "").replace(/&#(x?)([0-9a-f]+);/gi, (_, x, n) => String.fromCodePoint(parseInt(n, x ? 16 : 10))).replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&quot;/g, '"').replace(/&#39;/g, "'").replace(/&amp;/g, "&");
+  // A "Label: text" line joined with the lines that hang under its text, so a page can wrap it to the panel's width.
+  const indent = (l) => l.length - l.trimStart().length;
+  const joined = (n) => {
+    const hang = /^\s*[A-Z][^:]*:\s+/.exec(real[n])?.[0].length;
+    let t = real[n], k = n + 1;
+    while (hang && real[k]?.trim() && indent(real[k]) === hang) t += " " + real[k++].trim();
+    return t;
+  };
   let found = 0;
   for (const f of files("src").filter((x) => x.endsWith(".html"))) {
     for (const m of readFileSync(f, "utf8").matchAll(/<(pre|p)\b[^>]*\bdata-demo="whatsallowed"[^>]*>([\s\S]*?)<\/\1>/g)) {
@@ -176,7 +184,7 @@ function checkDemo() {
       let at = 0;
       // "…" lines mark the cuts; blank lines are spacing. Every other line must come from the demo, in order.
       for (const line of decode(m[2]).split("\n").map((l) => l.trimEnd()).filter((l) => l.trim() && l.trim() !== "…")) {
-        const i = real.indexOf(line, at);
+        const i = real.findIndex((r, n) => n >= at && (r === line || joined(n) === line));
         if (i < 0) { fail(f, `terminal line is not in ${fixture} (or is out of order): ${line}`); break; }
         at = i + 1;
       }
