@@ -239,6 +239,17 @@ footer .fonts { color: var(--mute); grid-column: 1 / -1; font-size: .85rem; }
 .fold[open] > summary { border-bottom: 1px solid var(--shade); }
 .fold-body { display: flex; flex-direction: column; gap: 1.2rem; padding: 1.3rem; min-width: 0; }
 .fold-body .how { max-width: 48rem; }
+.fold-body .show, .skills, .first-use, .fold-body > .ask { max-width: 48rem; }
+.ex-h { font-family: var(--display); font-weight: 700; font-size: .95rem; margin: 0; }
+.skills { margin: -.2rem 0 0; display: flex; flex-direction: column; gap: .6rem; }
+.skills dt { font-family: var(--display); font-weight: 700; }
+.skills dt code { font-family: var(--mono); font-size: .8em; font-weight: 600; background: var(--well); padding: .05rem .3rem; border-radius: 5px; margin-left: .3rem; }
+.skills dd { margin: 0; }
+.first-use { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem .7rem; }
+.first-use .fine { flex-basis: 100%; margin: 0; }
+.first-use .prompt { flex: 1 1 12rem; min-width: 0; }
+.first-use .copy-prompt { align-self: center; }
+.panels > [role=tabpanel] > .copy-prompt { display: block; margin-top: .6rem; }
 .how-h { font-family: var(--display); font-size: 1.2rem; font-weight: 800; letter-spacing: -.01em; margin: .4rem 0 -.4rem; }
 .how-h:focus { outline: none; }
 /* Show less needs the script, so it only appears with it. Without it the summary row closes the card. */
