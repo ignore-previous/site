@@ -4,9 +4,6 @@
 .tm-hero h1 mark { background: var(--accent); color: var(--accent-ink); padding: 0 .1em; border-radius: .1em; box-decoration-break: clone; -webkit-box-decoration-break: clone; }
 .tm-hero-text { display: flex; flex-direction: column; gap: 1rem; }
 .tm-hero .lede { font-size: 1.15rem; color: var(--mute); max-width: 40rem; }
-.tm-jump { display: flex; flex-wrap: wrap; gap: .5rem; }
-.tm-jump a { font-family: var(--display); font-weight: 700; font-size: .95rem; text-decoration: none; border: 2px solid var(--line); border-radius: 99px; padding: .3rem .9rem; background: var(--surface); }
-.tm-jump a:hover { background: var(--well); }
 .tm-intro { max-width: 42rem; }
 .tm code, .tm-key code { font-family: var(--mono); font-size: .88em; font-weight: 600; background: var(--well); padding: .05rem .35rem; border-radius: 5px; }
 

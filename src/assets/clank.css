@@ -12,3 +12,21 @@ table.ev th, table.ev td { text-align: left; vertical-align: top; padding: .65re
 table.ev thead th { font-size: .85rem; color: var(--mute); border-top: 0; background: var(--well); }
 table.ev tbody th { font-weight: 600; width: 32%; }
 table.ev td:nth-child(2) { white-space: nowrap; width: 8rem; }
+
+/* "Pick your way of working": the three modes side by side, stacked on a phone. */
+.pick { display: grid; grid-template-columns: minmax(0, 1fr); gap: 1rem; }
+@media (min-width: 50rem) { .pick { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.pick .card { gap: .6rem; align-content: start; }
+.pick a { display: inline-flex; align-items: center; min-height: 1.75rem; font-family: var(--display); font-weight: 700; }
+
+/* On a phone, each table row becomes a stacked entry: control, status, then who applies it.
+   The role attributes in the markup keep it a table for screen readers. */
+@media (max-width: 40rem) {
+  table.ev { min-width: 0; }
+  table.ev, table.ev caption, table.ev tbody, table.ev tr, table.ev th, table.ev td { display: block; }
+  table.ev thead { position: absolute; width: 1px; height: 1px; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  table.ev tbody tr { border-top: 2px solid var(--shade); padding: .7rem .9rem; display: flex; flex-direction: column; gap: .35rem; }
+  table.ev tbody tr:first-child { border-top: 0; }
+  table.ev tbody th, table.ev td { border-top: 0; padding: 0; width: auto; }
+  table.ev td:nth-child(2) { white-space: normal; width: auto; }
+}
