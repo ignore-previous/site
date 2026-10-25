@@ -281,15 +281,37 @@ Rules:
           <div class="fold-body">
         <p class="promise limits"><span class="pi"><b>Runs:</b> <a href="https://github.com/ignore-previous/unclank#install">inside Claude Code or Codex</a> <span class="dot">&middot;</span></span> <span class="pi"><b>Sends:</b> <a href="https://github.com/ignore-previous/unclank/tree/main/skills">only what that app already sends</a> <span class="dot">&middot;</span></span> <span class="pi"><b>Won't:</b> <a href="https://github.com/ignore-previous/unclank#how-the-skills-work">add tracking, or change files until you ask</a></span></p>
         <p class="fine">For example: a browser tab still showing the default icon, quiz answers you can guess without reading, or a store page that breaks a platform's AI rules. Every item cites its sources.</p>
+        <div class="show">
+          <p class="ex-h">Example: one finding on a sample project</p>
+          <div class="code" role="group" aria-label="Example: an unclank-launch finding in the README of a made-up project">
+            <div class="tab"><b>README.md</b> (made-up project, Tidepool)</div>
+<pre><span class="ln"><i>14</i><span>## Features</span></span><span class="ln"><i>15</i><span></span></span><span class="ln hot"><i>16</i><span>- [Insert key features here]</span></span></pre>
+            <div class="callwrap">
+              <div class="callout">
+                <div class="meta"><b>Avoid D08-013</b><em>README.md:16</em></div>
+                <div class="why">Leftover template text in the README: "[Insert key features here]".</div>
+                <div class="why"><b>Fix:</b> fill in or delete each placeholder.</div>
+              </div>
+            </div>
+<pre class="flush"><span class="ln"><i>17</i><span>- Tide tables for nearby beaches</span></span></pre>
+          </div>
+          <p class="fine">From a real <code>unclank-launch</code> check of a made-up site with starter leftovers planted in it, shortened. The full report listed 8 hits.</p>
+        </div>
+        <h4 class="how-h">Three skills</h4>
+        <dl class="skills">
+          <div><dt>Launch page <code>unclank-launch</code></dt><dd>Use it when you're about to ship, deploy, share or open-source a site, app or repo, or want a launch or polish check.</dd></div>
+          <div><dt>Quiz <code>unclank-quiz</code></dt><dd>Use it when a quiz, test, exam or set of flashcards needs checking before you print, hand out or publish it.</dd></div>
+          <div><dt>Store page <code>unclank-store</code></dt><dd>Use it when you're about to submit, publish, crowdfund or announce a game or creative project, or need a platform's AI-disclosure rules.</dd></div>
+        </dl>
         <h4 class="how-h" id="unclank-run" tabindex="-1">How to install it</h4>
         <div class="how tabs">
           <div class="tablist" role="tablist" aria-label="How to install Unclank">
-            <button type="button" role="tab" id="tab-uc-term" aria-selected="true" aria-controls="panel-uc-term" tabindex="0">Claude Code commands</button>
-            <button type="button" role="tab" id="tab-uc-ask" aria-selected="false" aria-controls="panel-uc-ask" tabindex="-1">Ask your agent</button>
+            <button type="button" role="tab" id="tab-uc-claude" aria-selected="true" aria-controls="panel-uc-claude" tabindex="0">Claude Code</button>
+            <button type="button" role="tab" id="tab-uc-codex" aria-selected="false" aria-controls="panel-uc-codex" tabindex="-1">Codex</button>
           </div>
           <div class="panels">
-            <div role="tabpanel" id="panel-uc-term" aria-labelledby="tab-uc-term">
-              <div class="plabel">Claude Code commands</div>
+            <div role="tabpanel" id="panel-uc-claude" aria-labelledby="tab-uc-claude">
+              <div class="plabel">Claude Code</div>
               <div class="cmd"><code id="c2">/plugin marketplace add ignore-previous/unclank</code><button type="button" data-target="c2" aria-label="Copy /plugin marketplace add ignore-previous/unclank">Copy</button></div>
               <a class="nt" href="/terminal/">New to the terminal?</a>
               <dl class="runcard">
@@ -305,11 +327,8 @@ Rules:
                 <div><dt>What it does</dt><dd>Shows what Unclank adds (three skills) and asks where to install it. Then it installs the skills and says whether to run <code>/reload-plugins</code>.</dd></div>
                 <div><dt>Undo</dt><dd>Type <code>/plugin</code>, open the Installed tab, pick Unclank and choose Uninstall.</dd></div>
               </dl>
-            </div>
-            <div role="tabpanel" id="panel-uc-ask" aria-labelledby="tab-uc-ask">
-              <div class="plabel">Ask your agent</div>
-              <details class="ask" open>
-                <summary>Claude Code</summary>
+              <details class="ask">
+                <summary>Or ask Claude Code to install it</summary>
                 <div class="ask-body">
 <pre class="prompt" id="p-uc-claude">Please install Unclank, a set of Claude Code skills from Ignore Previous.
 
@@ -325,9 +344,10 @@ Rules:
                   <button type="button" class="copy-prompt" data-target="p-uc-claude" data-say="the prompt for Claude Code" aria-label="Copy the prompt for Claude Code">Copy prompt</button>
                 </div>
               </details>
-              <details class="ask">
-                <summary>Codex or Cursor</summary>
-                <div class="ask-body">
+            </div>
+            <div role="tabpanel" id="panel-uc-codex" aria-labelledby="tab-uc-codex">
+              <div class="plabel">Codex</div>
+              <p class="fine">Codex loads skills from a folder. Open Codex and paste this, and it copies the three skills there. It works in Cursor too.</p>
 <pre class="prompt" id="p-uc-other">Please install Unclank, a set of agent skills from Ignore Previous, so you can use them in my projects.
 
 Rules:
@@ -337,13 +357,19 @@ Rules:
 4. Get the repo into a temporary folder, not my project. Tell me that folder, and delete it when you're done.
 5. Copy only the folders inside skills/ into the folder you load personal skills from. For Codex and Cursor that's usually ~/.agents/skills. Check your own docs, and tell me the folder before you copy.
 6. When it's done, list every folder you added, whether I need to restart you, and how to remove them.</pre>
-                  <button type="button" class="copy-prompt" data-target="p-uc-other" data-say="the prompt for Codex or Cursor" aria-label="Copy the prompt for Codex or Cursor">Copy prompt</button>
-                </div>
-              </details>
-              <details class="ask">
-                <summary>claude.ai or ChatGPT (nothing to install)</summary>
-                <div class="ask-body">
-                  <p class="fine">Uses the launch checklist without installing it. Advice only.</p>
+              <button type="button" class="copy-prompt" data-target="p-uc-other" data-say="the prompt for Codex or Cursor" aria-label="Copy the prompt for Codex or Cursor">Copy prompt</button>
+            </div>
+          </div>
+        </div>
+        <div class="first-use">
+          <p class="fine">Then ask:</p>
+<pre class="prompt" id="p-uc-first">check my launch page before I ship</pre>
+          <button type="button" class="copy-prompt" data-target="p-uc-first" data-say="check my launch page before I ship" aria-label="Copy check my launch page before I ship">Copy</button>
+        </div>
+        <details class="ask">
+          <summary>No Claude Code or Codex? Use claude.ai or ChatGPT</summary>
+          <div class="ask-body">
+            <p class="fine">Uses the launch checklist without installing it. Advice only.</p>
 <pre class="prompt" id="p-uc-chat">Please check my website before I launch it, using the Unclank launch checklist from Ignore Previous: https://github.com/ignore-previous/unclank/tree/main/skills/unclank-launch
 
 Rules:
@@ -353,12 +379,9 @@ Rules:
 4. If you can't open a link, say so. Don't guess what it says.
 5. Advice only. Don't ask me for passwords, keys or private files.
 6. For each problem, say where you saw it and which source the checklist cites. If you couldn't check something, say so.</pre>
-                  <button type="button" class="copy-prompt" data-target="p-uc-chat" data-say="the prompt for claude.ai or ChatGPT" aria-label="Copy the prompt for claude.ai or ChatGPT">Copy prompt</button>
-                </div>
-              </details>
-            </div>
+            <button type="button" class="copy-prompt" data-target="p-uc-chat" data-say="the prompt for claude.ai or ChatGPT" aria-label="Copy the prompt for claude.ai or ChatGPT">Copy prompt</button>
           </div>
-        </div>
+        </details>
         <button type="button" class="less">Show less</button>
           </div>
         </details>
