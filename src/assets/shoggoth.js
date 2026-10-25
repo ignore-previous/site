@@ -8,21 +8,21 @@
 // Every duration and gap in milliseconds, every chance from 0 to 1. Change one line to retune.
 const TIMING = {
   revealDelay: 700,        // the closed frame loaded, to the first slit appearing
-  revealSlit: 450,         // the first slit fading in
-  revealOpen: 1300,        // the first eye opening slowly, with a hesitation halfway
-  revealBlinkGap: 350,     // between the first eye's two blinks
-  revealSecond: 450,       // its second blink, to the second eye popping open
+  revealSlit: 300,         // the first slit fading in
+  revealOpen: 900,         // the first eye opening slowly, with a hesitation halfway
+  revealBlinkGap: 220,     // between the first eye's two blinks
+  revealSecond: 300,       // its second blink, to the second eye popping open
   revealThenMin: 1000,     // the second eye, to two more popping open: shortest
   revealThenMax: 2000,     // and longest
   revealQuick: 220,        // between those two
-  revealHold: 450,         // the shared blink, to the close together
+  revealHold: 250,         // the shared blink, to the close together
   slit: 90,                // a slit appearing before its eye pops open
   pop: 170,                // an eye popping open
   blink: 190,              // one blink, shut and open again
   blinkJitter: 40,         // a shared blink: most eyes start within this of each other
   lateChance: 0.35,        // a shared blink: chance one eye is a beat late
   late: 170,               // how late that eye is
-  closeTogether: 900,      // the reveal and every big event end with all open eyes closing at once, this slowly
+  closeTogether: 800,      // the reveal and every big event end with all open eyes closing at once, this slowly
   ambientGapMin: 4000,     // ambient eyes: gap between peeks, shortest
   ambientGapMax: 10000,    // and longest
   ambientTwoChance: 0.35,  // chance a peek has two eyes (never more)
