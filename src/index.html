@@ -176,28 +176,16 @@
                   <div class="tbar">Terminal (real demo output, shortened)</div>
                   <div class="tbody">
                     <div class="tcmd"><code id="t1">npx whatsallowed demo</code><button type="button" data-target="t1" aria-label="Copy npx whatsallowed demo">Copy</button></div>
-<pre class="tout" data-demo="whatsallowed">This is a demo. It checks a made-up setup that comes with whatsallowed. None of your own files are read.
+<pre class="tout" data-demo="whatsallowed">5 high, 5 medium, 0 info; 5 files checked.
+Read-only demo. Made-up findings. None of your files were read.
+
+Look at these first (5)
 …
-whatsallowed 0.2.0. This is a read-only check: it changes nothing and sends nothing anywhere.
-
-10 things to look at in the 5 files checked. 5 need attention first.
-
-Look at these first (5)  High: could let something run or leak without you noticing.
-…
-  A hook downloads code and runs it
-    …
-    Where: ./.claude/settings.json, line 15  Found: curl -fsSL https://example.com/format.sh | sh  Rule: HOOK-001
-…
-Worth checking (5)  Medium: risky in some set-ups, harmless in others.
-
-  A secrets file in this project isn't blocked from the agent
-    …
-    Where: ./.env, line 1  Found: ./.env  Rule: DENY-001
-
-  MCP server "browser" runs an unpinned package
-    …
-    Where: ./.mcp.json, line 4  Found: npx demo-browser-mcp  Rule: MCP-001
-…</pre>
+  An automatic command downloads code and runs it
+    ./.claude/settings.json:15
+    Downloads from: example.com
+<span class="hang">    What to do: Download and review the script, commit it to the repository or your home folder, and run the local copy.
+</span>…</pre>
                   </div>
                 </div>
               </div>
@@ -207,8 +195,8 @@ Worth checking (5)  Medium: risky in some set-ups, harmless in others.
         <h4 class="how-h" id="whats-allowed-run" tabindex="-1">How to run it</h4>
         <div class="how tabs">
           <div class="tablist" role="tablist" aria-label="How to run What's Allowed">
-            <button type="button" role="tab" id="tab-wa-term" aria-selected="true" aria-controls="panel-wa-term" tabindex="0">Terminal command</button>
-            <button type="button" role="tab" id="tab-wa-ask" aria-selected="false" aria-controls="panel-wa-ask" tabindex="-1">Ask your agent</button>
+            <button type="button" role="tab" id="tab-wa-term" aria-selected="true" aria-controls="panel-wa-term" tabindex="0">Command</button>
+            <button type="button" role="tab" id="tab-wa-ask" aria-selected="false" aria-controls="panel-wa-ask" tabindex="-1">Ask AI</button>
           </div>
           <div class="panels">
             <div role="tabpanel" id="panel-wa-term" aria-labelledby="tab-wa-term">
