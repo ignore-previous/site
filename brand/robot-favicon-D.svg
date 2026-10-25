@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-36 -40 1072 1072" role="img" aria-labelledby="title"><title id="title">Ignore Previous robot favicon</title><g fill="#ffcf1f" stroke="#ffcf1f" stroke-width="134.0" stroke-linejoin="round"><rect x="471" y="248" width="58" height="104"/><circle cx="500" cy="164" r="121"/><rect x="100" y="320" width="800" height="630" rx="169"/></g><g fill="#14161c">
+    <rect x="471" y="248" width="58" height="104"/>
+    <circle cx="500" cy="164" r="121"/>
+    <rect x="100" y="320" width="800" height="630" rx="169"/>
+  </g>
+  <circle cx="500" cy="164" r="59" fill="#e0301e"/>
+  <rect x="178" y="403" width="644" height="462" rx="130" fill="#ffffff"/>
+  <g fill="#14161c">
+    <path d="M232 616H470v47c0 77-48 132-119 132s-119-55-119-132z"/>
+    <rect x="220" y="596" width="262" height="44" rx="22"/>
+    <path d="M530 616h238v47c0 77-48 132-119 132s-119-55-119-132z"/>
+    <rect x="518" y="596" width="262" height="44" rx="22"/>
+  </g>
+  <g fill="#ffffff">
+    <path d="M290 665c13 41 38 67 72 67 37 0 65-29 70-74h-48c-4 20-16 31-35 31-22 0-39-8-59-24z"/>
+    <path d="M588 665c13 41 38 67 72 67 37 0 65-29 70-74h-48c-4 20-16 31-35 31-22 0-39-8-59-24z"/>
+  </g>
+</svg>

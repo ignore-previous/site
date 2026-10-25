@@ -11,7 +11,7 @@ import { fileURLToPath, pathToFileURL } from "node:url";
 import { screenshot } from "./render.mjs";
 
 const here = dirname(fileURLToPath(import.meta.url));
-const avatar = pathToFileURL(join(here, "assets", "avatar-1024.png")).href;
+const avatar = pathToFileURL(join(here, "assets", "avatar.png")).href;
 
 // width: page width in CSS px; d and left are fractions of that width. The avatar's centre sits on the banner's bottom edge.
 const modes = {

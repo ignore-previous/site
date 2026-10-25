@@ -77,7 +77,7 @@ const prep = {
     for (let row = -1; row * t < 500 + t; row++) {
       const shift = (((row % 2) + 2) % 2) * (t / 2) - Number(d.offsetx ?? 0);
       for (let col = -1; col * t + shift < 1500; col++) {
-        imgs.push(`<img src="${pathToFileURL(join(here, "assets", "mark-full-1024.png")).href}" alt="" style="left:${col * t + shift}px;top:${row * t - Number(d.offsety ?? 0)}px;width:${t}px;height:${t}px">`);
+        imgs.push(`<img src="${pathToFileURL(join(here, "assets", "shoggoth-yellow-1024.png")).href}" alt="" style="left:${col * t + shift}px;top:${row * t - Number(d.offsety ?? 0)}px;width:${t}px;height:${t}px">`);
       }
     }
     return { tiles_html: imgs.join("") };
