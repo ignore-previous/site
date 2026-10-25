@@ -1,0 +1,42 @@
+/* The quiz check panel inside the Unclank card on the home page. Uses the colour tokens from site.css. */
+.qc { display: flex; flex-direction: column; gap: .8rem; max-width: 48rem; min-width: 0; padding: 1.1rem; border: 2px solid var(--line); border-radius: 12px; background: var(--surface); }
+.qc .how-h { margin: 0; scroll-margin-top: 1.5rem; }
+.qc-live { display: none; flex-direction: column; gap: .8rem; min-width: 0; }
+.js .qc-live { display: flex; }
+.js .qc-nojs { display: none; }
+
+.qc-field { display: flex; flex-direction: column; gap: .3rem; min-width: 0; }
+.qc label { font-family: var(--display); font-weight: 700; font-size: .95rem; }
+.qc select, .qc textarea { width: 100%; min-width: 0; font: inherit; color: var(--ink); background: var(--well); border: 2px solid var(--line); border-radius: 8px; padding: .5rem .65rem; }
+.qc select { font-size: 1rem; min-height: 2.6rem; }
+.qc textarea { font-family: var(--mono); font-size: max(16px, .82rem); line-height: 1.55; min-height: 11rem; resize: vertical; }
+.qc select:focus-visible, .qc textarea:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+
+.qc-actions { display: flex; flex-wrap: wrap; align-items: center; gap: .6rem; }
+.qc-btn { font-family: var(--display); font-weight: 700; font-size: .95rem; min-height: 2.5rem; padding: .45rem 1.1rem; border-radius: 99px; border: 2px solid #14161c; background: var(--accent); color: var(--accent-ink); cursor: pointer; }
+.qc-btn:hover { text-decoration: underline; text-underline-offset: 4px; }
+.qc-btn.qc-ghost { background: none; color: var(--ink); border-color: var(--line); }
+.qc-btn.qc-ghost:hover { background: var(--well); }
+/* Reserved for the "Run the full check" button. Empty for now, so nothing shows. */
+.qc-slot { margin-inline-start: auto; min-width: 0; }
+.qc-slot:empty { display: none; }
+
+.qc-status { font-family: var(--display); font-weight: 700; min-height: 0; overflow-wrap: anywhere; }
+.qc-status:empty { display: none; }
+.qc-results { display: flex; flex-direction: column; gap: .7rem; min-width: 0; }
+.qc-res { border: 2px solid var(--line); border-radius: 10px; padding: .75rem .9rem .85rem; background: var(--bg); display: flex; flex-direction: column; gap: .5rem; min-width: 0; }
+.qc-res[data-state="found"], .qc-res[data-state="unread"] { background: var(--hl); border-color: var(--ink); }
+.qc-res h5 { margin: 0; font-family: var(--display); font-size: 1.02rem; line-height: 1.3; display: flex; flex-wrap: wrap; align-items: center; gap: .3rem .6rem; }
+.qc-id { font-family: var(--mono); font-size: .8rem; font-weight: 700; padding: .05rem .4rem; border-radius: 5px; border: 2px solid var(--line); background: var(--surface); }
+.qc-badge { margin-inline-start: auto; font-size: .8rem; font-weight: 700; padding: .05rem .55rem; border-radius: 99px; border: 2px solid var(--line); background: var(--surface); }
+.qc-res ul { margin: 0; padding-left: 1.2rem; display: flex; flex-direction: column; gap: .3rem; }
+.qc-res li { overflow-wrap: anywhere; }
+.qc-res p { overflow-wrap: anywhere; }
+.qc-fix { font-weight: 500; }
+.qc-results > .fine { overflow-wrap: anywhere; }
+
+@media (max-width: 30rem) {
+  .qc { padding: .85rem; }
+  .qc-btn { flex: 1 1 auto; }
+  .qc-badge { margin-inline-start: 0; }
+}

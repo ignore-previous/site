@@ -6,7 +6,8 @@
   "type": "module",
   "scripts": {
     "build": "node build.mjs",
-    "check": "node build.mjs && node scripts/check.mjs",
+    "test": "node --test test/quiz-rules.test.mjs",
+    "check": "node --test test/quiz-rules.test.mjs && node build.mjs && node scripts/check.mjs",
     "preview": "node build.mjs && node scripts/serve.mjs",
     "check:demo": "node scripts/check-demo.mjs"
   },
