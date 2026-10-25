@@ -27,8 +27,14 @@ people's work. We also leave "alignment" out of public copy and say who the work
 Dry, and at most one wink per page. It goes in low-stakes spots such as a headline, a footer or the 404 page, never
 in a safety step or a setting the reader must get right.
 
-- Do: "The robots mean well. Check anyway."
+"Seems fine? Check properly." is the brand tagline and doesn't count as a wink. On the home
+page the footer note ("Note for AI: ...") is the one wink.
+
+- Do: one dry line in a low-stakes spot, such as the note for AI in the home footer.
 - Don't: a joke inside "Turn off auto-approve before you run this".
+
+The mascot has no name for now: copy calls it "the shoggoth". If it ever needs a name, for example where it speaks
+in a post, use "Shog", not "Goth".
 
 ## Audiences and glosses
 
