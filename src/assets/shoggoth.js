@@ -2,6 +2,7 @@
 // open now and then, bigger events where several open at once, and on a desktop, open eyes that watch the cursor.
 // The eyes are cut from the frames (assets/hero-eye-*.png) and site.css places them over the closed frame.
 // Four more eyes in the dark body (x1, x2, x4, x5) join the peeks and every big event, and the mix changes each time.
+// A peek is one to four eyes, scattered glances; a big event is always five or more at once.
 // Only transform and opacity change, through the Web Animations API and CSSOM, which the CSP allows.
 // With reduced motion nothing here starts: no timers, no eyes, and the closed mask shows.
 // The one storage use: a sessionStorage flag, so the first reveal plays once per tab (every load without storage).
@@ -26,9 +27,12 @@ const TIMING = {
   closeTogether: 560,      // the reveal and every big event end with all open eyes closing at once, this slowly
   ambientGapMin: 4000,     // ambient eyes: gap between peeks, shortest
   ambientGapMax: 10000,    // and longest
-  ambientTwoChance: 0.35,  // chance a peek has two eyes (never more)
-  ambientSecondMin: 400,   // the second eye of a peek starts this long after the first: shortest
-  ambientSecondMax: 1500,  // and longest
+  peekOne: 0.15,           // a peek has one eye with this weight ...
+  peekTwo: 0.35,           // ... two eyes with this one ...
+  peekThree: 0.30,         // ... three ...
+  peekFour: 0.20,          // ... or four (weights, they need not add up to 1; the mean is about 2.55)
+  ambientSecondMin: 400,   // each further eye of a peek starts this long after the one before: shortest
+  ambientSecondMax: 1900,  // and longest
   ambientSlit: 175,        // an ambient slit appearing
   ambientOpen: 315,        // an ambient eye opening from its slit
   ambientHoldMin: 2000,    // an ambient eye stays open: shortest
@@ -45,11 +49,7 @@ const TIMING = {
   eventBlinkWait: 140,     // a big event: the last eye open, to the shared blink
   eventHoldMin: 2000,      // all the event's eyes open, to the close together: shortest
   eventHoldMax: 3000,      // and longest
-  bodyFirstChance: 0.25,   // an ambient peek: chance its first eye is a body eye rather than one of the three
-  bodyPeekChance: 0.35,    // an ambient peek: chance a body eye joins it as its second
-  bodySecondMin: 700,      // the body eye starts this long after the peek's first eye: shortest
-  bodySecondMax: 1900,     // and longest
-  bodyBothChance: 0.5,     // a big event: chance two body eyes join it (else one); the deepest event has its own seven
+  eventBigChance: 0.4,     // a big event has six eyes with this chance, else five (body eyes join its two or three drawn ones)
   bodyLateMin: 250,        // each body eye joins an event this long after the last one opened: shortest
   bodyLateMax: 700,        // and longest
   bodyBlinkLagMin: 70,     // a body eye joining an event blinks this much after the others: shortest
@@ -80,7 +80,8 @@ const TIMING = {
   const AMBIENT = ['1', '2', '3'];
   const REVEAL = ['1', '2', '3', 'x1'];
   const BODY = ['x1', 'x2', 'x4', 'x5'];  // the extra eyes in the dark body that peeks and events draw on
-  const DEEP = ['1', '2', '3', 'x1', 'x2', 'x3', 'x4'];  // the deepest event: these seven, as in the first round
+  const DEEP = NAMES.slice();  // the deepest event: all eight
+  const POOL = AMBIENT.concat(BODY);  // the eyes a peek draws from
   const MAIN_SETS = [['1', '2'], ['1', '3'], ['2', '3'], ['1', '2', '3'], ['1', '2', '3']];  // a big event's drawn eyes (the triple twice: it is likelier)
   const SLIT = 0.07;       // a closed eye: squashed to a slit
   const STOP = {};         // thrown to end a sequence that was stopped or overtaken
@@ -88,7 +89,7 @@ const TIMING = {
 
   let eyes = null, running = false, onScreen = false, ready = false, revealed = false;
   let gen = 0, ambGen = 0, ambRun = null, busy = null, lastEventEnd = -Infinity;
-  let ambientTimer = 0, eventTimer = 0, lastPeek = [], prevPeek = [], lastMain = '', lastJoin = [], lastDeep = false;
+  let ambientTimer = 0, eventTimer = 0, lastPeek = [], lastMain = '', lastJoin = '', lastDeep = false;
   let pointer = null, raf = 0, lastFrame = 0;
   const timers = new Set();
 
@@ -200,34 +201,40 @@ const TIMING = {
     scheduleEvent(flags.has('event') ? 1500 : undefined);
   }
 
-  // Ambient: one or two eyes peek, each from a slit, blink once or twice and close on their own.
+  // Ambient: one to four eyes peek, each from its own slit, on its own timing, blinking once or twice and
+  // closing on its own, so a peek reads as scattered glances rather than something happening together.
   function scheduleAmbient(ms) {
     clearTimeout(ambientTimer);
     timers.delete(ambientTimer);
     ambientTimer = later(ms === undefined ? rand(TIMING.ambientGapMin, TIMING.ambientGapMax) : ms, () => ambient(gen).catch(quiet));
   }
+  const sameSet = (a, b) => a.length === b.length && a.every((n) => b.includes(n));
+  // How many eyes peek: by the weights, and a peek usually has a different count from the last one.
+  function peekCount() {
+    const w = [TIMING.peekOne, TIMING.peekTwo, TIMING.peekThree, TIMING.peekFour];
+    const draw = () => { let r = Math.random() * w.reduce((x, y) => x + y, 0); for (let i = 0; i < w.length; i++) { r -= w[i]; if (r < 0) return i + 1; } return w.length; };
+    let n = draw();
+    for (let i = 0; i < 2 && n === lastPeek.length; i++) n = draw();
+    return n;
+  }
+  // Which eyes, in the order they start: never the same set as the last peek, and if possible none of its
+  // eyes, otherwise at most one (a four-eye peek after a three-eye one cannot avoid them all).
+  function peekSet(n) {
+    for (const maxShared of [0, 1, n]) {
+      for (let i = 0; i < 40; i++) {
+        const set = shuffle(POOL).slice(0, n);
+        if (!sameSet(set, lastPeek) && set.filter((x) => lastPeek.includes(x)).length <= maxShared) return set;
+      }
+    }
+    return shuffle(POOL).slice(0, n);
+  }
   async function ambient(g) {
     if (busy) return scheduleAmbient();
     const ag = ++ambGen;
     const check = () => { if (g !== gen || ag !== ambGen) throw STOP; };
-    // Which eyes peek: none that peeked last time, and if possible none from the time before. A body eye
-    // sometimes opens first, or joins as the second, so a peek never has more than two eyes.
-    const fresh = (list, avoid) => {
-      const a = list.filter((n) => !lastPeek.includes(n) && !avoid.includes(n));
-      const b = a.filter((n) => !prevPeek.includes(n));
-      return b.length ? b : a;
-    };
-    const mains = fresh(AMBIENT, []);
-    const first = pick(!mains.length || Math.random() < TIMING.bodyFirstChance ? fresh(BODY, []) : mains);
-    let body = Math.random() < TIMING.bodyPeekChance ? pick(fresh(BODY, [first])) : null;
-    let second = null;
-    if (!body && Math.random() < TIMING.ambientTwoChance) {
-      const others = fresh(AMBIENT, [first]);
-      if (others.length) second = pick(others); else body = pick(fresh(BODY, [first]));
-    }
-    prevPeek = lastPeek;
-    lastPeek = [first, second || body].filter(Boolean);
-    log('peek set', lastPeek.join(' '));
+    const set = peekSet(peekCount());
+    lastPeek = set;
+    log('peek set', set.join(' '));
     const peek = async (n) => {
       const e = eyes[n];
       log('peek opens', n);
@@ -244,10 +251,11 @@ const TIMING = {
       await close(e, TIMING.ambientClose);
       log('peek closed', n);
     };
-    const runs = [peek(first)];
-    if (second) runs.push(wait(rand(TIMING.ambientSecondMin, TIMING.ambientSecondMax)).then(() => { check(); return peek(second); }));
-    if (body) runs.push(wait(rand(TIMING.bodySecondMin, TIMING.bodySecondMax)).then(() => { check(); return peek(body); }));
-    ambRun = Promise.all(runs);
+    let start = 0;
+    ambRun = Promise.all(set.map((n, i) => {
+      if (i) start += rand(TIMING.ambientSecondMin, TIMING.ambientSecondMax);
+      return i ? wait(start).then(() => { check(); return peek(n); }) : peek(n);
+    }));
     await ambRun;
     check();
     scheduleAmbient();
@@ -273,14 +281,19 @@ const TIMING = {
       if (e.anim && e.anim.playState === 'running') await done(e.anim);
       if (e.open) await close(e, TIMING.ambientClose);
     })));
-    // Which eyes: the deepest is never twice running; otherwise two or three of the drawn eyes, never the same
-    // set as the last event, plus body eyes that were not in it.
+    // Which eyes: the deepest (all eight) is never twice running. Otherwise two or three of the drawn eyes, never
+    // the same set as the last event, plus enough body eyes to make five or six, never the same body set twice.
     const deep = flags.has('deep') || (!lastDeep && Math.random() < TIMING.deepChance);
     const main = deep ? DEEP : pick(MAIN_SETS.filter((set) => set.join('') !== lastMain));
-    const join = deep ? [] : shuffle(BODY.filter((n) => !lastJoin.includes(n))).slice(0, Math.random() < TIMING.bodyBothChance ? 2 : 1);
+    let join = [];
+    if (!deep) {
+      const need = (Math.random() < TIMING.eventBigChance ? 6 : 5) - main.length;
+      join = shuffle(BODY.filter((n) => !lastJoin.includes(n))).concat(shuffle(BODY.filter((n) => lastJoin.includes(n)))).slice(0, need);
+      if (join.slice().sort().join('') === lastJoin && main.length + join.length > 5) join = join.slice(1);
+    }
     lastDeep = deep;
     lastMain = deep ? 'deep' : main.join('');
-    lastJoin = join;
+    lastJoin = join.slice().sort().join('');
     const list = shuffle(main.map((n) => eyes[n]));
     log('event opens', list.map((e) => e.n).join(' '));
     const opening = [];
@@ -289,7 +302,7 @@ const TIMING = {
       const slow = Math.random() < TIMING.eventSlowChance;
       opening.push(open(list[i], slow ? TIMING.ambientSlit : TIMING.slit, slow ? TIMING.eventSlowOpen : TIMING.pop));
     }
-    // Unless it is the deepest, one or two body eyes join a beat after the rest, each a little later than the last.
+    // Unless it is the deepest, two to four body eyes join a beat after the rest, each a little later than the last.
     const joiners = join.map((n) => eyes[n]);
     for (const e of joiners) {
       await guard(g, wait(rand(TIMING.bodyLateMin, TIMING.bodyLateMax)));
