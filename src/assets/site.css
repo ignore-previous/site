@@ -98,7 +98,7 @@ h1, h2, h3 { margin: 0; font-family: var(--display); text-wrap: balance; }
 .hero p { font-size: 1.15rem; color: var(--mute); max-width: 36rem; }
 /* Phone: the shoggoth centred above the headline, and the headline on two lines, one phrase each.
    The size keeps "Check properly." on one line down to a 320 px screen. */
-@media not (min-width: 40rem) {
+@media (max-width: 39.99rem) {
   .hero .mark { width: 11.75rem; height: 11.75rem; justify-self: center; }
   .hero h1 { font-size: min(2.3rem, 10.6vw); }
   .hero h1 .h1-a { display: block; }
