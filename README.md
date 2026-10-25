@@ -1,6 +1,6 @@
 # ignoreprevious.dev
 
-Source for ignoreprevious.dev: the home page, What Can My AI See? and Clank Safely.
+Source for ignoreprevious.dev: the home page, What Can My AI See? and Clank Safely. The header nav on every page lists the tools and guides in two groups, Tools and Guides. A new group appears only when its first item ships, and a group label becomes a link to its own page once it has more than about four items.
 
 Built with Claude.
 
