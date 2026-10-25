@@ -30,11 +30,11 @@ in a safety step or a setting the reader must get right.
 "The robots mean well. Check anyway." is the brand tagline and doesn't count as a wink. On the home
 page the footer note ("Note for AI: ...") is the one wink.
 
-The mascot has no name for now: copy calls it "the shoggoth". If it ever needs a name, for example where it
-speaks in a post, use "Shog".
-
 - Do: "The robots mean well. Check anyway."
 - Don't: a joke inside "Turn off auto-approve before you run this".
+
+The mascot has no name for now: copy calls it "the shoggoth". If it ever needs a name, for example where it speaks
+in a post, use "Shog", not "Goth".
 
 ## Audiences and glosses
 
