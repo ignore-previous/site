@@ -21,7 +21,7 @@
 .js .picker { display: grid; }
 .nojs-note { display: block; }
 .js .nojs-note { display: none; }
-.picker .privacy { font-weight: 600; max-width: 40rem; }
+.picker .privacy { max-width: 40rem; font-size: .88rem; }
 .picker fieldset { border: 0; margin: 0; padding: 0; min-width: 0; display: flex; flex-direction: column; gap: .7rem; }
 .picker legend { padding: 0; margin-bottom: .6rem; font-family: var(--display); font-weight: 800; font-size: 1.15rem; max-width: 40rem; }
 .picker legend .hint { display: block; font-family: var(--body); font-weight: 400; font-size: .95rem; color: var(--mute); margin-top: .2rem; }
@@ -36,6 +36,9 @@
 .g-statusrow { display: flex; flex-wrap: wrap; align-items: center; gap: .75rem 1rem; }
 .g-statusrow .status { font-weight: 600; }
 .g-statusrow .status:empty { display: none; }
+/* guide.js moves focus here once a plan is picked. A quiet dashed ring shows where focus went without looking like a control. */
+.g-statusrow { scroll-margin-top: 1rem; }
+.g-statusrow .status:focus { outline: 2px dashed var(--mute); outline-offset: 4px; border-radius: 2px; }
 .btn { font-family: var(--body); font-weight: 700; font-size: .95rem; min-height: 44px; padding: .45rem 1.1rem; background: var(--surface); color: var(--ink); border: 2px solid var(--line); border-radius: 999px; cursor: pointer; }
 .btn:hover { background: var(--well); }
 .btn:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
