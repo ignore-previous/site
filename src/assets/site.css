@@ -254,3 +254,10 @@ footer .fonts { color: var(--mute); grid-column: 1 / -1; font-size: .85rem; }
 @media (max-width: 30rem) { .tool-top, .fold-body { padding: 1rem; } .fold > summary { padding-inline: 1rem; } .card.guide { padding: 1rem; } .tool-top { gap: .5rem; } }
 @media (max-width: 30rem) { .cta { font-size: .92rem; padding: .4rem .85rem; } .tool-head h3 { font-size: 1.35rem; } .pair, .stack { gap: 1rem; } }
 .tool h3, .how-h { scroll-margin-top: 1.5rem; }
+
+/* "On this page" jump links, used by the terminal page and both guides. */
+.tm-jump { display: flex; flex-wrap: wrap; gap: .5rem; }
+.tm-jump a { font-family: var(--display); font-weight: 700; font-size: .95rem; text-decoration: none; border: 2px solid var(--line); border-radius: 99px; padding: .3rem .9rem; background: var(--surface); }
+.tm-jump a:hover { background: var(--well); }
+.back-top { font-family: var(--display); font-weight: 700; }
+.back-top a { display: inline-flex; align-items: center; min-height: 1.75rem; }
