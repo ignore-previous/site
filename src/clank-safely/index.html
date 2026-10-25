@@ -65,7 +65,7 @@
     <nav class="tm-jump" aria-label="On this page">
       <a href="#way-h">Pick your way</a>
       <a href="#scope-h">What this page is</a>
-      <a href="#agent-h">Agent prompt</a>
+      <a href="#agent-h">Prompt for your AI</a>
       <a href="#s1-h">Step 1: check</a>
       <a href="#s2-h">Step 2: protections</a>
       <a href="#ev-h">Enforced or advice</a>
@@ -92,8 +92,8 @@
       </div>
       <div class="card">
         <h3>Unattended</h3>
-        <p><b>Suits:</b> a long job you leave running while you do something else. <span class="pill ours">Our tip</span> We recommend you only do this in an isolated place.</p>
-        <p><b>Trade-off:</b> the agent can do a lot without asking, so the fence around it does the protecting.</p>
+        <p><b>Suits:</b> a long job you leave running while you do something else. <span class="pill ours">Our tip</span> We recommend you only do this in an isolated place: a separate computer or a virtual machine, holding a copy of the project and none of your real passwords or personal files.</p>
+        <p><b>Trade-off:</b> the agent can do a lot without asking, so the fence around it does the protecting. If the fence is weak, a mistake or a prompt injection can do real harm.</p>
         <p><a href="#p-unattended">Unattended settings</a></p>
       </div>
     </div>
@@ -280,7 +280,7 @@ Rules:
     <div class="card">
       <div class="g-block">
         <div class="tbl-wrap" role="region" aria-labelledby="ev-cap" tabindex="0">
-          <table class="ev" role="table">
+          <table class="ev" role="table" aria-labelledby="ev-cap">
             <caption id="ev-cap">Who applies each control</caption>
             <thead role="rowgroup"><tr role="row"><th scope="col" role="columnheader">Control</th><th scope="col" role="columnheader">Status</th><th scope="col" role="columnheader">Who applies it</th></tr></thead>
             <tbody role="rowgroup">
