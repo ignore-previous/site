@@ -28,6 +28,8 @@
 <link rel="preload" href="/assets/fonts/bricolage-grotesque-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/assets/fonts/figtree-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/assets/site.css">
+<link rel="stylesheet" href="/assets/quiz.css">
+<link rel="modulepreload" href="/assets/quiz-rules.js">
 <script src="/assets/js-class.js"></script>
 <script type="application/ld+json">
 {
@@ -271,7 +273,7 @@ Rules:
           <p class="who">For anyone shipping one with Claude Code or Codex.</p>
         </div>
         <details class="fold">
-          <summary>Examples and how to install it</summary>
+          <summary>Try the quiz check, examples and how to install it</summary>
           <div class="fold-body">
         <ul class="chips" aria-label="Proof">
           <li><a href="https://github.com/ignore-previous/unclank#install">Runs inside Claude Code or Codex</a></li>
@@ -301,6 +303,36 @@ Rules:
           <div><dt>Quiz <code>unclank-quiz</code></dt><dd>Use it when a quiz, test, exam or set of flashcards needs checking before you print, hand out or publish it.</dd></div>
           <div><dt>Store page <code>unclank-store</code></dt><dd>Use it when you're about to submit, publish, crowdfund or announce a game or creative project, or need a platform's AI-disclosure rules.</dd></div>
         </dl>
+        <section class="qc" id="quiz-check" aria-labelledby="qc-h">
+          <h4 class="how-h" id="qc-h">Try the quiz check</h4>
+          <p>Paste a quiz or pick a sample. It counts three things: two right answers in one question, a right answer that is the longest option, and right answers that bunch up in one position. This part runs in your browser and sends nothing. The full check uses your agent.</p>
+          <p class="qc-nojs fine">This part needs JavaScript, which is off here. The full check uses your agent and does not need it: <a href="#unclank-run">how to install Unclank</a>.</p>
+          <div class="qc-live">
+            <details class="ask">
+              <summary>Paste format</summary>
+              <div class="ask-body">
+                <p class="fine">Number each question. Start each option with A) to D). Mark the right answer with * at the end of its line, or add a line such as Answer: B. Leave a blank line between questions. Lines that can't be read are listed, not guessed at.</p>
+                <pre class="prompt" id="qc-format"></pre>
+              </div>
+            </details>
+            <div class="qc-field">
+              <label for="qc-sample">Sample quiz</label>
+              <select id="qc-sample"><option value="">Choose a sample</option></select>
+            </div>
+            <div class="qc-field">
+              <label for="qc-text">Your quiz</label>
+              <textarea id="qc-text" rows="12" maxlength="60000" spellcheck="false" autocomplete="off" aria-describedby="qc-format"></textarea>
+            </div>
+            <div class="qc-actions">
+              <button type="button" class="qc-btn" id="qc-run">Check this quiz</button>
+              <button type="button" class="qc-btn qc-ghost" id="qc-clear">Clear</button>
+              <!-- Slot for the "Run the full check" button, added by a later change. -->
+              <span class="qc-slot" data-slot="full-check"></span>
+            </div>
+            <p class="qc-status" id="qc-status" role="status"></p>
+            <div class="qc-results" id="qc-results"></div>
+          </div>
+        </section>
         <h4 class="how-h" id="unclank-run" tabindex="-1">How to install it</h4>
         <p class="fine"><b>Won't:</b> <a href="https://github.com/ignore-previous/unclank#how-the-skills-work">add tracking</a>.</p>
         <div class="how tabs">
@@ -425,6 +457,7 @@ Rules:
   </footer>
 </div>
 <script src="/assets/site.js"></script>
+<script type="module" src="/assets/quiz-panel.js"></script>
 <!-- CF_BEACON -->
 </body>
 </html>
