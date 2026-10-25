@@ -33,7 +33,8 @@ in a safety step or a setting the reader must get right.
 ## Audiences and glosses
 
 Say "AI", not "AI agents". Name Claude Code or Codex when you mean the tool.
-Never describe our tools as "free" or "small".
+Don't use "free" as a price or selling word ("free tool", "free forever"). Everyday idioms such as "feel free"
+are fine, and so are plan names such as "Free or Go". Never describe our tools as "small".
 
 The home page hero and What Can My AI See? are for people new to agents, so they explain jargon the first time it
 appears, in a few words in brackets. The tool cards, Clank Safely and the READMEs speak to developers and skip the
