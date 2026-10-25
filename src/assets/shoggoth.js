@@ -60,7 +60,7 @@ const TIMING = {
 (function () {
   const mark = document.querySelector('[data-shoggoth]');
   const rest = mark && mark.querySelector('.f-rest');
-  if (!rest || !window.matchMedia || !mark.animate) return;
+  if (!rest || !window.matchMedia || !window.IntersectionObserver || !mark.animate) return;
 
   const flags = new Set((new URLSearchParams(location.search).get('eyes') || '').split(','));
   const reduce = matchMedia('(prefers-reduced-motion: reduce)');
@@ -92,6 +92,7 @@ const TIMING = {
     for (const n of NAMES) {
       const el = document.createElement('span');
       el.className = 'eye eye-' + n;
+      el.setAttribute('aria-hidden', 'true');
       const pupil = document.createElement('span');
       el.appendChild(pupil);
       mark.appendChild(el);
@@ -231,6 +232,7 @@ const TIMING = {
     if (busy) return;
     busy = 'event';
     clearTimeout(eventTimer);
+    timers.delete(eventTimer);
     // A timed event lets the ambient eyes finish their peek first. One started early by the
     // cursor doesn't wait: any ambient eye still open closes, then the event begins.
     if (!early && ambRun) await guard(g, ambRun.catch(() => {}));
@@ -336,6 +338,7 @@ const TIMING = {
     running = false;
     gen++;
     ambGen++;
+    ambRun = null;
     busy = null;
     timers.forEach(clearTimeout);
     timers.clear();
