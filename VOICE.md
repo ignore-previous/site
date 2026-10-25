@@ -17,7 +17,7 @@ people's work. We also leave "alignment" out of public copy and say who the work
 
 ## Who speaks
 
-"We" speaks. "by ruddy" is a signature, used in the header and nowhere in the prose.
+"We" speaks, on every page and in the header. There is no personal signature.
 
 - Do: "We make tools that keep a person in the loop with AI."
 - Don't: "I built this because…", "ruddy recommends…"
