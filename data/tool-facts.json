@@ -1,0 +1,12 @@
+{
+  "whatsallowed": {
+    "version": "0.2.2",
+    "tested": "2026-10-25",
+    "testedWhat": "accuracy run (eval/results.json, last committed date)"
+  },
+  "unclank": {
+    "version": "0.1.2",
+    "reviewed": "2026-10-21",
+    "reviewedWhat": "newest 'Last reviewed' line in skills/*/SKILL.md"
+  }
+}

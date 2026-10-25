@@ -10,6 +10,9 @@
 // 6. Canonical links, sitemap, llms.txt, Markdown copies, security.txt and wrangler.jsonc agree with each other.
 // 7. Terminal output shown on a page (<pre data-demo> or <p data-demo>) is real: its lines appear, in order, in the saved demo output.
 //    `npm run check:demo` compares that saved output with what the latest whatsallowed prints.
+// 9. Receipts. A page may load things from this site only, plus the beacon script when the beacon is on (everything else
+//    on the allow-list below). The footer says so and how to check it, and says "Cloudflare" only in the beacon build.
+//    Each home tool card shows the version and date from data/tool-facts.json.
 // 8. The mechanical rules from VOICE.md: no bare "no network calls" (say "once installed"), "plain" only in the guide's
 //    page title, no old "Unverified" label.
 import { readdirSync, readFileSync, statSync, existsSync } from "node:fs";
@@ -39,6 +42,32 @@ for (const f of scanned) {
   if (phrase.test(s) || phrase.test(s.replace(/<[^>]+>/g, " "))) fail(f, "contains the full brand phrase");
 }
 
+// 9. Origins a page may load from. Anchors are links the visitor follows, not requests, so they are not listed.
+const OWN_ORIGIN = "https://ignoreprevious.dev";
+const BEACON_SCRIPT = "https://static.cloudflareinsights.com/beacon.min.js";
+const attrOf = (tag, name) => (tag.match(new RegExp(`\\s${name}\\s*=\\s*(?:"([^"]*)"|'([^']*)')`, "i")) || []).slice(1).find((v) => v !== undefined);
+function loadedUrls(html) {
+  const urls = [];
+  for (const m of html.matchAll(/<(?!\/)([a-z][a-z0-9-]*)\b[^>]*>/gi)) {
+    const [tag, name] = [m[0], m[1].toLowerCase()];
+    if (name === "a" || name === "area") continue;
+    if (name === "link" && /\brel\s*=\s*["']?(canonical|alternate|author|me|license|help|next|prev)\b/i.test(tag)) continue;
+    for (const a of ["src", "poster", "data", "href", "action", "formaction", "data-src"]) { const v = attrOf(tag, a); if (v) urls.push([name, v]); }
+    for (const a of ["srcset", "imagesrcset"]) { const v = attrOf(tag, a); if (v) for (const part of v.split(",")) urls.push([name, part.trim().split(/\s+/)[0]]); }
+    if (name === "meta" && /http-equiv\s*=\s*["']?refresh/i.test(tag)) urls.push([name, (attrOf(tag, "content") || "").replace(/^.*url=/i, "")]);
+  }
+  return urls;
+}
+function checkOrigins(f, html, label, beacon) {
+  for (const [tag, url] of loadedUrls(html)) {
+    if (!/^(?:[a-z][a-z0-9+.-]*:)?\/\//i.test(url) && !/^(?:https?|ftp|ws|wss):/i.test(url)) continue; // same-site path or fragment
+    const absolute = url.startsWith("//") ? "https:" + url : url;
+    if (absolute.startsWith(OWN_ORIGIN + "/") || absolute === OWN_ORIGIN) continue;
+    if (beacon && tag === "script" && absolute === BEACON_SCRIPT) continue;
+    fail(f, `${label}: <${tag}> loads from another origin: ${url}`);
+  }
+}
+
 function checkSite(label, { beacon }) {
   const html = files("dist").filter((f) => f.endsWith(".html"));
   const js = files("dist").filter((f) => f.endsWith(".js"));
@@ -55,6 +84,7 @@ function checkSite(label, { beacon }) {
       if (external.length !== 1) fail(f, `${label}: expected exactly one beacon script, found ${external.length}`);
       else if (!/"spa":\s*false/.test(external[0][0])) fail(f, `${label}: beacon must set "spa": false`);
     } else if (external.length) fail(f, `${label}: beacon present without a token`);
+    checkOrigins(f, s, label, beacon);
     // 4. Stylesheets, fonts, iframes
     for (const m of s.matchAll(/<link\b[^>]*\bhref=["']((?:https?:)?\/\/[^"']+)["'][^>]*>/gi))
       if (/rel=["'](stylesheet|preload|preconnect|dns-prefetch)/i.test(m[0])) fail(f, `${label}: external resource ${m[1]}`);
@@ -74,7 +104,22 @@ function checkSite(label, { beacon }) {
     const visible = s.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ");
     if (!beacon && /\bcount (?:page )?visits\b|Web Analytics/i.test(visible)) fail(f, `${label}: says visits are counted, but there is no beacon`);
     if (beacon && !f.endsWith("404.html") && !/Web Analytics/.test(visible)) fail(f, `${label}: footer analytics line missing`);
-    if (/<!-- \/?ANALYTICS -->/.test(s)) fail(f, `${label}: ANALYTICS marker left in output`);
+    if (/<!-- \/?(?:NO_)?ANALYTICS -->|<!-- TOOL_FACTS/.test(s)) fail(f, `${label}: build marker left in output`);
+    // The footer's receipt: what is loaded, and how to see it. Cloudflare is named only when its script is there.
+    if (!f.endsWith("404.html")) {
+      const foot = (s.match(/<footer>([\s\S]*?)<\/footer>/) || [])[1]?.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ") ?? "";
+      if (!/DevTools/.test(foot) || !/Network/.test(foot)) fail(f, `${label}: footer does not say how to check (DevTools, Network)`);
+      if (beacon && !/One script from Cloudflare Web Analytics/.test(foot)) fail(f, `${label}: footer should name the one Cloudflare script`);
+      if (!beacon && /Cloudflare/i.test(visible)) fail(f, `${label}: names Cloudflare, but there is no beacon`);
+    }
+    if (f === join("dist", "index.html")) {
+      for (const [name, v] of Object.entries(toolFacts())) {
+        const start = s.indexOf(`<h3 id="${name === "whatsallowed" ? "whats-allowed" : name}">`);
+        const card = start < 0 ? "" : s.slice(start, s.indexOf("</article>", start));
+        if (!card.includes(`Version ${v.version}`)) fail(f, `${label}: ${name} card does not show version ${v.version}`);
+        for (const d of [v.tested, v.reviewed].filter(Boolean)) if (!card.includes(`datetime="${d}"`)) fail(f, `${label}: ${name} card does not show the date ${d}`);
+      }
+    }
     // Internal links resolve
     for (const m of s.matchAll(/\b(?:href|src)=["'](\/[^"'#?]*)/g)) {
       const p = join("dist", m[1]);
@@ -89,6 +134,23 @@ function checkSite(label, { beacon }) {
   for (const f of css) {
     const s = readFileSync(f, "utf8");
     if (/@import\s+url\(\s*["']?(https?:)?\/\//i.test(s) || /url\(\s*["']?(https?:)?\/\//i.test(s)) fail(f, `${label}: external CSS resource`);
+  }
+}
+// 9. The data file behind the tool cards: versions look like versions, dates are real days and not in the future.
+function toolFacts() {
+  try { return JSON.parse(readFileSync("data/tool-facts.json", "utf8")); } catch (e) { fail("data/tool-facts.json", `does not parse (${e.message})`); return {}; }
+}
+function checkToolFacts() {
+  const facts = toolFacts();
+  for (const name of ["whatsallowed", "unclank"]) {
+    const v = facts[name];
+    if (!v) { fail("data/tool-facts.json", `no entry for ${name}`); continue; }
+    if (!/^\d+\.\d+\.\d+$/.test(v.version ?? "")) fail("data/tool-facts.json", `${name}: version should look like 1.2.3`);
+    for (const k of ["tested", "reviewed"]) if (k in v) {
+      const t = Date.parse(v[k] + "T00:00:00Z");
+      if (!/^\d{4}-\d{2}-\d{2}$/.test(v[k]) || Number.isNaN(t)) fail("data/tool-facts.json", `${name}.${k} should be a date like 2026-10-25`);
+      else if (t > Date.now() + 864e5) fail("data/tool-facts.json", `${name}.${k} is in the future`);
+    }
   }
 }
 function scanScript(f, code, label) {
@@ -217,6 +279,7 @@ function checkVoice() {
 const build = (env) => execFileSync(process.execPath, ["build.mjs"], { env: { ...process.env, ...env }, stdio: "pipe" });
 build({ CF_BEACON_TOKEN: "" });
 checkHeaders();
+checkToolFacts();
 checkSite("no token", { beacon: false });
 checkDiscovery();
 checkDemo();
