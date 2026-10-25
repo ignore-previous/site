@@ -96,11 +96,11 @@ Advice is our recommendation. Strong, flat statements are for documented facts o
 
 Each tool card opens with one line about what you get, then a row of short proof chips: where it runs, what it
 sends and what it won't do. Each chip is a positive fact that links to its proof: a test, the threat model,
-ACCURACY.md. Keep a "never" chip only when it's an honesty promise. Any other "won't" detail goes in the install box,
-beside Undo. Chips are outlined links, never yellow: yellow is for actions.
+ACCURACY.md. Keep a "never" chip only when it's an honesty promise. Any other "won't" detail goes in one "Won't:" line
+under the install heading, above the routes, so every route shows it. Chips are outlined links, never yellow: yellow is for actions.
 
-- Do: `Runs on your computer` · `Sends nothing once installed (tested)` · `Read-only` · `Never says "safe"`
-- Don't: a "Won't:" sentence on the card, or badges with no proof behind them, such as "Local-first",
+- Do: `Runs on your computer` · `Sends nothing once installed (tested)` · `Read-only scans` · `Never says "safe"`
+- Don't: a "Won't:" sentence beside the chips, or badges with no proof behind them, such as "Local-first",
   "Privacy-friendly", "Secure".
 
 ## Network wording

@@ -150,8 +150,8 @@
         <ul class="chips" aria-label="Proof">
           <li><a href="https://github.com/ignore-previous/whatsallowed/blob/main/docs/THREAT_MODEL.md#assumptions">Runs on your computer</a></li>
           <li><a href="https://github.com/ignore-previous/whatsallowed/blob/main/test/no-network.test.ts">Sends nothing once installed (tested)</a></li>
-          <li><a href="https://github.com/ignore-previous/whatsallowed/blob/main/test/no-writes.test.ts">Read-only</a></li>
-          <li><a href="https://github.com/ignore-previous/whatsallowed/blob/main/docs/THREAT_MODEL.md#what-it-cant-see">Never says &quot;safe&quot;</a></li>
+          <li><a href="https://github.com/ignore-previous/whatsallowed/blob/main/test/no-writes.test.ts">Read-only scans</a></li>
+          <li><a href="https://github.com/ignore-previous/whatsallowed/blob/main/docs/ACCURACY.md#limits">Never says &quot;safe&quot;</a></li>
         </ul>
         <p class="fine">For example: a hook that pipes <code>curl</code> into <code>sh</code>, an MCP server run with <code>npx</code> and no version, or a <code>.env</code> file the agent can read without asking.</p>
         <div class="show">
@@ -198,6 +198,7 @@ Look at these first (5)
           </div>
         </div>
         <h4 class="how-h" id="whats-allowed-run" tabindex="-1">How to run it</h4>
+        <p class="fine"><b>Won't:</b> <a href="https://github.com/ignore-previous/whatsallowed/blob/main/test/no-writes.test.ts">change your config</a>, or <a href="https://github.com/ignore-previous/whatsallowed/blob/main/docs/ACCURACY.md#limits">tell you a setup is safe</a>. A clean result means its rules found nothing in the files they read.</p>
         <div class="how tabs">
           <div class="tablist" role="tablist" aria-label="How to run What's Allowed">
             <button type="button" role="tab" id="tab-wa-term" aria-selected="true" aria-controls="panel-wa-term" tabindex="0">Command</button>
@@ -213,7 +214,6 @@ Look at these first (5)
                 <div><dt>From</dt><dd>Your project's folder.</dd></div>
                 <div><dt>What it does</dt><dd>Reads your agents' settings files and lists what it found, like the "In your terminal" example. The first time, npx asks to download What's Allowed from npm: type <code>y</code>. Needs Node.js 20 or later.</dd></div>
                 <div><dt>Undo</dt><dd>Nothing to undo: it changes no files or settings. npm keeps the download in its cache. The one exception is <code>whatsallowed baseline</code>, which writes one file of its own, <code>~/.whatsallowed/baseline.json</code>, and only when you run it.</dd></div>
-                <div><dt>Won't</dt><dd><a href="https://github.com/ignore-previous/whatsallowed/blob/main/test/no-writes.test.ts">Change your config</a>, or <a href="https://github.com/ignore-previous/whatsallowed/blob/main/docs/THREAT_MODEL.md#what-it-cant-see">tell you a setup is safe</a>. A clean result means its rules found nothing in the files they read.</dd></div>
               </dl>
             </div>
             <div role="tabpanel" id="panel-wa-ask" aria-labelledby="tab-wa-ask">
@@ -275,7 +275,7 @@ Rules:
           <div class="fold-body">
         <ul class="chips" aria-label="Proof">
           <li><a href="https://github.com/ignore-previous/unclank#install">Runs inside Claude Code or Codex</a></li>
-          <li><a href="https://github.com/ignore-previous/unclank/tree/main/skills">Sends only what that app already sends</a></li>
+          <li><a href="https://github.com/ignore-previous/unclank/blob/main/SECURITY.md#what-counts">Sends only what that app already sends</a></li>
           <li><a href="https://github.com/ignore-previous/unclank#how-the-skills-work">Edits files only when you ask</a></li>
         </ul>
         <p class="fine">For example: a browser tab still showing the default icon, quiz answers you can guess without reading, or a store page that breaks a platform's AI rules. Every item cites its sources.</p>
@@ -302,6 +302,7 @@ Rules:
           <div><dt>Store page <code>unclank-store</code></dt><dd>Use it when you're about to submit, publish, crowdfund or announce a game or creative project, or need a platform's AI-disclosure rules.</dd></div>
         </dl>
         <h4 class="how-h" id="unclank-run" tabindex="-1">How to install it</h4>
+        <p class="fine"><b>Won't:</b> <a href="https://github.com/ignore-previous/unclank#how-the-skills-work">add tracking</a>.</p>
         <div class="how tabs">
           <div class="tablist" role="tablist" aria-label="How to install Unclank">
             <button type="button" role="tab" id="tab-uc-claude" aria-selected="true" aria-controls="panel-uc-claude" tabindex="0">Claude Code</button>
@@ -324,7 +325,6 @@ Rules:
                 <div><dt>From</dt><dd>Any folder. Choose <b>Install for you</b> to use it in every project.</dd></div>
                 <div><dt>What it does</dt><dd>Shows what Unclank adds (three skills) and asks where to install it. Then it installs the skills and says whether to run <code>/reload-plugins</code>.</dd></div>
                 <div><dt>Undo</dt><dd>Type <code>/plugin</code>, open the Installed tab, pick Unclank and choose Uninstall.</dd></div>
-                <div><dt>Won't</dt><dd><a href="https://github.com/ignore-previous/unclank#how-the-skills-work">Add tracking</a>.</dd></div>
               </dl>
               <details class="ask">
                 <summary>Or ask Claude Code to install it</summary>
