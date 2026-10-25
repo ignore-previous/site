@@ -6,7 +6,7 @@ import { readFileSync, existsSync } from "node:fs";
 import { join, extname, normalize } from "node:path";
 
 const ROOT = "dist", PORT = Number(process.env.PORT) || 8137;
-const TYPES = { ".html": "text/html; charset=utf-8", ".css": "text/css", ".js": "text/javascript", ".svg": "image/svg+xml", ".png": "image/png", ".woff2": "font/woff2", ".txt": "text/plain; charset=utf-8", ".json": "application/json", ".md": "text/markdown; charset=utf-8", ".xml": "application/xml" };
+const TYPES = { ".html": "text/html; charset=utf-8", ".css": "text/css", ".js": "text/javascript", ".svg": "image/svg+xml", ".png": "image/png", ".woff2": "font/woff2", ".txt": "text/plain; charset=utf-8", ".json": "application/json", ".md": "text/markdown; charset=utf-8", ".xml": "application/xml", ".ico": "image/x-icon" };
 
 function loadRules() {
   const rules = [];
