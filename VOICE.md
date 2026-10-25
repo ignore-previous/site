@@ -19,7 +19,7 @@ people's work. We also leave "alignment" out of public copy and say who the work
 
 "We" speaks. "by ruddy" is a signature, used in the header and nowhere in the prose.
 
-- Do: "We make small, free tools that keep a person in the loop with AI agents."
+- Do: "We make tools that keep a person in the loop with AI."
 - Don't: "I built this because…", "ruddy recommends…"
 
 ## Humour
@@ -32,12 +32,15 @@ in a safety step or a setting the reader must get right.
 
 ## Audiences and glosses
 
+Say "AI", not "AI agents". Name Claude Code or Codex when you mean the tool.
+Never describe our tools as "free" or "small".
+
 The home page hero and What Can My AI See? are for people new to agents, so they explain jargon the first time it
 appears, in a few words in brackets. The tool cards, Clank Safely and the READMEs speak to developers and skip the
 basics. Clank Safely still explains sandbox, permission mode, approval policy, prompt injection, classifier and
 annotation.
 
-- Do (home hero): "AI agents (programs that do tasks on your computer for you)"
+- Do (home hero): "They check what the AI is allowed to do, and whether what it makes holds up for real people."
 - Don't (Clank Safely): explaining what a terminal or JSON is.
 
 Use "plain" in one place only, the guide's page title. Elsewhere, write plainly and don't announce it. *Checked.*
@@ -104,6 +107,19 @@ Watch "check". One per sentence is plenty.
 
 - Do: "It reads your settings files and flags risky ones."
 - Don't: "Check your settings with a check that checks…"
+
+## Unclank and Clank Safely
+
+Use Unclank only as the product name. Keep skill names as they are.
+Use Clank Safely only as the guide's name, with a plain subtitle the first time it stands alone.
+Never use "clank" as a verb in instructions. Use "clanky", meaning work that looks finished but has
+unchecked faults, at most once per document and only with a definition next to it. Current copy uses none.
+Name faults in their own terms. The AI helps you review; you decide what to fix.
+
+- Do: "Unclank: Checklists for launch pages, quizzes and store releases."
+- Do: "Clank Safely: A setup guide for Claude Code and Codex permissions."
+- Do: "The answer key is wrong", "Two options are correct", "There is no link preview".
+- Don't: "Clank this page", "The quiz has clankiness".
 
 ## One antithesis per document
 
