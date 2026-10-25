@@ -92,7 +92,7 @@ function checkSite(label, { beacon }) {
   }
 }
 function scanScript(f, code, label) {
-  const banned = { "custom analytics event": /__cfBeacon|cfBeacon|zaraz|gtag|dataLayer|plausible|umami/, "network call": /\bfetch\s*\(|XMLHttpRequest|sendBeacon|WebSocket|EventSource|import\s*\(/, "browser storage": f.split(sep).join("/").endsWith("assets/guide.js") ? /localStorage|document\.cookie|indexedDB/ : /localStorage|sessionStorage|document\.cookie|indexedDB/, "URL change": /pushState|replaceState|location\.hash\s*=|location\.search\s*=/ };
+  const banned = { "custom analytics event": /__cfBeacon|cfBeacon|zaraz|gtag|dataLayer|plausible|umami/, "network call": /\bfetch\s*\(|XMLHttpRequest|sendBeacon|WebSocket|EventSource|import\s*\(/, "browser storage": f.split(sep).join("/") === "dist/assets/guide.js" ? /localStorage|document\.cookie|indexedDB/ : /localStorage|sessionStorage|document\.cookie|indexedDB/, "URL change": /pushState|replaceState|location\.hash\s*=|location\.search\s*=/ };
   for (const [what, re] of Object.entries(banned)) if (re.test(code)) fail(f, `${label}: ${what}`);
 }
 

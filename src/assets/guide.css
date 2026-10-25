@@ -37,7 +37,7 @@
 .g-statusrow .status { font-weight: 600; }
 .g-statusrow .status:empty { display: none; }
 /* guide.js moves focus here once a plan is picked. A quiet dashed ring shows where focus went without looking like a control. */
-.g-statusrow { scroll-margin-top: 1rem; }
+.g-statusrow { scroll-margin-top: 1.5rem; }
 .g-statusrow .status:focus { outline: 2px dashed var(--mute); outline-offset: 4px; border-radius: 2px; }
 .btn { font-family: var(--body); font-weight: 700; font-size: .95rem; min-height: 44px; padding: .45rem 1.1rem; background: var(--surface); color: var(--ink); border: 2px solid var(--line); border-radius: 999px; cursor: pointer; }
 .btn:hover { background: var(--well); }
