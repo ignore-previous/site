@@ -1,0 +1,9 @@
+{
+  "template": "release",
+  "theme": "light",
+  "kicker": "New release",
+  "product": "What's Allowed",
+  "version": "0.2.1",
+  "line": "Reads the settings files of Claude Code, Codex and Cursor and flags risky ones.",
+  "url": "ignoreprevious.dev"
+}

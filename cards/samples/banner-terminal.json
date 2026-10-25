@@ -1,0 +1,10 @@
+{
+  "template": "banner-terminal",
+  "theme": "dark",
+  "note": "A dark banner with a strip of real whatsallowed output, then the bio line. Tells developers what the account does.",
+  "command": "whatsallowed demo",
+  "finding": "An allow rule approves every shell command",
+  "where": "Where: ./.claude/settings.json, line 4  Found: Bash(*)  Rule: ALLOW-001",
+  "headline": "Make the most of AI without getting burned.",
+  "subline": "Hands-on tools, guides and games."
+}

@@ -1,0 +1,16 @@
+{
+  "template": "terminal",
+  "theme": "light",
+  "headline": "What is your AI allowed to do?",
+  "url": "ignoreprevious.dev",
+  "command": "whatsallowed demo",
+  "lines": [
+    "10 things to look at in the 5 files checked. 5 need attention first.",
+    "",
+    "  An allow rule approves every shell command",
+    "    What this means: Any command the agent decides to run, including deleting files or sending data out, runs without a prompt.",
+    "    What you could do: Replace it with the specific commands you use, such as \"Bash(npm run test)\" or \"Bash(git diff *)\".",
+    "    Where: ./.claude/settings.json, line 4  Found: Bash(*)  Rule: ALLOW-001"
+  ],
+  "highlight": [2]
+}
