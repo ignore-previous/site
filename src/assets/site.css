@@ -102,10 +102,7 @@ h1, h2, h3 { margin: 0; font-family: var(--display); text-wrap: balance; }
 .stack { display: flex; flex-direction: column; gap: 1.25rem; }
 
 .card { background: var(--surface); border: 2px solid var(--line); border-radius: 12px; box-shadow: 3px 3px 0 var(--shade); padding: 1.3rem; display: grid; grid-template-columns: minmax(0, 1fr); gap: 1.5rem; min-width: 0; }
-@media (min-width: 50rem) { .card.split { grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 2rem; } .card.compact { grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 2rem; align-items: end; } }
-.col { display: flex; flex-direction: column; gap: .8rem; min-width: 0; }
 .card h3 { font-size: 1.5rem; font-weight: 800; letter-spacing: -.02em; line-height: 1.1; }
-.handle { font-family: var(--mono); font-size: .78rem; color: var(--mute); display: block; margin-top: .25rem; }
 .card ul { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: .3rem; }
 .card li { padding-left: 1.2rem; position: relative; }
 .card li::before { content: ""; position: absolute; left: 0; top: .6em; width: .5rem; height: .5rem; background: var(--ink); border-radius: 2px; }
@@ -117,7 +114,6 @@ h1, h2, h3 { margin: 0; font-family: var(--display); text-wrap: balance; }
 .cmd code::before { content: "> "; color: var(--term-fg); opacity: .55; }
 .cmd button { font-family: var(--body); font-weight: 700; font-size: .85rem; background: var(--accent); color: var(--accent-ink); border: 0; border-radius: 6px; padding: .45rem .8rem; cursor: pointer; flex: none; }
 .cmd button:hover { filter: brightness(.94); }
-.cmds { display: flex; flex-direction: column; gap: .5rem; min-width: 0; }
 
 /* in the works: light hazard-tape strip */
 .works { border: 2px solid var(--line); border-radius: 10px; overflow: hidden; background: var(--surface); max-width: 34rem; }
@@ -139,10 +135,6 @@ footer .fonts { color: var(--mute); grid-column: 1 / -1; font-size: .85rem; }
 .newbie:hover .nb-btn { text-decoration: underline; text-underline-offset: 4px; }
 .newbie:focus-visible { outline-offset: 4px; }
 .card.one { grid-template-columns: minmax(0, 1fr); }
-.col p { max-width: 42rem; }
-.col.top .tops { display: grid; grid-template-columns: minmax(0, 1fr); gap: .8rem 2.5rem; }
-@media (min-width: 50rem) { .col.top .tops { grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); } }
-.col.top .tops > div { display: flex; flex-direction: column; gap: .8rem; min-width: 0; }
 .cap { color: var(--mute); font-size: .88rem; }
 
 .code { background: var(--well); border: 2px solid var(--line); border-radius: 10px; overflow: hidden; min-width: 0; align-self: start; }
@@ -197,7 +189,6 @@ footer .fonts { color: var(--mute); grid-column: 1 / -1; font-size: .85rem; }
 .promise { font-size: .92rem; }
 .promise .pi { white-space: nowrap; }
 .promise b { font-weight: 700; }
-@media (min-width: 50rem) { .card.split.wa { grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); } }
 .show.wide { max-width: 46rem; }
 @media (max-width: 30rem) { .promise .pi { display: block; white-space: normal; } .promise .dot { display: none; } .newbie .nb-btn { white-space: normal; text-align: center; } }
 .show .code { align-self: stretch; }
@@ -226,7 +217,43 @@ footer .fonts { color: var(--mute); grid-column: 1 / -1; font-size: .85rem; }
 .copy-prompt { align-self: flex-start; font-family: var(--body); font-weight: 700; font-size: .88rem; background: var(--accent); color: var(--accent-ink); border: 2px solid #14161c; border-radius: 6px; padding: .4rem .9rem; cursor: pointer; }
 .copy-prompt:hover { filter: brightness(.94); }
 .card > .how { grid-column: 1 / -1; max-width: 48rem; }
-.ask-link { align-self: flex-start; font-weight: 600; font-size: .95rem; }
+
+/* home: each tool card folds open in place; the guides sit side by side */
+.card.tool { display: block; padding: 0; }
+.tool-top { display: flex; flex-direction: column; gap: .7rem; padding: 1.3rem; min-width: 0; }
+.tool-top p { max-width: 42rem; }
+.links { display: flex; flex-wrap: wrap; align-items: center; gap: 0 .5rem; font-size: .95rem; font-weight: 600; }
+.links a { display: inline-flex; align-items: center; min-height: 1.75rem; }
+.links .dot { color: var(--mute); }
+.who { color: var(--mute); font-size: .95rem; }
+.cta { align-self: flex-start; background: var(--accent); color: var(--accent-ink); font-family: var(--display); font-weight: 700; padding: .55rem 1.1rem; border-radius: 99px; border: 2px solid #14161c; text-decoration: none; text-align: center; }
+.cta:hover { text-decoration: underline; text-underline-offset: 4px; }
+.cta:focus-visible { outline-offset: 4px; }
+.fold { border-top: 2px solid var(--line); }
+.fold > summary { list-style: none; cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: .7rem 1.3rem; font-family: var(--display); font-weight: 700; }
+.fold > summary::-webkit-details-marker { display: none; }
+/* The arrow points down when closed and up when open. */
+.fold > summary::after { content: ""; flex: none; width: .55rem; height: .55rem; margin: 0 .3rem .25rem 0; border-right: 2.5px solid var(--ink); border-bottom: 2.5px solid var(--ink); transform: rotate(45deg); }
+.fold[open] > summary::after { margin-bottom: -.25rem; transform: rotate(-135deg); }
+@media (prefers-reduced-motion: no-preference) { .fold > summary::after { transition: transform .2s; } }
+.fold[open] > summary { border-bottom: 1px solid var(--shade); }
+.fold-body { display: flex; flex-direction: column; gap: 1.2rem; padding: 1.3rem; min-width: 0; }
+.fold-body .how { max-width: 48rem; }
+.how-h { font-family: var(--display); font-size: 1.2rem; font-weight: 800; letter-spacing: -.01em; margin: .4rem 0 -.4rem; }
+.how-h:focus { outline: none; }
+/* Show less needs the script, so it only appears with it. Without it the summary row closes the card. */
+.less { display: none; align-self: flex-start; align-items: center; min-height: 1.75rem; padding: 0; background: none; border: 0; color: var(--ink); font: 600 .95rem var(--body); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+.less::before { content: "\2191\00a0"; }
+.js .less { display: inline-flex; }
+.js .tool:not(:has(> .fold[open])), .js .tool:has(> .fold[open]) .tool-top { cursor: pointer; }
+.pair { display: grid; grid-template-columns: minmax(0, 1fr); gap: 1.25rem; }
+@media (min-width: 50rem) { .pair { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); } }
+.card.guide { display: flex; flex-direction: column; gap: .8rem; }
+.tool-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .6rem 1rem; }
+.promise a { padding-block: .2rem; }
+@media (max-width: 30rem) { .tool-top, .fold-body { padding: 1rem; } .fold > summary { padding-inline: 1rem; } .card.guide { padding: 1rem; } .tool-top { gap: .5rem; } }
+@media (max-width: 30rem) { .cta { font-size: .92rem; padding: .4rem .85rem; } .tool-head h3 { font-size: 1.35rem; } .pair, .stack { gap: 1rem; } }
+.tool h3, .how-h { scroll-margin-top: 1.5rem; }
 .ask-link::after { content: " \2192"; }
 
 /* "On this page" jump links, used by the terminal page and both guides. */
@@ -234,4 +261,3 @@ footer .fonts { color: var(--mute); grid-column: 1 / -1; font-size: .85rem; }
 .tm-jump a { font-family: var(--display); font-weight: 700; font-size: .95rem; text-decoration: none; border: 2px solid var(--line); border-radius: 99px; padding: .3rem .9rem; background: var(--surface); }
 .tm-jump a:hover { background: var(--well); }
 .back-top { font-family: var(--display); font-weight: 700; }
-.back-top a { display: inline-flex; align-items: center; min-height: 1.75rem; }
