@@ -10,10 +10,19 @@ real person uses it. A person in the loop is what makes it fit. Our tools help t
 allowed to do and whether what it made holds up.
 
 Our readers use AI on purpose, so we never talk about spotting AI, proving someone used it, or judging other
-people's work. We also leave "alignment" out of public copy and say who the work is for.
+people's work. We say who the work is for.
 
 - Do: "so the work fits the people who'll use it"
-- Don't: "aligned with user needs", "tells you whether AI wrote this"
+- Don't: "tells you whether AI wrote this"
+
+## The word "alignment"
+
+Use "alignment" at most once per page, never in the hero or a headline, and only below the hero. Explain it in
+everyday words in the same sentence. It names the problem, never our achievement: no "alignment tool", "aligned AI"
+or "makes AI safe".
+
+- Do: "Researchers call this the alignment problem: getting AI to do what people actually meant."
+- Don't: "Our alignment tool keeps your AI aligned with user needs."
 
 ## Who speaks
 
@@ -21,6 +30,12 @@ people's work. We also leave "alignment" out of public copy and say who the work
 
 - Do: "We make tools that keep a person in the loop with AI."
 - Don't: "I built this because…", "ruddy recommends…"
+
+We sound like a wry friend who's in on the memes, uses AI every day, has fought to get it to do what they actually
+meant, and wants to keep control of it.
+
+- Do: "It did what you said. Was it what you meant?"
+- Don't: "Unlock the full power of AI", or "AI is coming for your job".
 
 ## Humour
 
@@ -77,14 +92,16 @@ Advice is our recommendation. Strong, flat statements are for documented facts o
   the project and none of your real passwords or personal files."
 - Don't: "Never run this outside a container."
 
-## The limits line
+## Proof chips
 
-Every tool says where it runs, what it sends and what it won't do, in one fixed shape. Each part links to its proof:
-a test, the threat model, ACCURACY.md.
+Each tool card opens with one line about what you get, then a row of short proof chips: where it runs, what it
+sends and what it won't do. Each chip is a positive fact that links to its proof: a test, the threat model,
+ACCURACY.md. Keep a "never" chip only when it's an honesty promise. Any other "won't" detail goes in the install box,
+beside Undo. Chips are outlined links, never yellow: yellow is for actions.
 
-- Do: "Runs: on your computer · Sends: nothing once installed (tested) · Won't: change your config, or tell you a
-  setup is safe"
-- Don't: a row of badges such as "Local-first", "Privacy-friendly", "Secure".
+- Do: `Runs on your computer` · `Sends nothing once installed (tested)` · `Read-only` · `Never says "safe"`
+- Don't: a "Won't:" sentence on the card, or badges with no proof behind them, such as "Local-first",
+  "Privacy-friendly", "Secure".
 
 ## Network wording
 
@@ -110,7 +127,7 @@ them. *Checked.*
 - Do: "Open the settings and turn off auto-approve."
 - Don't: "Just turn off auto-approve."
 
-Watch "check". One per sentence is plenty.
+Never use "check" twice in one sentence.
 
 - Do: "It reads your settings files and flags risky ones."
 - Don't: "Check your settings with a check that checks…"
@@ -152,6 +169,15 @@ carry the line.
 
 - Do: "Built with Claude." or, where Codex built part of it, "Built with Claude and Codex."
 - Don't: "Made with AI", or a paragraph about which model wrote which file.
+
+## The subline
+
+"Tools and guides for people who use AI." It goes where the brand travels without the page: the link preview
+(`src/assets/og.png`, under the name), the home page `<title>` and its `og:title`. The home hero leaves it out
+because the lede already names AI. The tagline stays "Seems fine? Check properly."
+
+- Do: "Ignore Previous: Seems fine? Check properly. Tools and guides for people who use AI"
+- Don't: "Tools for checking your AI" (it repeats "check" straight after the tagline).
 
 ## The brand name
 
