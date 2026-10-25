@@ -1,7 +1,7 @@
 // Picker and checklist counts for the guide. Nothing is sent and the address of the page never changes.
 // Everything is shown or hidden on this page only. The app and plan picked are kept in this tab's
 // sessionStorage, in the visitor's own browser, so Back and reload bring the page back as they left it.
-// The browser drops them when the tab closes. If storage is blocked the picker starts empty each time.
+// The browser normally drops them when the tab closes. If storage is blocked the picker starts empty each time.
 (function () {
   'use strict';
 
@@ -15,6 +15,7 @@
   var KEY = 'what-can-my-ai-see:choice';
   var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)');
   var arrowKey = false;
+  var liveTimer = 0;
 
   var APP_NAMES = { chatgpt: 'ChatGPT', claude: 'Claude' };
   var PLAN_NAMES = {
@@ -121,7 +122,8 @@
   function showResult() {
     scrollToEl(status.parentNode);
     status.focus({ preventScroll: true });
-    setTimeout(function () { status.setAttribute('aria-live', 'polite'); }, 1000);
+    clearTimeout(liveTimer);
+    liveTimer = setTimeout(function () { status.setAttribute('aria-live', 'polite'); }, 1000);
   }
 
   // Arrow keys move through a radio group and pick as they go, so a keyboard visitor would be pulled away
@@ -145,11 +147,14 @@
     if (t.name === 'app') {
       all('input[name="plan-chatgpt"], input[name="plan-claude"]').forEach(function (i) { i.checked = false; });
       all('input[type="checkbox"]').forEach(function (i) { i.checked = false; });
+      clearTimeout(liveTimer);
+      status.setAttribute('aria-live', 'polite');
       update();
     } else if (t.name.indexOf('plan-') === 0) {
       all('input[type="checkbox"]').forEach(function (i) { i.checked = false; });
       var move = !arrowKey;
-      if (move) status.setAttribute('aria-live', 'off');
+      clearTimeout(liveTimer);
+      status.setAttribute('aria-live', move ? 'off' : 'polite');
       update();
       if (move) showResult();
     }
