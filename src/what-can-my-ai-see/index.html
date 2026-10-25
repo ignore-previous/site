@@ -71,7 +71,6 @@
     <h2 class="h2" id="pick-h">Pick your app and plan</h2>
     <p class="nojs-note notice">Your browser has scripts turned off, so this page shows both apps and every plan. Each part says which plan it covers. Scroll to the headings for your app.</p>
     <div class="card picker" id="picker">
-      <p class="privacy">Your choice stays on this page. We don't record which app or plan you pick, and nothing you do here leaves your browser.<!-- ANALYTICS --> We count page visits only.<!-- /ANALYTICS --></p>
       <fieldset id="app-set">
         <legend>Which app do you use?</legend>
         <div class="opts">
@@ -99,10 +98,12 @@
         </div>
       </fieldset>
       <p class="fine" id="g-hint" hidden>Choose "Not sure" and we will show everything for your app, with each part labelled by plan.</p>
+      <p class="fine privacy">Your choice stays in this browser tab. We don't record which app or plan you pick, and nothing you do here leaves your browser.<!-- ANALYTICS --> We count page visits only.<!-- /ANALYTICS --></p>
     </div>
     <div class="g-statusrow">
-      <p class="status" id="g-status" aria-live="polite"></p>
+      <p class="status" id="g-status" aria-live="polite" tabindex="-1"></p>
       <button type="button" class="btn g-back" hidden>Change my choice</button>
+      <button type="button" class="btn g-reset" hidden>Start again</button>
     </div>
     <p class="g-prompt" id="g-prompt">Pick your app and plan above and your page will appear here.</p>
     <div class="card g-key" id="g-key">
