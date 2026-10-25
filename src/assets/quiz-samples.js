@@ -32,7 +32,7 @@ D) Sublimation
 3. Which instrument measures air pressure?
 A) Thermometer
 B) Anemometer
-C) Barometer, a sealed device whose reading rises and falls with the weight of the air above it *
+C) Barometer, an instrument whose reading rises and falls with the weight of the air above it *
 D) Hygrometer
 
 4. In which layer of the atmosphere does most weather happen?
