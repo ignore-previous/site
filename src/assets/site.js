@@ -50,7 +50,9 @@ document.querySelectorAll('[role="tablist"]').forEach(function (list) {
 // returns to the card's top; and a link to the card or into it (#whats-allowed, #unclank-run) arrives with it open.
 var folds = [].slice.call(document.querySelectorAll('.tool > .fold'));
 function openFor(hash) {
-  var el = hash && hash.length > 1 && document.getElementById(decodeURIComponent(hash.slice(1)));
+  var id = hash && hash.length > 1 ? hash.slice(1) : "";
+  try { id = decodeURIComponent(id); } catch (e) { /* a malformed hash such as #%zz: use it as typed */ }
+  var el = id && document.getElementById(id);
   var card = el && el.closest('.tool');
   if (!card) return null;
   card.querySelector('.fold').open = true;
