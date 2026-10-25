@@ -173,10 +173,10 @@ carry the line.
 ## The subline
 
 "Tools and guides for people who use AI." It goes where the brand travels without the page: the link preview
-(`src/assets/og.png`, under the name), the home page `<title>` and its `og:title`. The home hero leaves it out
+(`src/assets/og.png`, under the name), the home page `<title>` and its `og:title`. The `<title>` is the brand and the subline only, so search results show it whole; `og:title` adds the tagline. The home hero leaves it out
 because the lede already names AI. The tagline stays "Seems fine? Check properly."
 
-- Do: "Ignore Previous: Seems fine? Check properly. Tools and guides for people who use AI"
+- Do: `<title>` "Ignore Previous: Tools and guides for people who use AI"; `og:title` "Ignore Previous: Seems fine? Check properly. Tools and guides for people who use AI"
 - Don't: "Tools for checking your AI" (it repeats "check" straight after the tagline).
 
 ## The brand name
