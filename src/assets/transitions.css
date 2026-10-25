@@ -1,0 +1,18 @@
+/* Page-to-page transitions. Moving between pages on this site cross-fades the content, and the header mark stays put.
+   It is all CSS and opt-in: a browser without cross-document view transitions drops the @view-transition rule, the
+   view-transition-name property and the ::view-transition-* rules as unknown CSS, so links navigate as they always did.
+   With reduced motion turned on, none of it applies and pages change at once. */
+
+/* The one timing knob. It sits on :root because the ::view-transition pseudo-elements hang off the root element and
+   inherit from it. A value set on body never reaches them. */
+:root { --page-fade: 300ms; }
+
+@media (prefers-reduced-motion: no-preference) {
+  @view-transition { navigation: auto; }
+  .logo { view-transition-name: brand-mark; }
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) { animation-duration: var(--page-fade); }
+  /* Keep the mark pinned. Without this it would slide down from above the fold when you leave a scrolled page. */
+  ::view-transition-group(brand-mark) { animation: none; }
+}
