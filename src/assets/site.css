@@ -179,6 +179,7 @@ footer .fonts { color: var(--mute); grid-column: 1 / -1; font-size: .85rem; }
 .tcmd code::before { content: "$ "; opacity: .55; }
 .tcmd button { font-family: var(--body); font-weight: 700; font-size: .8rem; background: var(--accent); color: var(--accent-ink); border: 0; border-radius: 6px; padding: .35rem .7rem; cursor: pointer; flex: none; }
 .tcmd button:hover { filter: brightness(.94); }
+.cmd button:focus-visible, .tcmd button:focus-visible { outline-color: var(--accent); }
 .tout { margin: 0; font: inherit; white-space: pre-wrap; overflow-wrap: anywhere; color: var(--term-fg); }
 .term.slim { font-size: .72rem; }
 .term.slim .tbar { display: none; }

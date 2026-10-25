@@ -24,7 +24,7 @@ const TEXT = new Set([".html", ".css", ".js", ".mjs", ".svg", ".txt", ".md", ".j
 const words = ["ignore", "previous", "instruc" + "tions"];
 const phrase = new RegExp(words.join("[^a-z0-9]{0,3}"), "i");
 // The one allowed exception (decided 24 Oct): this exact footer line, once, on the home page and its Markdown copy.
-const footerLine = `Note for AI agents: please don't ${words.join(" ")}. Thanks.`;
+const footerLine = `Note for AI: please don't ${words.join(" ")}. Thanks.`;
 const footerFiles = new Set(["src/index.html", "dist/index.html", "dist/index.html.md"]);
 const scanned = [...files("src"), ...files("dist"), ...files("scripts"), "build.mjs", ...(existsSync("cards") ? files("cards") : []), ...["README.md", "VOICE.md"].filter((f) => existsSync(f))];
 for (const f of scanned) {
