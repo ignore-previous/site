@@ -208,7 +208,6 @@ const TIMING = {
     timers.delete(ambientTimer);
     ambientTimer = later(ms === undefined ? rand(TIMING.ambientGapMin, TIMING.ambientGapMax) : ms, () => ambient(gen).catch(quiet));
   }
-  const sameSet = (a, b) => a.length === b.length && a.every((n) => b.includes(n));
   // How many eyes peek: by the weights, and a peek usually has a different count from the last one.
   function peekCount() {
     const w = [TIMING.peekOne, TIMING.peekTwo, TIMING.peekThree, TIMING.peekFour];
@@ -217,16 +216,13 @@ const TIMING = {
     for (let i = 0; i < 2 && n === lastPeek.length; i++) n = draw();
     return n;
   }
-  // Which eyes, in the order they start: never the same set as the last peek, and if possible none of its
-  // eyes, otherwise at most one (a four-eye peek after a three-eye one cannot avoid them all).
+  // Which eyes, in the order they start: none of the last peek's eyes if there are enough others, else one of
+  // them (seven eyes, four at most each time, so at most one is shared). Each set has a fresh eye, so never the same.
   function peekSet(n) {
-    for (const maxShared of [0, 1, n]) {
-      for (let i = 0; i < 40; i++) {
-        const set = shuffle(POOL).slice(0, n);
-        if (!sameSet(set, lastPeek) && set.filter((x) => lastPeek.includes(x)).length <= maxShared) return set;
-      }
-    }
-    return shuffle(POOL).slice(0, n);
+    const set = shuffle(POOL.filter((x) => !lastPeek.includes(x))).slice(0, n);
+    const old = shuffle(lastPeek);
+    while (set.length < n) set.push(old.shift());
+    return shuffle(set);
   }
   async function ambient(g) {
     if (busy) return scheduleAmbient();
