@@ -1,9 +1,11 @@
 // Copies src/ to dist/. Adds the Cloudflare Web Analytics beacon only when CF_BEACON_TOKEN is set.
 // The beacon counts page views. SPA mode is off, so it never sees anything a page does after load.
 // Also writes a Markdown copy of each page next to it (index.html -> index.html.md), linked from llms.txt.
+// A page with an <!-- AI_VIEW --> marker gets its own text, as an AI fetching the page receives it, put there.
 import { cpSync, rmSync, readdirSync, readFileSync, writeFileSync, statSync } from "node:fs";
 import { join, relative, sep } from "node:path";
 import { htmlToMarkdown } from "./scripts/markdown.mjs";
+import { htmlToAiText, aiTextToHtml } from "./scripts/ai-view.mjs";
 
 const SRC = "src", OUT = "dist", ORIGIN = "https://ignoreprevious.dev";
 const token = (process.env.CF_BEACON_TOKEN || "").trim();
@@ -25,7 +27,11 @@ function walk(dir) {
       if (!html.includes("<!-- CF_BEACON -->")) throw new Error(`${p} has no <!-- CF_BEACON --> marker.`);
       // The footer only says we count visits when the beacon is there to count them.
       const analytics = /<!-- ANALYTICS -->([\s\S]*?)<!-- \/ANALYTICS -->/g;
-      const out = html.replace("<!-- CF_BEACON -->", beacon).replace(analytics, token ? "$1" : "");
+      let out = html.replace("<!-- CF_BEACON -->", beacon).replace(analytics, token ? "$1" : "");
+      if (out.includes("<!-- AI_VIEW -->")) {
+        const path = "/" + relative(OUT, p).split(sep).join("/").replace(/index\.html$/, "");
+        out = out.replace("<!-- AI_VIEW -->", () => aiTextToHtml(htmlToAiText(out, ORIGIN + path)));
+      }
       writeFileSync(p, out);
       if (name !== "404.html") {
         const path = "/" + relative(OUT, p).split(sep).join("/").replace(/index\.html$/, "");

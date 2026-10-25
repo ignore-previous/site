@@ -52,6 +52,7 @@ const textOf = (n) => (typeof n === "string" ? n : n.children.map(textOf).join("
 
 function skip(n) {
   if (["svg", "script", "style", "button", "input", "noscript", "template"].includes(n.tag)) return true;
+  if ("data-ai-view-skip" in n.attrs) return true; // the page's own text view: a copy has no use for a copy of itself
   if (n.attrs["aria-hidden"] === "true" || n.attrs.role === "tablist") return true;
   if (n.tag === "fieldset") return true; // the app and plan pickers
   if (n.attrs.id === "picker" || n.attrs.id === "pick-h") return true; // the picker card and its heading: a copy has nothing to pick
