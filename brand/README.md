@@ -34,5 +34,5 @@ Made by recolouring the pack's transparent PNGs: each pixel snaps to the nearest
 ## Built copies
 
 - `src/assets/hero-{one,blink,two,three}.png`: the four shoggoth frames above, composited on yellow at 400 px and reduced to 32 colours. The home hero stacks them and `site.css` fades them in once on load (about 2.6 s), then rests on the one-eye still. Reduced motion shows the still only.
-- `src/assets/og.png`: 1200 x 630 link preview. Shoggoth on yellow, set in Bricolage Grotesque and Figtree.
+- `src/assets/og.png`: 1200 x 630 link preview. Shoggoth on yellow with the site name and the tagline, set in Bricolage Grotesque and Figtree. Made from `brand/og.html` with headless Chrome: edit the HTML, then run `node brand/og.mjs` from the repo root (set `CHROME` if Chrome is not in the usual Windows place). Check it still reads at 600 x 315.
 - `cards/assets/`: `avatar.png` and `banner.png` for the social profile, and `shoggoth-yellow-1024.png` (the tile for the wallpaper banner).
