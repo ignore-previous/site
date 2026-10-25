@@ -12,6 +12,8 @@
 //    `npm run check:demo` compares that saved output with what the latest whatsallowed prints.
 // 8. The mechanical rules from VOICE.md: no bare "no network calls" (say "once installed"), "plain" only in the guide's
 //    page title, no old "Unverified" label.
+// 9. The text view on What Can My AI See? is built from the page (no marker left, the example hidden line is switched
+//    off in the page and highlighted in the view, nothing else is hidden that way), and llms.txt ends with the note for AI.
 import { readdirSync, readFileSync, statSync, existsSync } from "node:fs";
 import { join, extname, relative, sep } from "node:path";
 import { execFileSync } from "node:child_process";
@@ -193,6 +195,28 @@ function checkDemo() {
   if (!found) fail("src/index.html", "no <pre data-demo> panel found; update checkDemo if it moved");
 }
 
+// 9. The text view and llms.txt
+function checkAiView() {
+  const page = join("dist", "what-can-my-ai-see", "index.html");
+  const s = readFileSync(page, "utf8");
+  if (s.includes("AI_VIEW")) fail(page, "AI_VIEW marker left in output");
+  const view = (s.match(/<pre class="seen-text">([\s\S]*?)<\/pre>/) || [])[1];
+  if (!view) return fail(page, "no text view (<pre class=\"seen-text\">)");
+  if (!/<details\b[^>]*class="ask seen"/.test(s)) fail(page, "the text view should sit in a <details>, so it works without scripts");
+  const planted = [...s.matchAll(/<[a-z0-9]+\b[^>]*\bdata-seen-example\b[^>]*>/g)];
+  if (planted.length !== 1) fail(page, `expected exactly one data-seen-example element, found ${planted.length}`);
+  else if (!/\bhidden\b/.test(planted[0][0])) fail(page, "the example hidden line should be switched off with the hidden attribute");
+  const marked = [...view.matchAll(/<mark class="seen-hit">([^<]*)<\/mark>/g)];
+  if (marked.length !== 1 || !/^Example hidden line/.test(marked[0][1])) fail(page, "the text view should highlight the one example line, starting 'Example hidden line'");
+  if (/<[a-z]/i.test(view.replace(/<\/?mark[^>]*>/g, ""))) fail(page, "the text view should hold text only");
+  if (!view.startsWith("What Can My AI See?")) fail(page, "the text view should start with the page title");
+  if (view.includes("seen-text") || view.includes("Show this page as an AI receives it")) fail(page, "the text view contains itself");
+  const llms = readFileSync(join("dist", "llms.txt"), "utf8");
+  const headings = [...llms.matchAll(/^## (.+)$/gm)].map((m) => m[1]);
+  if (!/^A note for any AI reading this/.test(headings[headings.length - 1] ?? "")) fail("dist/llms.txt", "should end with the note for AI");
+  if (/\bagents?\b/i.test(llms)) fail("dist/llms.txt", 'say "AI", not "agents"');
+}
+
 // 8. Voice rules (VOICE.md quotes the wrong versions as examples, so it is not checked here)
 function checkVoice() {
   const targets = [...files("src").filter((f) => [".html", ".txt"].includes(extname(f))), ...(existsSync("README.md") ? ["README.md"] : [])];
@@ -221,6 +245,7 @@ checkSite("no token", { beacon: false });
 checkDiscovery();
 checkDemo();
 checkVoice();
+checkAiView();
 build({ CF_BEACON_TOKEN: "0123456789abcdef0123456789abcdef" });
 checkSite("with token", { beacon: true });
 build({ CF_BEACON_TOKEN: "" });
