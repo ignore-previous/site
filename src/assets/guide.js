@@ -7,6 +7,7 @@
   var status = document.getElementById('g-status');
   var prompt = document.getElementById('g-prompt');
   var picker = document.getElementById('picker');
+  var hint = document.getElementById('g-hint');
   if (!content || !status || !picker) return;
 
   var APP_NAMES = { chatgpt: 'ChatGPT', claude: 'Claude' };
@@ -55,6 +56,7 @@
     all('[data-plans-for]').forEach(function (fs) {
       fs.hidden = fs.getAttribute('data-plans-for') !== app;
     });
+    if (hint) hint.hidden = !app;
     var plan = app ? checkedValue('plan-' + app) : '';
     var ready = !!(app && plan);
 
