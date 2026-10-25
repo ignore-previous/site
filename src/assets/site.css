@@ -228,3 +228,10 @@ footer .fonts { color: var(--mute); grid-column: 1 / -1; font-size: .85rem; }
 .card > .how { grid-column: 1 / -1; max-width: 48rem; }
 .ask-link { align-self: flex-start; font-weight: 600; font-size: .95rem; }
 .ask-link::after { content: " \2192"; }
+
+/* "On this page" jump links, used by the terminal page and both guides. */
+.tm-jump { display: flex; flex-wrap: wrap; gap: .5rem; }
+.tm-jump a { font-family: var(--display); font-weight: 700; font-size: .95rem; text-decoration: none; border: 2px solid var(--line); border-radius: 99px; padding: .3rem .9rem; background: var(--surface); }
+.tm-jump a:hover { background: var(--well); }
+.back-top { font-family: var(--display); font-weight: 700; }
+.back-top a { display: inline-flex; align-items: center; min-height: 1.75rem; }
