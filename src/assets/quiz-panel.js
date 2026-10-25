@@ -73,7 +73,7 @@ if (root) {
       for (const c of r.checks) out.append(block(c));
       const foot = el("p", "fine");
       foot.append(
-        document.createTextNode("These counts cannot tell whether a key is wrong or an answer is open to argument. The full check reads the questions themselves, with your agent. "),
+        document.createTextNode("These counts cannot tell whether a key is wrong or an answer is open to argument. The full check reads the questions themselves, in Claude Code or Codex. "),
         Object.assign(el("a", "", "How to install it"), { href: "#unclank-run" }),
         document.createTextNode(". Look up the IDs in "),
         Object.assign(el("a", "", "the skill's evidence file"), { href: EVIDENCE }),
