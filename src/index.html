@@ -127,10 +127,6 @@
     <div class="hero-text">
       <h1>Seems fine? <mark>Check properly.</mark></h1>
       <p>We make tools that keep a person in the loop with AI. They check what the AI is allowed to do, and whether what it makes holds up for real people. The code is public, and each tool tells you what it sends, where it runs and what it won't do.</p>
-      <a class="newbie" href="/what-can-my-ai-see/">
-        <span class="nb-text"><b>New to ChatGPT or Claude?</b><span>What the app can see and remember about you.</span></span>
-        <span class="nb-btn">Read What Can My AI See?</span>
-      </a>
     </div>
   </header>
 
@@ -138,17 +134,21 @@
     <h2 class="h2" id="tools">Tools</h2>
     <div class="stack">
 
-      <article class="card split wa" id="whats-allowed">
-        <div class="col">
-          <div>
-            <h3>What's Allowed</h3>
-            <span class="handle">whatsallowed</span>
+      <article class="card tool">
+        <div class="tool-top">
+          <div class="tool-head">
+            <h3 id="whats-allowed">What's Allowed</h3>
+            <a class="cta" href="#whats-allowed-run">How to run it</a>
           </div>
-          <p>A checker that reads the settings files of Claude Code, Codex and Cursor and flags risky ones. Each finding names the file, the line number and the rule ID.</p>
-          <p class="fine">For example: a hook that pipes <code>curl</code> into <code>sh</code>, an MCP server run with <code>npx</code> and no version, or a <code>.env</code> file the agent can read without asking.</p>
-          <p class="promise limits"><span class="pi"><b>Runs:</b> <a href="https://github.com/ignore-previous/whatsallowed/blob/main/docs/THREAT_MODEL.md#assumptions">on your computer</a> <span class="dot">&middot;</span></span> <span class="pi"><b>Sends:</b> <a href="https://github.com/ignore-previous/whatsallowed/blob/main/test/no-network.test.ts">nothing once installed (tested)</a> <span class="dot">&middot;</span></span> <span class="pi"><b>Won't:</b> <a href="https://github.com/ignore-previous/whatsallowed/blob/main/test/no-writes.test.ts">change your config, or tell you a setup is safe</a></span></p>
-          <p class="promise"><a href="https://github.com/ignore-previous/whatsallowed/blob/main/docs/ACCURACY.md">Publishes its test results</a></p>
+          <p class="links"><a href="https://github.com/ignore-previous/whatsallowed">GitHub</a> <span class="dot">&middot;</span> <a href="https://www.npmjs.com/package/whatsallowed">npm</a> <span class="dot">&middot;</span> <a href="https://github.com/ignore-previous/whatsallowed/blob/main/docs/ACCURACY.md">Test results</a></p>
+          <p>Flags risky settings in Claude Code, Codex and Cursor, down to the line.</p>
+          <p class="who">For developers who use those tools.</p>
         </div>
+        <details class="fold">
+          <summary>Example and how to run it</summary>
+          <div class="fold-body">
+        <p class="promise limits"><span class="pi"><b>Runs:</b> <a href="https://github.com/ignore-previous/whatsallowed/blob/main/docs/THREAT_MODEL.md#assumptions">on your computer</a> <span class="dot">&middot;</span></span> <span class="pi"><b>Sends:</b> <a href="https://github.com/ignore-previous/whatsallowed/blob/main/test/no-network.test.ts">nothing once installed (tested)</a> <span class="dot">&middot;</span></span> <span class="pi"><b>Won't:</b> <a href="https://github.com/ignore-previous/whatsallowed/blob/main/test/no-writes.test.ts">change your config, or tell you a setup is safe</a></span></p>
+        <p class="fine">For example: a hook that pipes <code>curl</code> into <code>sh</code>, an MCP server run with <code>npx</code> and no version, or a <code>.env</code> file the agent can read without asking.</p>
         <div class="show">
           <div class="tabs">
             <div class="tablist" role="tablist" aria-label="What's Allowed examples">
@@ -204,6 +204,7 @@ Worth checking (5)  Medium: risky in some set-ups, harmless in others.
             </div>
           </div>
         </div>
+        <h4 class="how-h" id="whats-allowed-run" tabindex="-1">How to run it</h4>
         <div class="how tabs">
           <div class="tablist" role="tablist" aria-label="How to run What's Allowed">
             <button type="button" role="tab" id="tab-wa-term" aria-selected="true" aria-controls="panel-wa-term" tabindex="0">Terminal command</button>
@@ -260,16 +261,27 @@ Rules:
             </div>
           </div>
         </div>
+        <button type="button" class="less">Show less</button>
+          </div>
+        </details>
       </article>
 
-      <article class="card" id="unclank">
-        <div class="col">
-          <div>
-            <h3>Unclank</h3>
+      <article class="card tool">
+        <div class="tool-top">
+          <div class="tool-head">
+            <h3 id="unclank">Unclank</h3>
+            <a class="cta" href="#unclank-run">How to install it</a>
           </div>
-          <p>Skills for Claude Code and Codex that catch what agents miss when nobody's looking: a browser tab still showing the default icon, quiz answers you can guess without reading, a store page that breaks a platform's AI rules. Every item cites its sources.</p>
-          <p class="promise limits"><span class="pi"><b>Runs:</b> <a href="https://github.com/ignore-previous/unclank#install">inside Claude Code or Codex</a> <span class="dot">&middot;</span></span> <span class="pi"><b>Sends:</b> <a href="https://github.com/ignore-previous/unclank/tree/main/skills">only what that app already sends</a> <span class="dot">&middot;</span></span> <span class="pi"><b>Won't:</b> <a href="https://github.com/ignore-previous/unclank#how-the-skills-work">add tracking, or change files until you ask</a></span></p>
+          <p class="links"><a href="https://github.com/ignore-previous/unclank">GitHub</a></p>
+          <p>Skills that catch what AI misses on launch pages, quizzes and game store pages.</p>
+          <p class="who">For anyone shipping one with Claude Code or Codex.</p>
         </div>
+        <details class="fold">
+          <summary>Examples and how to install it</summary>
+          <div class="fold-body">
+        <p class="promise limits"><span class="pi"><b>Runs:</b> <a href="https://github.com/ignore-previous/unclank#install">inside Claude Code or Codex</a> <span class="dot">&middot;</span></span> <span class="pi"><b>Sends:</b> <a href="https://github.com/ignore-previous/unclank/tree/main/skills">only what that app already sends</a> <span class="dot">&middot;</span></span> <span class="pi"><b>Won't:</b> <a href="https://github.com/ignore-previous/unclank#how-the-skills-work">add tracking, or change files until you ask</a></span></p>
+        <p class="fine">For example: a browser tab still showing the default icon, quiz answers you can guess without reading, or a store page that breaks a platform's AI rules. Every item cites its sources.</p>
+        <h4 class="how-h" id="unclank-run" tabindex="-1">How to install it</h4>
         <div class="how tabs">
           <div class="tablist" role="tablist" aria-label="How to install Unclank">
             <button type="button" role="tab" id="tab-uc-term" aria-selected="true" aria-controls="panel-uc-term" tabindex="0">Claude Code commands</button>
@@ -347,24 +359,30 @@ Rules:
             </div>
           </div>
         </div>
+        <button type="button" class="less">Show less</button>
+          </div>
+        </details>
       </article>
 
-      <article class="card compact">
-        <div class="col">
-          <div>
-            <h3>Clank Safely</h3>
-            <span class="handle">a page, not a program</span>
-          </div>
-          <p>A setup guide for Claude Code and Codex permissions. Check what's allowed now, then pick one of three ways of working, using the official setting names. Every fact links to the vendor's docs or is marked Not confirmed.</p>
-          <p class="promise limits"><span class="pi"><b>Runs:</b> <a href="/clank-safely/">in your browser</a> <span class="dot">&middot;</span></span> <span class="pi"><b>Sends:</b> <a href="https://github.com/ignore-previous/site/blob/main/scripts/check.mjs">nothing</a> <span class="dot">&middot;</span></span> <span class="pi"><b>Won't:</b> <a href="/clank-safely/#scope-h">change your settings, or make an agent safe on its own</a></span></p>
-        </div>
-        <div class="cmds">
-          <a class="newbie" href="/clank-safely/">
-            <span class="nb-text"><b>Set up an agent carefully</b><span>Three ways of working, with sources.</span></span>
-            <span class="nb-btn">Read Clank Safely</span>
-          </a>
-          <a class="ask-link" href="/clank-safely/#agent-h">Or ask your agent to walk you through it</a>
-        </div>
+    </div>
+  </section>
+
+  <section class="sect" aria-labelledby="guides">
+    <h2 class="h2" id="guides">Guides</h2>
+    <div class="pair">
+
+      <article class="card guide">
+        <h3>Clank Safely</h3>
+        <p>Set up Claude Code or Codex permissions in one of three ways of working, with sources.</p>
+        <p class="who">For developers setting up either tool.</p>
+        <a class="cta push" href="/clank-safely/">Read Clank Safely</a>
+      </article>
+
+      <article class="card guide">
+        <h3>What Can My AI See?</h3>
+        <p>What ChatGPT and Claude can see and remember about you, and how to check your own settings.</p>
+        <p class="who">New to ChatGPT or Claude? Start here.</p>
+        <a class="cta push" href="/what-can-my-ai-see/">Read What Can My AI See?</a>
       </article>
 
     </div>
