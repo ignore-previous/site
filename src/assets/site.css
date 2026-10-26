@@ -257,6 +257,8 @@ footer .fonts { color: var(--mute); grid-column: 1 / -1; font-size: .85rem; }
 .links a { display: inline-flex; align-items: center; min-height: 1.75rem; }
 .links .dot { color: var(--mute); }
 .who { color: var(--mute); font-size: .95rem; }
+.receipt { margin: 0; }
+.receipt .dot { color: var(--mute); }
 .tool-top .lead { font-size: 1.1rem; font-weight: 500; text-wrap: pretty; }
 .why p { max-width: 40rem; font-size: 1.1rem; }
 .cta { align-self: flex-start; background: var(--accent); color: var(--accent-ink); font-family: var(--display); font-weight: 700; padding: .55rem 1.1rem; border-radius: 99px; border: 2px solid #14161c; text-decoration: none; text-align: center; }
