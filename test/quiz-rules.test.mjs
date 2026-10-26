@@ -143,6 +143,14 @@ test("D09-001: strictly longest and near-ties are counted separately", () => {
   assert.match(r.tally, /Near-ties, counted separately: 2/);
 });
 
+test("D09-001: the near-tie count is left out when nothing is flagged", () => {
+  const r = checkLongest(items([mk(10, [10, 8, 8]), mk(10, [12, 8, 8])].map((t, i) => t.replace(/^1\./, `${i + 1}.`)).join("\n\n")));
+  assert.equal(r.found.length, 0);
+  assert.equal(r.stats.near, 2); // still counted
+  assert.match(r.tally, /longest option in/);
+  assert.doesNotMatch(r.tally, /Near-ties/);
+});
+
 test("D09-001: the set tally needs 8 items with one key", () => {
   const longKeys = (n) => quiz(seq("ABCDABCDABCD".slice(0, n)), { len: (i, l) => (l === "ABCD"[i % 4] ? 40 : 10) });
   const seven = checkLongest(items(longKeys(7)));
