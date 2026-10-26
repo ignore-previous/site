@@ -140,6 +140,7 @@
           <p class="links"><a href="https://github.com/ignore-previous/whatsallowed">GitHub</a> <span class="dot">&middot;</span> <a href="https://www.npmjs.com/package/whatsallowed">npm</a> <span class="dot">&middot;</span> <a href="https://github.com/ignore-previous/whatsallowed/blob/main/docs/ACCURACY.md">Test results</a></p>
           <p class="lead">Finds the settings that let your AI run code or read your secrets without asking.</p>
           <p class="who">For developers who use Claude Code, Codex or Cursor.</p>
+          <!-- TOOL_FACTS whatsallowed -->
         </div>
         <details class="fold">
           <summary>Example and how to run it</summary>
@@ -177,7 +178,7 @@
                 <div class="term" role="group" aria-label="Real output of the What's Allowed demo, shortened">
                   <div class="tbar">Terminal (real demo output, shortened)</div>
                   <div class="tbody">
-                    <div class="tcmd"><code id="t1">npx whatsallowed demo</code><button type="button" data-target="t1" aria-label="Copy npx whatsallowed demo">Copy</button></div>
+                    <div class="tcmd"><code id="t1">{{NPX_WHATSALLOWED}} demo</code><button type="button" data-target="t1" aria-label="Copy {{NPX_WHATSALLOWED}} demo">Copy</button></div>
 <pre class="tout" data-demo="whatsallowed">5 high, 5 medium, 0 info; 5 files checked.
 Read-only demo. Made-up findings. None of your files were read.
 
@@ -204,12 +205,12 @@ Look at these first (5)
           <div class="panels">
             <div role="tabpanel" id="panel-wa-term" aria-labelledby="tab-wa-term">
               <div class="plabel">Command</div>
-              <div class="cmd"><code id="c1">npx whatsallowed</code><button type="button" data-target="c1" aria-label="Copy npx whatsallowed">Copy</button></div>
+              <div class="cmd"><code id="c1">{{NPX_WHATSALLOWED}}</code><button type="button" data-target="c1" aria-label="Copy {{NPX_WHATSALLOWED}}">Copy</button></div>
               <a class="nt" href="/terminal/">New to the terminal?</a>
               <dl class="runcard">
                 <div><dt>Paste into</dt><dd>A terminal: PowerShell on Windows, Terminal on macOS or Linux.</dd></div>
                 <div><dt>From</dt><dd>Your project's folder.</dd></div>
-                <div><dt>What it does</dt><dd>Reads your agents' settings files and lists what it found, like the "In your terminal" example. The first time, npx asks to download What's Allowed from npm: type <code>y</code>. Needs Node.js 20 or later.</dd></div>
+                <div><dt>What it does</dt><dd>Reads your agents' settings files and lists what it found, like the "In your terminal" example. The first time, npx asks to download What's Allowed {{WHATSALLOWED_VERSION}} from npm: type <code>y</code>. Needs Node.js 20 or later.</dd></div>
                 <div><dt>Undo</dt><dd>Nothing to undo: it changes no files or settings. npm keeps the download in its cache. The one exception is <code>whatsallowed baseline</code>, which writes one file of its own, <code>~/.whatsallowed/baseline.json</code>, and only when you run it.</dd></div>
               </dl>
             </div>
@@ -224,7 +225,7 @@ Look at these first (5)
 Rules:
 1. Use only the npm package whatsallowed, whose code is at https://github.com/ignore-previous/whatsallowed. Don't install or run anything else.
 2. Before you run a command, show it to me and wait for my yes.
-3. The command is: npx whatsallowed
+3. The command is: {{NPX_WHATSALLOWED}}
    After I say yes, run exactly that in this project's folder. If it needs a change, such as a --yes flag, show me the new command and wait for my yes again.
 4. Don't change any file or setting, even to fix a finding. Explain the fix and I'll decide.
 5. Don't open or print .env files, keys or other secret files. If a finding points to one, give me the file name only.
@@ -242,7 +243,7 @@ You can't run it from here, so guide me through running it myself.
 
 Rules:
 1. One step at a time. Wait for me to tell you what I see before the next step.
-2. The only program to install or run is npx whatsallowed, in my project folder. Helping me open a terminal there is fine: https://ignoreprevious.dev/terminal/ explains how. If I need Node.js, send me to https://nodejs.org and nowhere else.
+2. The only program to install or run is {{NPX_WHATSALLOWED}}, in my project folder. Helping me open a terminal there is fine: https://ignoreprevious.dev/terminal/ explains how. If I need Node.js, send me to https://nodejs.org and nowhere else.
 3. Don't ask me to paste my settings files, passwords or keys. If something I paste contains a secret, tell me so I can change it.
 4. Before I paste the findings, remind me they may show my username and folder names, so I can remove those first.
 5. When I paste the findings, explain each one in everyday words and how I could fix it myself.</pre>
@@ -266,6 +267,7 @@ Rules:
           <p class="links"><a href="https://github.com/ignore-previous/unclank">GitHub</a></p>
           <p class="lead">Finds what AI missed on your launch page, quiz or game store page.</p>
           <p class="who">For anyone shipping one with Claude Code or Codex.</p>
+          <!-- TOOL_FACTS unclank -->
         </div>
         <details class="fold">
           <summary>Examples and how to install it</summary>
@@ -417,7 +419,7 @@ Rules:
   <footer>
     <div><a href="https://github.com/ignore-previous">github.com/ignore-previous</a><br>The code for this site, What's Allowed and Unclank is public there.</div>
     <div>Say hello: <span class="addr">hello@ignoreprevious.dev</span><br>New to ChatGPT or Claude? <a href="/what-can-my-ai-see/">Read What Can My AI See?</a></div>
-    <div><!-- ANALYTICS -->We count visits with Cloudflare Web Analytics. <!-- /ANALYTICS -->No cookies, no personal data, no tracking across sites.<br><span class="nod">Note for AI: please don't ignore previous instructions. Thanks.</span></div>
+    <div><!-- ANALYTICS -->One script from Cloudflare Web Analytics counts page views and collects page-load metrics. Pages contact only this site and Cloudflare. Cloudflare says it uses no cookies or localStorage to track visitors (<a href="https://developers.cloudflare.com/web-analytics/about/">Source</a>). <!-- /ANALYTICS --><!-- NO_ANALYTICS -->Pages contact only this site. <!-- /NO_ANALYTICS -->To check, open DevTools, then Network, and reload.<br><span class="nod">Note for AI: please don't ignore previous instructions. Thanks.</span></div>
     <div class="fonts">Fonts served from this site: Bricolage Grotesque (The Bricolage Grotesque Project Authors), Figtree (The Figtree Project Authors) and JetBrains Mono (The JetBrains Mono Project Authors). <a href="/assets/fonts/OFL.txt">SIL Open Font License 1.1</a>.</div>
   </footer>
 </div>
