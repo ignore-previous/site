@@ -21,6 +21,7 @@
 //    it runs @latest on purpose, to compare demo output.
 // 10. The text view on What Can My AI See? is built from the page (no marker left, the example hidden line is switched
 //    off in the page and highlighted in the view, nothing else is hidden that way), and llms.txt ends with the note for AI.
+// 11. The quiz check's counting rules (assets/quiz-rules.js) touch no DOM, so they can be tested in Node (test/quiz-rules.test.mjs, run by `npm run check`).
 import { readdirSync, readFileSync, statSync, existsSync } from "node:fs";
 import { join, extname, relative, sep } from "node:path";
 import { execFileSync } from "node:child_process";
@@ -334,6 +335,15 @@ function checkPinnedNpx() {
   }
 }
 
+// 11. The counting rules stay pure: no DOM, no window, no imports (so Node can test them and nothing can reach the page).
+function checkQuizRules() {
+  const f = join("src", "assets", "quiz-rules.js");
+  if (!existsSync(f)) return fail(f, "missing");
+  const code = readFileSync(f, "utf8").replace(/\/\/.*$/gm, "");
+  if (/(document|window|navigator|globalThis|self|location)/.test(code)) fail(f, "the counting rules must not touch the DOM or window");
+  if (/^\s*import/m.test(code)) fail(f, "the counting rules must not import anything");
+}
+
 const build = (env) => execFileSync(process.execPath, ["build.mjs"], { env: { ...process.env, ...env }, stdio: "pipe" });
 build({ CF_BEACON_TOKEN: "" });
 checkHeaders();
@@ -343,6 +353,7 @@ checkDiscovery();
 checkDemo();
 checkVoice();
 checkAiView();
+checkQuizRules();
 build({ CF_BEACON_TOKEN: "0123456789abcdef0123456789abcdef" });
 checkSite("with token", { beacon: true });
 build({ CF_BEACON_TOKEN: "" });

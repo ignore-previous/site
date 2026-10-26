@@ -56,7 +56,7 @@ function skip(n) {
   if (n.attrs["aria-hidden"] === "true" || n.attrs.role === "tablist") return true;
   if (n.tag === "fieldset") return true; // the app and plan pickers
   if (n.attrs.id === "picker" || n.attrs.id === "pick-h") return true; // the picker card and its heading: a copy has nothing to pick
-  return ["g-statusrow", "g-prompt", "back-wrap", "nojs-note"].some((c) => has(n, c));
+  return ["g-statusrow", "g-prompt", "back-wrap", "nojs-note", "qc-live", "qc-nojs"].some((c) => has(n, c));
 }
 
 const isBlock = (n) => typeof n !== "string" && (BLOCK.has(n.tag) || has(n, "cmd") || has(n, "tcmd") || n.attrs.role === "tabpanel");
