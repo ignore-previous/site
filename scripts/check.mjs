@@ -2,8 +2,9 @@
 // 1. The brand phrase never appears in full (built from parts so this file doesn't contain it), except the one
 //    decided footer line on the home page.
 // 2. The only external script is the Cloudflare Web Analytics beacon, added at build time with SPA mode off.
-// 3. No custom analytics events, no network calls and no browser storage in page scripts. The one exception is the guide's
-//    picker (assets/guide.js), which keeps the app and plan in sessionStorage for the tab's lifetime.
+// 3. No custom analytics events, no network calls and no browser storage in page scripts. The exceptions use sessionStorage
+//    only, for the tab's lifetime: the guide's picker (assets/guide.js) keeps the app and plan, and the shoggoth
+//    (assets/shoggoth.js) keeps a flag so its first reveal plays once per visit.
 // 4. No external stylesheets or fonts. Internal links resolve. Voice: no "simply" or "just" in page text.
 // 5. dist/_headers has the strict CSP (no inline script or style needed, beacon hosts allowed) and the other security headers.
 //    Pages therefore carry no inline <script>, <style>, style="" or on*="" handlers. JSON-LD data blocks are allowed and must parse.
@@ -93,7 +94,7 @@ function checkSite(label, { beacon }) {
   }
 }
 function scanScript(f, code, label) {
-  const banned = { "custom analytics event": /__cfBeacon|cfBeacon|zaraz|gtag|dataLayer|plausible|umami/, "network call": /\bfetch\s*\(|XMLHttpRequest|sendBeacon|WebSocket|EventSource|import\s*\(/, "browser storage": f.split(sep).join("/") === "dist/assets/guide.js" ? /localStorage|document\.cookie|indexedDB/ : /localStorage|sessionStorage|document\.cookie|indexedDB/, "URL change": /pushState|replaceState|location\.hash\s*=|location\.search\s*=/ };
+  const banned = { "custom analytics event": /__cfBeacon|cfBeacon|zaraz|gtag|dataLayer|plausible|umami/, "network call": /\bfetch\s*\(|XMLHttpRequest|sendBeacon|WebSocket|EventSource|import\s*\(/, "browser storage": ["dist/assets/guide.js", "dist/assets/shoggoth.js"].includes(f.split(sep).join("/")) ? /localStorage|document\.cookie|indexedDB/ : /localStorage|sessionStorage|document\.cookie|indexedDB/, "URL change": /pushState|replaceState|location\.hash\s*=|location\.search\s*=/ };
   for (const [what, re] of Object.entries(banned)) if (re.test(code)) fail(f, `${label}: ${what}`);
 }
 
