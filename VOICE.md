@@ -111,6 +111,20 @@ network calls". *Checked.*
 - Do: "Once installed, it makes no network calls, and a test checks that on every build."
 - Don't: "What's Allowed makes no network calls."
 
+## Receipts
+
+Claims about what a page loads or sends describe the present ("loads", "sends"), so a reader can test them. Don't write
+"never". Each claim is true in both builds, with and without the analytics beacon, and `npm run check` tests both. The
+footer says in one line what the page contacts and how to see it (DevTools, Network). In the beacon build it names the
+one Cloudflare script and says only what Cloudflare's own documentation says about it, with a Source link. Don't add a
+claim the documentation doesn't make, such as "no tracking" or "sends nothing", for a page that counts views. A tool
+page that says where it runs and what it sends says so for the page itself, and leaves what the tool does to the tool's README.
+If analytics or any network call is added or removed, change the receipt in the same PR: the footer on every page, the
+Clank Safely line, the allow-list in `scripts/check.mjs`, and this section.
+
+- Do: "One script from Cloudflare Web Analytics counts page views and collects page-load metrics. Pages contact only this site and Cloudflare."
+- Don't: "No trackers." or "This site never sends anything."
+
 ## Names and terms
 
 In prose and titles, write What's Allowed and Unclank. Use code font for the command or package: `whatsallowed`,

@@ -18,6 +18,12 @@ In PowerShell, from this folder:
 
 Terminal output on the site is real `whatsallowed demo` output, shortened. `npm run check` fails if a line shown on a page is missing from `scripts/whatsallowed-demo.txt` or out of order. `npm run check:demo` downloads the latest What's Allowed from npm and fails if its demo output differs from that file. When it does, update the file and the pages together.
 
+## Receipts
+
+The footer on every page says what the page contacts and how to see it in DevTools. The Clank Safely page adds one line on where it runs and what it sends. Both change with the build: they name Cloudflare Web Analytics only when `CF_BEACON_TOKEN` adds the beacon. If analytics or any other network call is ever added, change the footer line and the Clank Safely line in the same PR. `npm run check` fails when a page loads anything from another origin, apart from the beacon script in the beacon build.
+
+Each home tool card shows the tool's version and a date. `data/tool-facts.json` holds them, and `build.mjs` copies them into the cards, so a build never reads the network or the tool repos. To refresh the file after a tool ships, in PowerShell from this folder, with the tool repos fetched: `node scripts/update-tool-facts.mjs ../whatsallowed ../unclank`. For What's Allowed the date is when `eval/results.json` last changed (the accuracy run), and only when it is for the version shown. For Unclank it is the newest "Last reviewed" line in its skills, since Unclank keeps no dated test results.
+
 Every command the site tells a visitor to run names a What's Allowed release. That release is `WHATSALLOWED_VERSION` in `scripts/whatsallowed-version.mjs`. Pages and `llms.txt` write `{{NPX_WHATSALLOWED}}`, and `{{WHATSALLOWED_VERSION}}` where a sentence names the release. The build fills them in. To move to a new release, change the version in that file and run `npm run check`. If `npm run check:demo` reports new demo output, update `scripts/whatsallowed-demo.txt` and the pages together.
 
 ## Voice
@@ -38,7 +44,7 @@ The site is a Cloudflare Worker with static assets only (no Worker script), depl
 
 The custom domain is set in the Cloudflare dashboard, so the file has no `routes`.
 
-Analytics: set `CF_BEACON_TOKEN` in the build variables to add the Cloudflare Web Analytics beacon. Without it the build leaves out the beacon and the footer line that says we count visits.
+Analytics: set `CF_BEACON_TOKEN` in the build variables to add the Cloudflare Web Analytics beacon. Without it the build leaves out the beacon and the footer wording that names Cloudflare. The production site sets it on purpose, to count page views.
 
 ## Files for search engines and agents
 
