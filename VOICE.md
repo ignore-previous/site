@@ -6,8 +6,8 @@ How we write the site, the READMEs and the tools' help text. Each rule has an ex
 ## The idea behind the brand
 
 Agents keep getting more capable. Their work still comes out generic, looks finished, and breaks the first time a
-real person uses it. A person in the loop is what makes it fit. Our tools help that person check what an agent is
-allowed to do and whether what it made holds up.
+real person uses it. Keeping you in the loop is what makes it fit. Our tools help you check what the AI is allowed to
+do, and catch what it missed.
 
 Our readers use AI on purpose, so we never talk about spotting AI, proving someone used it, or judging other
 people's work. We say who the work is for.
@@ -28,7 +28,7 @@ or "makes AI safe".
 
 "We" speaks, on every page and in the header. There is no personal signature.
 
-- Do: "We make tools that keep a person in the loop with AI."
+- Do: "We make tools that keep you in the loop with AI."
 - Don't: "I built this because…", "ruddy recommends…"
 
 We sound like a wry friend who's in on the memes, uses AI every day, has fought to get it to do what they actually
@@ -62,7 +62,7 @@ appears, in a few words in brackets. The tool cards, Clank Safely and the README
 basics. Clank Safely still explains sandbox, permission mode, approval policy, prompt injection, classifier and
 annotation.
 
-- Do (home hero): "They check what the AI is allowed to do, and whether what it makes holds up for real people."
+- Do (home hero): "They check what the AI is allowed to do, and catch what it missed."
 - Don't (Clank Safely): explaining what a terminal or JSON is.
 
 Use "plain" in one place only, the guide's page title. Elsewhere, write plainly and don't announce it. *Checked.*
