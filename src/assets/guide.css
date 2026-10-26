@@ -152,3 +152,10 @@
   html { scroll-behavior: auto; }
   .g *, .g *::before, .g *::after { animation: none !important; transition: none !important; }
 }
+
+/* What an AI gets from this page: the page as text in a box that scrolls inside itself. The text is made at build time. */
+.seen-box { max-height: 26rem; overflow: auto; border: 2px solid var(--line); border-radius: 8px; background: var(--well); min-width: 0; }
+.seen-box:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+.seen-text { margin: 0; padding: .8rem; font-family: var(--mono); font-size: .8rem; line-height: 1.6; white-space: pre-wrap; overflow-wrap: anywhere; }
+/* The planted-example line: a tint and an underline, so colour is not the only cue. */
+.seen-hit { background: var(--hl); color: var(--ink); text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 3px; }

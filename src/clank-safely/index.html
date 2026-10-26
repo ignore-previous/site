@@ -27,6 +27,7 @@
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <link rel="preload" href="/assets/fonts/bricolage-grotesque-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/assets/fonts/figtree-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/assets/transitions.css">
 <link rel="stylesheet" href="/assets/site.css">
 <link rel="stylesheet" href="/assets/guide.css">
 <link rel="stylesheet" href="/assets/clank.css">
@@ -62,6 +63,7 @@
     <h1 id="top">Clank <mark>Safely</mark></h1>
     <p class="lede">Set up Claude Code or Codex so it can't do more than you meant. This page names the official settings, quotes the docs, and says which ones the tool enforces and which are only advice. It changes nothing on your computer. OpenAI and Anthropic didn't write or review it.</p>
     <p class="lede">On Windows: Claude Code's sandbox runs only inside WSL2. Without it, your permission rules are the only fence.</p>
+    <p class="fine">The page runs in your browser<!-- ANALYTICS --> and counts a page view<!-- /ANALYTICS -->. The Copy buttons only write to your clipboard. The step 1 command runs on your computer, where npx first downloads What's Allowed from npm.</p>
     <nav class="tm-jump" aria-label="On this page">
       <a href="#way-h">Pick your way</a>
       <a href="#scope-h">What this page is</a>
@@ -135,7 +137,7 @@
 Rules:
 1. First read the guide: https://ignoreprevious.dev/clank-safely/index.html.md
    Use its setting names and its sources. If you're not sure a setting exists, say so.
-2. Install nothing except What's Allowed (the npm package whatsallowed), which npx downloads when it runs. If you can run commands, start by checking my current settings with What's Allowed: npx whatsallowed, in this project's folder. Show me the command and wait for my yes before you run it.
+2. Install nothing except What's Allowed (the npm package whatsallowed), which npx downloads when it runs. If you can run commands, start by checking my current settings with What's Allowed: {{NPX_WHATSALLOWED}}, in this project's folder. Show me the command and wait for my yes before you run it.
 3. Ask me one question at a time, and wait for my answer.
 4. Before you run a command or change any file, show me the exact command or change. Do it only after I say yes.
 5. Don't open or print .env files, keys or other secret files. If something points to one, give me the file name only.
@@ -156,12 +158,12 @@ Rules:
         <p><b>Read-only: it reads your config files and changes nothing.</b></p>
         <p data-fact="clank-3.1 clank-3.2">What's Allowed is our checker. It reads the settings files of Claude Code, Codex and Cursor and flags risky ones. Each finding gives the file, the line and a rule ID, with a reason and a fix <a class="src" href="https://github.com/ignore-previous/whatsallowed#readme" rel="noopener noreferrer" aria-label="Our docs: What's Allowed project page">Our docs</a>.</p>
         <p data-fact="clank-3.3">In a terminal in your project folder (PowerShell on Windows), run this. It needs Node.js 20 or later <a class="src" href="https://github.com/ignore-previous/whatsallowed#readme" rel="noopener noreferrer" aria-label="Our docs: What's Allowed project page, first run">Our docs</a>.</p>
-        <div class="cmd"><code id="c1">npx whatsallowed</code><button type="button" data-target="c1" aria-label="Copy npx whatsallowed">Copy</button></div>
+        <div class="cmd"><code id="c1">{{NPX_WHATSALLOWED}}</code><button type="button" data-target="c1" aria-label="Copy {{NPX_WHATSALLOWED}}">Copy</button></div>
         <a class="nt" href="/terminal/">New to the terminal?</a>
         <dl class="runcard">
           <div><dt>Paste into</dt><dd>A terminal: PowerShell on Windows, Terminal on macOS or Linux.</dd></div>
           <div><dt>From</dt><dd>Your project's folder.</dd></div>
-          <div><dt>What it does</dt><dd>Reads your agents' settings files and lists what it found. The first time, npx asks to download What's Allowed from npm: type <code>y</code>.</dd></div>
+          <div><dt>What it does</dt><dd>Reads your agents' settings files and lists what it found. The first time, npx asks to download What's Allowed {{WHATSALLOWED_VERSION}} from npm: type <code>y</code>.</dd></div>
           <div><dt>Undo</dt><dd>Nothing to undo: it changes no files or settings. npm keeps the download in its cache.</dd></div>
         </dl>
         <ul>
@@ -331,7 +333,7 @@ Rules:
   <footer>
     <div><a href="https://github.com/ignore-previous">github.com/ignore-previous</a><br>The code for this site, What's Allowed and Unclank is public there.</div>
     <div>Say hello: <span class="addr">hello@ignoreprevious.dev</span><br>New to ChatGPT or Claude? <a href="/what-can-my-ai-see/">Read What Can My AI See?</a></div>
-    <div><!-- ANALYTICS -->We count visits with Cloudflare Web Analytics. <!-- /ANALYTICS -->No cookies, no personal data, no tracking across sites.</div>
+    <div><!-- ANALYTICS -->One script from Cloudflare Web Analytics counts page views and collects page-load metrics. Pages contact only this site and Cloudflare. Cloudflare says it uses no cookies or localStorage to track visitors (<a href="https://developers.cloudflare.com/web-analytics/about/">Source</a>). <!-- /ANALYTICS --><!-- NO_ANALYTICS -->Pages contact only this site. <!-- /NO_ANALYTICS -->To check, open DevTools, then Network, and reload.</div>
     <div class="fonts">Fonts served from this site: Bricolage Grotesque (The Bricolage Grotesque Project Authors), Figtree (The Figtree Project Authors) and JetBrains Mono (The JetBrains Mono Project Authors). <a href="/assets/fonts/OFL.txt">SIL Open Font License 1.1</a>.</div>
   </footer>
 </div>
