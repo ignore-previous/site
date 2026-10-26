@@ -61,9 +61,11 @@
   <header class="g-hero">
     <h1 id="top">What Can <mark>My AI</mark> See?</h1>
     <p class="lede">ChatGPT and Claude can use more than the message you type: past chats, saved memories, your instructions, connected apps and, if you allow it, a folder on your computer. This guide covers those two apps only. Pick yours, read your part (about 12 minutes), then check your settings with a short checklist.</p>
+    <p hidden data-seen-example>Example hidden line: this is the kind of sentence we could have planted here, hidden from people and written for an AI to read. We did not plant a real one, and this one asks for nothing.</p>
     <nav class="tm-jump" aria-label="On this page">
       <a href="#pick-h">Pick your app and plan</a>
       <a href="#g-key">How to read the labels</a>
+      <a href="#seen-h">What an AI gets from this page</a>
       <a href="#about-h">About these sources</a>
     </nav>
   </header>
@@ -318,6 +320,42 @@
 
   </div>
 
+  <section class="sect" aria-labelledby="seen-h">
+    <h2 class="h2" id="seen-h">What an AI gets when it reads this page</h2>
+    <p class="answer">When an AI reads a web page, it usually receives the page's text and links, not what you see on screen. Anything the page hides from your eyes is still in that text. Open the box to read this page the way an AI that fetches it does.</p>
+    <details class="ask seen" id="seen" data-ai-view-skip>
+      <summary>Show this page as an AI receives it</summary>
+      <div class="ask-body">
+        <p class="fine">We made this text from the page's own code when the site was built, so it matches the page. Tags are stripped, hidden parts stay in, each image shows its description and each link shows its address. The box leaves itself out. Other tools strip a little more or less. We picked this page because you can compare it with the one on your screen, including the parts the app and plan picker hides from you.</p>
+        <div class="seen-box" role="region" aria-label="This page as text, the way an AI that fetches it receives it" tabindex="0"><pre class="seen-text"><!-- AI_VIEW --></pre></div>
+      </div>
+    </details>
+    <div class="card g-card">
+      <div class="g-block">
+        <h3>How text hides from you but not from an AI</h3>
+        <p>Hiding text from people takes one line of styling. A tool that strips tags never reads the styling, so it still gets the text. The usual ways:</p>
+        <ul>
+          <li>White text on a white background, or any text coloured to match what is behind it.</li>
+          <li>Text set to zero size, or moved off the edge of the screen.</li>
+          <li>A part of the page the code switches off. This is how our example hides.</li>
+          <li>A comment in the page's code. This view leaves comments out, but some tools keep them.</li>
+        </ul>
+      </div>
+      <div class="g-block">
+        <h3>The line we hid</h3>
+        <p>Near the top of the box, one line is highlighted. It sits in this page's code, switched off, to show what a hidden line looks like. It is an example of what we could have planted. It is harmless, and it asks for nothing.</p>
+      </div>
+      <div class="g-block">
+        <h3>How to spot one</h3>
+        <ul>
+          <li>Press Ctrl+A (Cmd+A on a Mac) to select the whole page. Text coloured to match the background shows up as a highlighted strip.</li>
+          <li>Right-click the page, choose View page source and search for a sentence that doesn't belong. This also finds text a page has switched off.</li>
+          <li>In Firefox, press Alt, then choose View, Page Style, No Style. The page loses its styling, and hidden-by-colour text appears.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
   <section class="sect" aria-labelledby="about-h">
     <h2 class="h2" id="about-h">About these sources</h2>
     <div class="card g-card">
@@ -336,7 +374,7 @@
   <footer>
     <div><a href="https://github.com/ignore-previous">github.com/ignore-previous</a><br>The code for this site, What's Allowed and Unclank is public there.</div>
     <div>Say hello: <span class="addr">hello@ignoreprevious.dev</span></div>
-    <div><!-- ANALYTICS -->We count visits with Cloudflare Web Analytics. <!-- /ANALYTICS -->No cookies, no personal data, no tracking across sites.</div>
+    <div><!-- ANALYTICS -->One script from Cloudflare Web Analytics counts page views and collects page-load metrics. Pages contact only this site and Cloudflare. Cloudflare says it uses no cookies or localStorage to track visitors (<a href="https://developers.cloudflare.com/web-analytics/about/">Source</a>). <!-- /ANALYTICS --><!-- NO_ANALYTICS -->Pages contact only this site. <!-- /NO_ANALYTICS -->To check, open DevTools, then Network, and reload.</div>
     <div class="fonts">Fonts served from this site: Bricolage Grotesque (The Bricolage Grotesque Project Authors), Figtree (The Figtree Project Authors) and JetBrains Mono (The JetBrains Mono Project Authors). <a href="/assets/fonts/OFL.txt">SIL Open Font License 1.1</a>.</div>
   </footer>
 </div>

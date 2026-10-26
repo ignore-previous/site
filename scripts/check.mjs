@@ -11,11 +11,20 @@
 // 6. Canonical links, sitemap, llms.txt, Markdown copies, security.txt and wrangler.jsonc agree with each other.
 // 7. Terminal output shown on a page (<pre data-demo> or <p data-demo>) is real: its lines appear, in order, in the saved demo output.
 //    `npm run check:demo` compares that saved output with what the latest whatsallowed prints.
+// 9. Receipts. A page may load things from this site only, plus the beacon script when the beacon is on (everything else
+//    on the allow-list below). The footer says so and how to check it, and says "Cloudflare" only in the beacon build.
+//    Each home tool card shows the version and date from data/tool-facts.json.
 // 8. The mechanical rules from VOICE.md: no bare "no network calls" (say "once installed"), "plain" only in the guide's
 //    page title, no old "Unverified" label.
+// 9. Visitor commands for What's Allowed name the release in scripts/whatsallowed-version.mjs. Source pages write
+//    {{NPX_WHATSALLOWED}}, and the built site has npx whatsallowed@ that version. scripts/check-demo.mjs is separate:
+//    it runs @latest on purpose, to compare demo output.
+// 10. The text view on What Can My AI See? is built from the page (no marker left, the example hidden line is switched
+//    off in the page and highlighted in the view, nothing else is hidden that way), and llms.txt ends with the note for AI.
 import { readdirSync, readFileSync, statSync, existsSync } from "node:fs";
 import { join, extname, relative, sep } from "node:path";
 import { execFileSync } from "node:child_process";
+import { WHATSALLOWED_VERSION, NPX_WHATSALLOWED, NPX_WHATSALLOWED_TOKEN, WHATSALLOWED_VERSION_TOKEN } from "./whatsallowed-version.mjs";
 
 const failures = [];
 const fail = (file, msg) => failures.push(`${file}: ${msg}`);
@@ -40,6 +49,32 @@ for (const f of scanned) {
   if (phrase.test(s) || phrase.test(s.replace(/<[^>]+>/g, " "))) fail(f, "contains the full brand phrase");
 }
 
+// 9. Origins a page may load from. Anchors are links the visitor follows, not requests, so they are not listed.
+const OWN_ORIGIN = "https://ignoreprevious.dev";
+const BEACON_SCRIPT = "https://static.cloudflareinsights.com/beacon.min.js";
+const attrOf = (tag, name) => (tag.match(new RegExp(`\\s${name}\\s*=\\s*(?:"([^"]*)"|'([^']*)')`, "i")) || []).slice(1).find((v) => v !== undefined);
+function loadedUrls(html) {
+  const urls = [];
+  for (const m of html.matchAll(/<(?!\/)([a-z][a-z0-9-]*)\b[^>]*>/gi)) {
+    const [tag, name] = [m[0], m[1].toLowerCase()];
+    if (name === "a" || name === "area") continue;
+    if (name === "link" && /\brel\s*=\s*["']?(canonical|alternate|author|me|license|help|next|prev)\b/i.test(tag)) continue;
+    for (const a of ["src", "poster", "data", "href", "action", "formaction", "data-src"]) { const v = attrOf(tag, a); if (v) urls.push([name, v]); }
+    for (const a of ["srcset", "imagesrcset"]) { const v = attrOf(tag, a); if (v) for (const part of v.split(",")) urls.push([name, part.trim().split(/\s+/)[0]]); }
+    if (name === "meta" && /http-equiv\s*=\s*["']?refresh/i.test(tag)) urls.push([name, (attrOf(tag, "content") || "").replace(/^.*url=/i, "")]);
+  }
+  return urls;
+}
+function checkOrigins(f, html, label, beacon) {
+  for (const [tag, url] of loadedUrls(html)) {
+    if (!/^(?:[a-z][a-z0-9+.-]*:)?\/\//i.test(url) && !/^(?:https?|ftp|ws|wss):/i.test(url)) continue; // same-site path or fragment
+    const absolute = url.startsWith("//") ? "https:" + url : url;
+    if (absolute.startsWith(OWN_ORIGIN + "/") || absolute === OWN_ORIGIN) continue;
+    if (beacon && tag === "script" && absolute === BEACON_SCRIPT) continue;
+    fail(f, `${label}: <${tag}> loads from another origin: ${url}`);
+  }
+}
+
 function checkSite(label, { beacon }) {
   const html = files("dist").filter((f) => f.endsWith(".html"));
   const js = files("dist").filter((f) => f.endsWith(".js"));
@@ -56,6 +91,7 @@ function checkSite(label, { beacon }) {
       if (external.length !== 1) fail(f, `${label}: expected exactly one beacon script, found ${external.length}`);
       else if (!/"spa":\s*false/.test(external[0][0])) fail(f, `${label}: beacon must set "spa": false`);
     } else if (external.length) fail(f, `${label}: beacon present without a token`);
+    checkOrigins(f, s, label, beacon);
     // 4. Stylesheets, fonts, iframes
     for (const m of s.matchAll(/<link\b[^>]*\bhref=["']((?:https?:)?\/\/[^"']+)["'][^>]*>/gi))
       if (/rel=["'](stylesheet|preload|preconnect|dns-prefetch)/i.test(m[0])) fail(f, `${label}: external resource ${m[1]}`);
@@ -75,7 +111,22 @@ function checkSite(label, { beacon }) {
     const visible = s.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ");
     if (!beacon && /\bcount (?:page )?visits\b|Web Analytics/i.test(visible)) fail(f, `${label}: says visits are counted, but there is no beacon`);
     if (beacon && !f.endsWith("404.html") && !/Web Analytics/.test(visible)) fail(f, `${label}: footer analytics line missing`);
-    if (/<!-- \/?ANALYTICS -->/.test(s)) fail(f, `${label}: ANALYTICS marker left in output`);
+    if (/<!-- \/?(?:NO_)?ANALYTICS -->|<!-- TOOL_FACTS/.test(s)) fail(f, `${label}: build marker left in output`);
+    // The footer's receipt: what is loaded, and how to see it. Cloudflare is named only when its script is there.
+    if (!f.endsWith("404.html")) {
+      const foot = (s.match(/<footer>([\s\S]*?)<\/footer>/) || [])[1]?.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ") ?? "";
+      if (!/DevTools/.test(foot) || !/Network/.test(foot)) fail(f, `${label}: footer does not say how to check (DevTools, Network)`);
+      if (beacon && !/One script from Cloudflare Web Analytics/.test(foot)) fail(f, `${label}: footer should name the one Cloudflare script`);
+      if (!beacon && /Cloudflare/i.test(visible)) fail(f, `${label}: names Cloudflare, but there is no beacon`);
+    }
+    if (f === join("dist", "index.html")) {
+      for (const [name, v] of Object.entries(toolFacts())) {
+        const start = s.indexOf(`<h3 id="${name === "whatsallowed" ? "whats-allowed" : name}">`);
+        const card = start < 0 ? "" : s.slice(start, s.indexOf("</article>", start));
+        if (!card.includes(`Version ${v.version}`)) fail(f, `${label}: ${name} card does not show version ${v.version}`);
+        for (const d of [v.tested, v.reviewed].filter(Boolean)) if (!card.includes(`datetime="${d}"`)) fail(f, `${label}: ${name} card does not show the date ${d}`);
+      }
+    }
     // Internal links resolve
     for (const m of s.matchAll(/\b(?:href|src)=["'](\/[^"'#?]*)/g)) {
       const p = join("dist", m[1]);
@@ -90,6 +141,23 @@ function checkSite(label, { beacon }) {
   for (const f of css) {
     const s = readFileSync(f, "utf8");
     if (/@import\s+url\(\s*["']?(https?:)?\/\//i.test(s) || /url\(\s*["']?(https?:)?\/\//i.test(s)) fail(f, `${label}: external CSS resource`);
+  }
+}
+// 9. The data file behind the tool cards: versions look like versions, dates are real days and not in the future.
+function toolFacts() {
+  try { return JSON.parse(readFileSync("data/tool-facts.json", "utf8")); } catch (e) { fail("data/tool-facts.json", `does not parse (${e.message})`); return {}; }
+}
+function checkToolFacts() {
+  const facts = toolFacts();
+  for (const name of ["whatsallowed", "unclank"]) {
+    const v = facts[name];
+    if (!v) { fail("data/tool-facts.json", `no entry for ${name}`); continue; }
+    if (!/^\d+\.\d+\.\d+$/.test(v.version ?? "")) fail("data/tool-facts.json", `${name}: version should look like 1.2.3`);
+    for (const k of ["tested", "reviewed"]) if (k in v) {
+      const t = Date.parse(v[k] + "T00:00:00Z");
+      if (!/^\d{4}-\d{2}-\d{2}$/.test(v[k]) || Number.isNaN(t)) fail("data/tool-facts.json", `${name}.${k} should be a date like 2026-10-25`);
+      else if (t > Date.now() + 864e5) fail("data/tool-facts.json", `${name}.${k} is in the future`);
+    }
   }
 }
 function scanScript(f, code, label) {
@@ -194,6 +262,28 @@ function checkDemo() {
   if (!found) fail("src/index.html", "no <pre data-demo> panel found; update checkDemo if it moved");
 }
 
+// 9. The text view and llms.txt
+function checkAiView() {
+  const page = join("dist", "what-can-my-ai-see", "index.html");
+  const s = readFileSync(page, "utf8");
+  if (s.includes("AI_VIEW")) fail(page, "AI_VIEW marker left in output");
+  const view = (s.match(/<pre class="seen-text">([\s\S]*?)<\/pre>/) || [])[1];
+  if (!view) return fail(page, "no text view (<pre class=\"seen-text\">)");
+  if (!/<details\b[^>]*class="ask seen"/.test(s)) fail(page, "the text view should sit in a <details>, so it works without scripts");
+  const planted = [...s.matchAll(/<[a-z0-9]+\b[^>]*\bdata-seen-example\b[^>]*>/g)];
+  if (planted.length !== 1) fail(page, `expected exactly one data-seen-example element, found ${planted.length}`);
+  else if (!/\bhidden\b/.test(planted[0][0])) fail(page, "the example hidden line should be switched off with the hidden attribute");
+  const marked = [...view.matchAll(/<mark class="seen-hit">([^<]*)<\/mark>/g)];
+  if (marked.length !== 1 || !/^Example hidden line/.test(marked[0][1])) fail(page, "the text view should highlight the one example line, starting 'Example hidden line'");
+  if (/<[a-z]/i.test(view.replace(/<\/?mark[^>]*>/g, ""))) fail(page, "the text view should hold text only");
+  if (!view.startsWith("What Can My AI See?")) fail(page, "the text view should start with the page title");
+  if (view.includes("seen-text") || view.includes("Show this page as an AI receives it")) fail(page, "the text view contains itself");
+  const llms = readFileSync(join("dist", "llms.txt"), "utf8");
+  const headings = [...llms.matchAll(/^## (.+)$/gm)].map((m) => m[1]);
+  if (!/^A note for any AI reading this/.test(headings[headings.length - 1] ?? "")) fail("dist/llms.txt", "should end with the note for AI");
+  if (/\bagents?\b/i.test(llms)) fail("dist/llms.txt", 'say "AI", not "agents"');
+}
+
 // 8. Voice rules (VOICE.md quotes the wrong versions as examples, so it is not checked here)
 function checkVoice() {
   const targets = [...files("src").filter((f) => [".html", ".txt"].includes(extname(f))), ...(existsSync("README.md") ? ["README.md"] : [])];
@@ -215,16 +305,48 @@ function checkVoice() {
   }
 }
 
+// 9. Pinned What's Allowed commands. Source keeps the token. Dist carries the release from the version file.
+function checkPinnedNpx() {
+  const count = (s, t) => s.split(t).length - 1;
+  const literal = /npx\s+(?:--yes\s+|-y\s+)?whatsallowed\b/g;
+  const pinned = /npx\s+(?:--yes\s+|-y\s+)?whatsallowed(?:@(\d+\.\d+\.\d+(?:[-+][0-9A-Za-z.-]+)?))?/g;
+  const siteText = (dir) => files(dir).filter((f) => [".html", ".txt", ".md"].includes(extname(f)) && !f.endsWith(`${sep}OFL.txt`) && !f.endsWith("/OFL.txt"));
+  for (const f of siteText("src")) {
+    const s = readFileSync(f, "utf8");
+    if (literal.test(s)) fail(f, `write ${NPX_WHATSALLOWED_TOKEN} here. The build turns it into ${NPX_WHATSALLOWED}`);
+    literal.lastIndex = 0;
+    const outPath = join("dist", relative("src", f));
+    if (!existsSync(outPath)) { fail(outPath, "missing after build"); continue; }
+    const out = readFileSync(outPath, "utf8");
+    if (count(s, NPX_WHATSALLOWED_TOKEN) !== count(out, NPX_WHATSALLOWED)) fail(outPath, `${NPX_WHATSALLOWED_TOKEN} was not replaced with ${NPX_WHATSALLOWED}`);
+    if (s.includes(WHATSALLOWED_VERSION_TOKEN) && !out.includes(WHATSALLOWED_VERSION)) fail(outPath, `${WHATSALLOWED_VERSION_TOKEN} was not replaced with ${WHATSALLOWED_VERSION}`);
+  }
+  for (const f of siteText("dist")) {
+    const s = readFileSync(f, "utf8");
+    if (s.includes(NPX_WHATSALLOWED_TOKEN) || s.includes(WHATSALLOWED_VERSION_TOKEN)) fail(f, "What's Allowed token left in the built site");
+    pinned.lastIndex = 0;
+    for (const m of s.matchAll(pinned)) {
+      if (m[1] !== WHATSALLOWED_VERSION) fail(f, `visitor command should be ${NPX_WHATSALLOWED}, found ${m[0]}`);
+    }
+  }
+  for (const f of ["dist/index.html", "dist/index.html.md", "dist/clank-safely/index.html", "dist/clank-safely/index.html.md", "dist/terminal/index.html", "dist/terminal/index.html.md", "dist/llms.txt"]) {
+    if (!existsSync(f) || !readFileSync(f, "utf8").includes(NPX_WHATSALLOWED)) fail(f, `missing ${NPX_WHATSALLOWED}`);
+  }
+}
+
 const build = (env) => execFileSync(process.execPath, ["build.mjs"], { env: { ...process.env, ...env }, stdio: "pipe" });
 build({ CF_BEACON_TOKEN: "" });
 checkHeaders();
+checkToolFacts();
 checkSite("no token", { beacon: false });
 checkDiscovery();
 checkDemo();
 checkVoice();
+checkAiView();
 build({ CF_BEACON_TOKEN: "0123456789abcdef0123456789abcdef" });
 checkSite("with token", { beacon: true });
 build({ CF_BEACON_TOKEN: "" });
+checkPinnedNpx();
 
 if (failures.length) { console.error(`FAIL (${failures.length})\n` + failures.map((x) => "  " + x).join("\n")); process.exit(1); }
 console.log(`OK: ${scanned.length} files scanned for the brand phrase; ${files("dist").filter((f) => f.endsWith(".html")).length} pages checked with and without the beacon.`);

@@ -111,13 +111,29 @@ network calls". *Checked.*
 - Do: "Once installed, it makes no network calls, and a test checks that on every build."
 - Don't: "What's Allowed makes no network calls."
 
+## Receipts
+
+Claims about what a page loads or sends describe the present ("loads", "sends"), so a reader can test them. Don't write
+"never". Each claim is true in both builds, with and without the analytics beacon, and `npm run check` tests both. The
+footer says in one line what the page contacts and how to see it (DevTools, Network). In the beacon build it names the
+one Cloudflare script and says only what Cloudflare's own documentation says about it, with a Source link. Don't add a
+claim the documentation doesn't make, such as "no tracking" or "sends nothing", for a page that counts views. A tool
+page that says where it runs and what it sends says so for the page itself, and leaves what the tool does to the tool's README.
+If analytics or any network call is added or removed, change the receipt in the same PR: the footer on every page, the
+Clank Safely line, the allow-list in `scripts/check.mjs`, and this section.
+
+- Do: "One script from Cloudflare Web Analytics counts page views and collects page-load metrics. Pages contact only this site and Cloudflare."
+- Don't: "No trackers." or "This site never sends anything."
+
 ## Names and terms
 
 In prose and titles, write What's Allowed and Unclank. Use code font for the command or package: `whatsallowed`,
 `unclank`. A finding has a "rule ID".
 
-- Do: "Run `npx whatsallowed`. Each finding names the file, the line number and the rule ID."
-- Don't: "Whatsallowed shows a code for the rule."
+- Do: "Run `npx whatsallowed@0.2.2`. Each finding names the file, the line number and the rule ID."
+- Don't: "Whatsallowed shows a code for the rule." Or "Run `npx whatsallowed`."
+
+A command the site tells a visitor to run names the release. *Checked.* The release is `scripts/whatsallowed-version.mjs`. Pages and `llms.txt` write `{{NPX_WHATSALLOWED}}`, and the build inserts the command. A sentence that names the release on its own writes `{{WHATSALLOWED_VERSION}}`. The `0.2.2` above shows the shape. Pages take the number from that file.
 
 The Unclank README's title is "# Unclank".
 
@@ -159,7 +175,7 @@ Terminal output on the site is real output from the tool, trimmed with "…". `n
 a page isn't in `scripts/whatsallowed-demo.txt`, in order. *Checked.* When the tool's output changes, update that
 file and the page together.
 
-- Do: paste from `npx whatsallowed demo` and cut lines.
+- Do: paste from the tool's demo output and cut lines.
 - Don't: retype the output, or tidy a line so it reads better.
 
 ## The AI-help line
