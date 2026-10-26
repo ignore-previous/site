@@ -169,11 +169,13 @@ export function checkLongest(items) {
   const n = rows.length, strict = rows.filter((r) => r.strict).length, near = rows.filter((r) => r.near).length;
   const chance = rows.reduce((s, r) => s + r.p, 0) / (n || 1);
   const expected = chance * n;
-  const tally = `The key is the longest option in ${strict} of ${n} items. By chance that would be about ${expected < 10 ? Math.round(expected * 10) / 10 : Math.round(expected)} (${Math.round(chance * 100)}% of items). Near-ties, counted separately: ${near}.`;
+  const tally = `The key is the longest option in ${strict} of ${n} items. By chance that would be about ${expected < 10 ? Math.round(expected * 10) / 10 : Math.round(expected)} (${Math.round(chance * 100)}% of items).`;
+  const nearNote = ` Near-ties, counted separately: ${near}.`;
+  // The near-tie count only shows when something is flagged; a clean set would just get a noisy number.
   let setHit = false, setNote = "";
   if (n >= LIMITS.longestSetItems) {
     setHit = binomialTail(n, strict, chance) < LIMITS.chanceAlpha;
-    if (setHit) found.push({ where: "Whole set", item: null, text: tally });
+    if (setHit) found.push({ where: "Whole set", item: null, text: tally + nearNote });
   } else if (n) setNote = `Under ${LIMITS.longestSetItems} items with one key, so the set tally is not judged.`;
   const nums = found.filter((f) => f.item != null).map((f) => f.item);
   let summary;
@@ -181,7 +183,7 @@ export function checkLongest(items) {
   else if (found.length) summary = `${nums.length ? `The key is at least a quarter longer than every other option in ${itemWord(nums)}. ` : ""}${setHit ? "Across the set, longest keys are well above chance." : ""}`.trim();
   else summary = "No key stands out for length.";
   return {
-    id: "D09-001", name: "Key is the longest option", status: !n ? "skipped" : found.length ? "found" : "clear", found, summary, note: setNote, tally: setHit ? "" : tally, stats: { n, strict, near, chance, setHit },
+    id: "D09-001", name: "Key is the longest option", status: !n ? "skipped" : found.length ? "found" : "clear", found, summary, note: setNote, tally: setHit ? "" : found.length ? tally + nearNote : tally, stats: { n, strict, near, chance, setHit },
     fix: "Write the other options at the same length and detail as the key.",
   };
 }
