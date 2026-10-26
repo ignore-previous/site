@@ -18,6 +18,8 @@ In PowerShell, from this folder:
 
 Terminal output on the site is real `whatsallowed demo` output, shortened. `npm run check` fails if a line shown on a page is missing from `scripts/whatsallowed-demo.txt` or out of order. `npm run check:demo` downloads the latest What's Allowed from npm and fails if its demo output differs from that file. When it does, update the file and the pages together.
 
+Every command the site tells a visitor to run names a What's Allowed release. That release is `WHATSALLOWED_VERSION` in `scripts/whatsallowed-version.mjs`. Pages and `llms.txt` write `{{NPX_WHATSALLOWED}}`, and `{{WHATSALLOWED_VERSION}}` where a sentence names the release. The build fills them in. To move to a new release, change the version in that file and run `npm run check`. If `npm run check:demo` reports new demo output, update `scripts/whatsallowed-demo.txt` and the pages together.
+
 ## Voice
 
 Copy on the site and in the brand's READMEs follows [VOICE.md](VOICE.md). `npm run check` enforces the rules VOICE.md marks as checked.

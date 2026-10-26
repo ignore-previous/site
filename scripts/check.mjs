@@ -13,9 +13,13 @@
 //    `npm run check:demo` compares that saved output with what the latest whatsallowed prints.
 // 8. The mechanical rules from VOICE.md: no bare "no network calls" (say "once installed"), "plain" only in the guide's
 //    page title, no old "Unverified" label.
+// 9. Visitor commands for What's Allowed name the release in scripts/whatsallowed-version.mjs. Source pages write
+//    {{NPX_WHATSALLOWED}}, and the built site has npx whatsallowed@ that version. scripts/check-demo.mjs is separate:
+//    it runs @latest on purpose, to compare demo output.
 import { readdirSync, readFileSync, statSync, existsSync } from "node:fs";
 import { join, extname, relative, sep } from "node:path";
 import { execFileSync } from "node:child_process";
+import { WHATSALLOWED_VERSION, NPX_WHATSALLOWED, NPX_WHATSALLOWED_TOKEN, WHATSALLOWED_VERSION_TOKEN } from "./whatsallowed-version.mjs";
 
 const failures = [];
 const fail = (file, msg) => failures.push(`${file}: ${msg}`);
@@ -215,6 +219,35 @@ function checkVoice() {
   }
 }
 
+// 9. Pinned What's Allowed commands. Source keeps the token. Dist carries the release from the version file.
+function checkPinnedNpx() {
+  const count = (s, t) => s.split(t).length - 1;
+  const literal = /npx\s+(?:--yes\s+|-y\s+)?whatsallowed\b/g;
+  const pinned = /npx\s+(?:--yes\s+|-y\s+)?whatsallowed(?:@(\d+\.\d+\.\d+(?:[-+][0-9A-Za-z.-]+)?))?/g;
+  const siteText = (dir) => files(dir).filter((f) => [".html", ".txt", ".md"].includes(extname(f)) && !f.endsWith(`${sep}OFL.txt`) && !f.endsWith("/OFL.txt"));
+  for (const f of siteText("src")) {
+    const s = readFileSync(f, "utf8");
+    if (literal.test(s)) fail(f, `write ${NPX_WHATSALLOWED_TOKEN} here. The build turns it into ${NPX_WHATSALLOWED}`);
+    literal.lastIndex = 0;
+    const outPath = join("dist", relative("src", f));
+    if (!existsSync(outPath)) { fail(outPath, "missing after build"); continue; }
+    const out = readFileSync(outPath, "utf8");
+    if (count(s, NPX_WHATSALLOWED_TOKEN) !== count(out, NPX_WHATSALLOWED)) fail(outPath, `${NPX_WHATSALLOWED_TOKEN} was not replaced with ${NPX_WHATSALLOWED}`);
+    if (s.includes(WHATSALLOWED_VERSION_TOKEN) && !out.includes(WHATSALLOWED_VERSION)) fail(outPath, `${WHATSALLOWED_VERSION_TOKEN} was not replaced with ${WHATSALLOWED_VERSION}`);
+  }
+  for (const f of siteText("dist")) {
+    const s = readFileSync(f, "utf8");
+    if (s.includes(NPX_WHATSALLOWED_TOKEN) || s.includes(WHATSALLOWED_VERSION_TOKEN)) fail(f, "What's Allowed token left in the built site");
+    pinned.lastIndex = 0;
+    for (const m of s.matchAll(pinned)) {
+      if (m[1] !== WHATSALLOWED_VERSION) fail(f, `visitor command should be ${NPX_WHATSALLOWED}, found ${m[0]}`);
+    }
+  }
+  for (const f of ["dist/index.html", "dist/index.html.md", "dist/clank-safely/index.html", "dist/clank-safely/index.html.md", "dist/terminal/index.html", "dist/terminal/index.html.md", "dist/llms.txt"]) {
+    if (!existsSync(f) || !readFileSync(f, "utf8").includes(NPX_WHATSALLOWED)) fail(f, `missing ${NPX_WHATSALLOWED}`);
+  }
+}
+
 const build = (env) => execFileSync(process.execPath, ["build.mjs"], { env: { ...process.env, ...env }, stdio: "pipe" });
 build({ CF_BEACON_TOKEN: "" });
 checkHeaders();
@@ -225,6 +258,7 @@ checkVoice();
 build({ CF_BEACON_TOKEN: "0123456789abcdef0123456789abcdef" });
 checkSite("with token", { beacon: true });
 build({ CF_BEACON_TOKEN: "" });
+checkPinnedNpx();
 
 if (failures.length) { console.error(`FAIL (${failures.length})\n` + failures.map((x) => "  " + x).join("\n")); process.exit(1); }
 console.log(`OK: ${scanned.length} files scanned for the brand phrase; ${files("dist").filter((f) => f.endsWith(".html")).length} pages checked with and without the beacon.`);

@@ -135,7 +135,7 @@
 Rules:
 1. First read the guide: https://ignoreprevious.dev/clank-safely/index.html.md
    Use its setting names and its sources. If you're not sure a setting exists, say so.
-2. Install nothing except What's Allowed (the npm package whatsallowed), which npx downloads when it runs. If you can run commands, start by checking my current settings with What's Allowed: npx whatsallowed, in this project's folder. Show me the command and wait for my yes before you run it.
+2. Install nothing except What's Allowed (the npm package whatsallowed), which npx downloads when it runs. If you can run commands, start by checking my current settings with What's Allowed: {{NPX_WHATSALLOWED}}, in this project's folder. Show me the command and wait for my yes before you run it.
 3. Ask me one question at a time, and wait for my answer.
 4. Before you run a command or change any file, show me the exact command or change. Do it only after I say yes.
 5. Don't open or print .env files, keys or other secret files. If something points to one, give me the file name only.
@@ -156,12 +156,12 @@ Rules:
         <p><b>Read-only: it reads your config files and changes nothing.</b></p>
         <p data-fact="clank-3.1 clank-3.2">What's Allowed is our checker. It reads the settings files of Claude Code, Codex and Cursor and flags risky ones. Each finding gives the file, the line and a rule ID, with a reason and a fix <a class="src" href="https://github.com/ignore-previous/whatsallowed#readme" rel="noopener noreferrer" aria-label="Our docs: What's Allowed project page">Our docs</a>.</p>
         <p data-fact="clank-3.3">In a terminal in your project folder (PowerShell on Windows), run this. It needs Node.js 20 or later <a class="src" href="https://github.com/ignore-previous/whatsallowed#readme" rel="noopener noreferrer" aria-label="Our docs: What's Allowed project page, first run">Our docs</a>.</p>
-        <div class="cmd"><code id="c1">npx whatsallowed</code><button type="button" data-target="c1" aria-label="Copy npx whatsallowed">Copy</button></div>
+        <div class="cmd"><code id="c1">{{NPX_WHATSALLOWED}}</code><button type="button" data-target="c1" aria-label="Copy {{NPX_WHATSALLOWED}}">Copy</button></div>
         <a class="nt" href="/terminal/">New to the terminal?</a>
         <dl class="runcard">
           <div><dt>Paste into</dt><dd>A terminal: PowerShell on Windows, Terminal on macOS or Linux.</dd></div>
           <div><dt>From</dt><dd>Your project's folder.</dd></div>
-          <div><dt>What it does</dt><dd>Reads your agents' settings files and lists what it found. The first time, npx asks to download What's Allowed from npm: type <code>y</code>.</dd></div>
+          <div><dt>What it does</dt><dd>Reads your agents' settings files and lists what it found. The first time, npx asks to download What's Allowed {{WHATSALLOWED_VERSION}} from npm: type <code>y</code>.</dd></div>
           <div><dt>Undo</dt><dd>Nothing to undo: it changes no files or settings. npm keeps the download in its cache.</dd></div>
         </dl>
         <ul>

@@ -116,8 +116,10 @@ network calls". *Checked.*
 In prose and titles, write What's Allowed and Unclank. Use code font for the command or package: `whatsallowed`,
 `unclank`. A finding has a "rule ID".
 
-- Do: "Run `npx whatsallowed`. Each finding names the file, the line number and the rule ID."
-- Don't: "Whatsallowed shows a code for the rule."
+- Do: "Run `npx whatsallowed@0.2.2`. Each finding names the file, the line number and the rule ID."
+- Don't: "Whatsallowed shows a code for the rule." Or "Run `npx whatsallowed`."
+
+A command the site tells a visitor to run names the release. *Checked.* The release is `scripts/whatsallowed-version.mjs`. Pages and `llms.txt` write `{{NPX_WHATSALLOWED}}`, and the build inserts the command. A sentence that names the release on its own writes `{{WHATSALLOWED_VERSION}}`. The `0.2.2` above shows the shape. Pages take the number from that file.
 
 The Unclank README's title is "# Unclank".
 
@@ -159,7 +161,7 @@ Terminal output on the site is real output from the tool, trimmed with "…". `n
 a page isn't in `scripts/whatsallowed-demo.txt`, in order. *Checked.* When the tool's output changes, update that
 file and the page together.
 
-- Do: paste from `npx whatsallowed demo` and cut lines.
+- Do: paste from the tool's demo output and cut lines.
 - Don't: retype the output, or tidy a line so it reads better.
 
 ## The AI-help line
