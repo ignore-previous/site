@@ -3,9 +3,11 @@
 // Fills each home tool card's version and date from data/tool-facts.json (see scripts/update-tool-facts.mjs).
 // Replaces {{NPX_WHATSALLOWED}} and {{WHATSALLOWED_VERSION}} from scripts/whatsallowed-version.mjs.
 // Also writes a Markdown copy of each page next to it (index.html -> index.html.md), linked from llms.txt.
+// A page with an <!-- AI_VIEW --> marker gets its own text, as an AI fetching the page receives it, put there.
 import { cpSync, rmSync, readdirSync, readFileSync, writeFileSync, statSync, existsSync } from "node:fs";
 import { join, relative, sep } from "node:path";
 import { htmlToMarkdown } from "./scripts/markdown.mjs";
+import { htmlToAiText, aiTextToHtml } from "./scripts/ai-view.mjs";
 import { pinWhatsAllowed, NPX_WHATSALLOWED_TOKEN, WHATSALLOWED_VERSION_TOKEN } from "./scripts/whatsallowed-version.mjs";
 
 const SRC = "src", OUT = "dist", ORIGIN = "https://ignoreprevious.dev";
@@ -60,8 +62,12 @@ function walk(dir) {
       // The footer only says we count visits when the beacon is there to count them.
       const analytics = /<!-- ANALYTICS -->([\s\S]*?)<!-- \/ANALYTICS -->/g;
       const noAnalytics = /<!-- NO_ANALYTICS -->([\s\S]*?)<!-- \/NO_ANALYTICS -->/g;
-      const out = html.replace("<!-- CF_BEACON -->", beacon).replace(analytics, token ? "$1" : "").replace(noAnalytics, token ? "" : "$1")
+      let out = html.replace("<!-- CF_BEACON -->", beacon).replace(analytics, token ? "$1" : "").replace(noAnalytics, token ? "" : "$1")
         .replace(/<!-- TOOL_FACTS (\w+) -->/g, (_, name) => receipt(name));
+      if (out.includes("<!-- AI_VIEW -->")) {
+        const path = "/" + relative(OUT, p).split(sep).join("/").replace(/index.html$/, "");
+        out = out.replace("<!-- AI_VIEW -->", () => aiTextToHtml(htmlToAiText(out, ORIGIN + path)));
+      }
       writeFileSync(p, out);
       if (name !== "404.html") {
         const path = "/" + relative(OUT, p).split(sep).join("/").replace(/index\.html$/, "");
