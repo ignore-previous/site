@@ -1,18 +1,34 @@
-/* Page-to-page transitions. Moving between pages on this site cross-fades the content, and the header mark stays put.
+/* Page-to-page transitions. Moving between pages fades the old page out and then the new page in, while the header mark
+   and the site navigation stay where they are.
    It is all CSS and opt-in: a browser without cross-document view transitions drops the @view-transition rule, the
    view-transition-name property and the ::view-transition-* rules as unknown CSS, so links navigate as they always did.
    With reduced motion turned on, none of it applies and pages change at once. */
 
-/* The one timing knob. It sits on :root because the ::view-transition pseudo-elements hang off the root element and
-   inherit from it. A value set on body never reaches them. */
-:root { --page-fade: 300ms; }
+/* The one timing knob: how long each half takes (out, then in). It sits on :root because the ::view-transition
+   pseudo-elements hang off the root element and inherit from it. A value set on body never reaches them. */
+:root { --page-fade: 250ms; }
 
 @media (prefers-reduced-motion: no-preference) {
   @view-transition { navigation: auto; }
   .logo { view-transition-name: brand-mark; }
-  ::view-transition-group(*),
-  ::view-transition-old(*),
-  ::view-transition-new(*) { animation-duration: var(--page-fade); }
-  /* Keep the mark pinned. Without this it would slide down from above the fold when you leave a scrolled page. */
-  ::view-transition-group(brand-mark) { animation: none; }
+  .site-nav { view-transition-name: site-nav; }
+
+  /* The page: old fades out, then new fades in once the old is gone (the delay equals one fade). */
+  ::view-transition-group(root) { animation-duration: calc(var(--page-fade) * 2); }
+  ::view-transition-old(root),
+  ::view-transition-new(root) { mix-blend-mode: normal; }
+  ::view-transition-old(root) { animation: page-fade-out var(--page-fade) ease-in both; }
+  ::view-transition-new(root) { animation: page-fade-in var(--page-fade) ease-out var(--page-fade) both; }
+
+  /* The mark and the nav hold steady: no movement, no fade. Only the new snapshot is shown, so the current-page
+     marker in the nav changes in place. */
+  ::view-transition-group(brand-mark),
+  ::view-transition-group(site-nav) { animation: none; }
+  ::view-transition-old(brand-mark),
+  ::view-transition-old(site-nav) { display: none; }
+  ::view-transition-new(brand-mark),
+  ::view-transition-new(site-nav) { animation: none; }
 }
+
+@keyframes page-fade-out { to { opacity: 0; } }
+@keyframes page-fade-in { from { opacity: 0; } }
