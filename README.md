@@ -53,3 +53,7 @@ Analytics: set `CF_BEACON_TOKEN` in the build variables to add the Cloudflare We
 - `index.html.md` next to each page, a Markdown copy written by `build.mjs` (`scripts/markdown.mjs` does the conversion).
 - `src/.well-known/security.txt` (RFC 9116). Its `Expires` date must be renewed before it passes; `npm run check` fails within 30 days of it.
 - Each page has a canonical link and a link to its Markdown copy. The home page has JSON-LD describing the site and the two software tools.
+
+## How we build this
+
+This site is built with AI coding agents (Claude Code and Codex). Every change is reviewed before it ships.
